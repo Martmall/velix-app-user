@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -395,15 +396,19 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                                 TextSpan(
                                   text: 'I agree to Velix ',
                                   style: TextStyle(fontSize: 12, color: subtextColor),
-                                  children: const [
+                                  children: [
                                     TextSpan(
                                       text: 'Terms of Service',
-                                      style: TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      style: const TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () => LegalTermsModal.showTermsOfService(context),
                                     ),
-                                    TextSpan(text: ' and '),
+                                    const TextSpan(text: ' and '),
                                     TextSpan(
                                       text: 'Privacy Policy',
-                                      style: TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      style: const TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () => LegalTermsModal.showPrivacyPolicy(context),
                                     ),
                                   ],
                                 ),

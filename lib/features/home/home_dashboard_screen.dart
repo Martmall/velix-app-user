@@ -29,6 +29,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'gradient': [const Color(0xFF0C1830), const Color(0xFF1E293B)],
       'accent': const Color(0xFFC84C00),
       'icon': Icons.local_fire_department,
+      'image': CarImageCatalog.limitedOfferBanner,
     },
     {
       'badge': 'WEEKEND SPECIAL',
@@ -39,6 +40,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'gradient': [const Color(0xFF7C2D12), const Color(0xFFC84C00)],
       'accent': const Color(0xFFF59E0B),
       'icon': Icons.directions_car,
+      'image': CarImageCatalog.weekendEscapeBanner,
     },
     {
       'badge': 'CHAUFFEUR VIP',
@@ -49,6 +51,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'gradient': [const Color(0xFF1E1B4B), const Color(0xFF312E81)],
       'accent': const Color(0xFF818CF8),
       'icon': Icons.shield,
+      'image': CarImageCatalog.luxuryChauffeurBanner,
     },
     {
       'badge': 'AIRPORT TRANSFERS',
@@ -59,6 +62,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'gradient': [const Color(0xFF064E3B), const Color(0xFF047857)],
       'accent': const Color(0xFF34D399),
       'icon': Icons.flight_land,
+      'image': CarImageCatalog.featuredHeroBanner,
     },
   ];
 
@@ -310,9 +314,17 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: gradientColors,
+                        colors: gradientColors.map((c) => c.withValues(alpha: 0.85)).toList(),
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(banner['image'] as String),
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withValues(alpha: 0.65),
+                          BlendMode.darken,
+                        ),
                       ),
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
