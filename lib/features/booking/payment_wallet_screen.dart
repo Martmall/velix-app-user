@@ -438,6 +438,7 @@ class _PaymentWalletScreenState extends ConsumerState<PaymentWalletScreen> {
                                 final user = ref.read(userAuthProvider).user;
                                 final booking = await ref.read(bookingDraftProvider.notifier).confirmAndPay(user: user);
                                 await ref.read(userAuthProvider.notifier).deductWallet(amountToPay, bookingId: booking?.id);
+                                ref.invalidate(userBookingsProvider);
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
