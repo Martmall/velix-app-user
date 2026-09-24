@@ -77,15 +77,24 @@ class _UserOtpVerificationScreenState extends State<UserOtpVerificationScreen> {
     }
     setState(() => _isLoading = true);
     try {
-      await AuthRemoteDataSource().verifyOtp(code: _otp);
+      final success = await AuthRemoteDataSource().verifyOtp(code: _otp, phone: _displayPhone);
       if (mounted) {
         setState(() => _isLoading = false);
-        context.go(AppRoutes.setUp);
+        if (success) {
+          VelixToast.showSuccess(context, 'Account verified successfully!');
+          context.go(AppRoutes.setUp);
+        } else {
+          VelixToast.showError(context, 'Invalid verification code. Please try again.');
+        }
       }
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        context.go(AppRoutes.setUp);
+        final message = e.toString().replaceAll('Exception:', '').trim();
+        VelixToast.showError(
+          context,
+          message.isNotEmpty ? message : 'OTP verification failed. Please try again.',
+        );
       }
     }
   }
