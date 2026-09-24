@@ -1,0 +1,32 @@
+class AppImages {
+  static const String userWelcome = 'assets/screens/Welcome Screen.png';
+  static const String userOnboarding = 'assets/screens/Onboarding Screen.png';
+  static const String userSignIn = 'assets/screens/Sign In Page.png';
+  static const String userOtpVerification = 'assets/screens/OTP Verification Page.png';
+  static const String userSetUp = 'assets/screens/Set Up Page.png';
+  static const String userIdentityVerification = 'assets/screens/Identity Verification.png';
+  static const String userHomeDashboard = 'assets/screens/Home Dashboard.png';
+  static const String userCarCategories = 'assets/screens/Car Categories Page.png';
+  static const String userCarListing = 'assets/screens/Car Listing Page.png';
+  static const String userCarDetail = 'assets/screens/Car Detail Page.png';
+  static const String userFavorites = 'assets/screens/Favorites & Wishlists.png';
+  static const String userBookingDateLocation = 'assets/screens/Booking Flow- Date & Location.png';
+  static const String userBookingSummary = 'assets/screens/Booking Flow- Add-ons & Summary.png';
+  static const String userPaymentCard = 'assets/screens/Payment Screen (Card Payment).png';
+  static const String userPaymentBank = 'assets/screens/Payment Screen (Bank Transfer).png';
+  static const String userPaymentWallet = 'assets/screens/Payment Screen (Wallet Payment).png';
+  static const String userPaymentOtp = 'assets/screens/OTP Payment Confirmation.png';
+  static const String userBookingConfirmation = 'assets/screens/Booking Confirmation.png';
+  static const String userTripUpdates = 'assets/screens/Trip Updates.png';
+  static const String userVehicleAccess = 'assets/screens/Vehicle Access.png';
+  static const String userVehicleSecured = 'assets/screens/Vehicle Secured Page.png';
+  static const String userReturnVehicle = 'assets/screens/Return Vehicle.png';
+  static const String userCarReturnedSuccess = 'assets/screens/Car Returned Successfully.png';
+  static const String userMyBookings = 'assets/screens/My Bookings.png';
+  static const String userLeaveReview = 'assets/screens/Leave a Review.png';
+  static const String userProfile = 'assets/screens/User Profile.png';
+  static const String userNotificationCenter = 'assets/screens/Notification Center.png';
+  static const String userLiveChat = 'assets/screens/Live Chat.png';
+  static const String userHelpSupport = 'assets/screens/Help & Support.png';
+  static const String userSubmitTicket = 'assets/screens/Submit a Ticket.png';
+}
