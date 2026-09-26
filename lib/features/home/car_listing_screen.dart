@@ -319,7 +319,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                   child: Container(
-                    height: 170,
+                    height: 135,
                     width: double.infinity,
                     color: const Color(0xFFF3F4F6),
                     child: Image.network(

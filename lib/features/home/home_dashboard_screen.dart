@@ -558,7 +558,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.76,
+                childAspectRatio: 0.86,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
@@ -718,7 +718,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                   child: Container(
-                    height: 96,
+                    height: 82,
                     width: double.infinity,
                     color: isDark ? const Color(0xFF1F2430) : const Color(0xFFF3F4F6),
                     child: Image.network(
