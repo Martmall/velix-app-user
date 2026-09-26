@@ -107,10 +107,12 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
     );
 
     final filteredCars = allCars.where((c) {
-      if (_selectedCategory == 'SUVs') return c.category == 'SUV';
-      if (_selectedCategory == 'Sedans') return c.category == 'Sedan';
-      if (_selectedCategory == 'Luxury') return c.category == 'Luxury';
-      if (_selectedCategory == 'Electric') return c.fuelType == 'Electric';
+      final catUpper = c.category.toUpperCase();
+      final fuelUpper = c.fuelType.toUpperCase();
+      if (_selectedCategory == 'SUVs') return catUpper.contains('SUV');
+      if (_selectedCategory == 'Sedans') return catUpper.contains('SEDAN');
+      if (_selectedCategory == 'Luxury') return catUpper.contains('LUXURY');
+      if (_selectedCategory == 'Electric') return fuelUpper.contains('ELECTRIC');
       return true;
     }).toList();
 
@@ -551,7 +553,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
 
             // Compact Vehicle Grid (Eliminating Stark White Area)
             GridView.builder(
-              itemCount: filteredCars.length > 4 ? 4 : filteredCars.length,
+              itemCount: filteredCars.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
