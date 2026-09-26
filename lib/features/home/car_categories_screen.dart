@@ -107,7 +107,8 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   icon: Icons.directions_car,
                   bgColor: const Color(0xFF0C1830),
                   textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.1),
+                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'SUVs & 4x4',
@@ -115,16 +116,18 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   icon: Icons.airport_shuttle,
                   bgColor: const Color(0xFF0C1830),
                   textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.1),
+                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  imageUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Luxury Cars',
                   count: '9 Cars Available',
                   icon: Icons.star,
-                  bgColor: const Color(0xFFC84C00), // Solid Terracotta Featured Card
+                  bgColor: const Color(0xFFC84C00),
                   textColor: Colors.white,
                   badge: '✦ FEATURED',
-                  btnBg: Colors.white.withValues(alpha: 0.2),
+                  btnBg: Colors.white.withValues(alpha: 0.35),
+                  imageUrl: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Sports Cars',
@@ -132,17 +135,17 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   icon: Icons.speed,
                   bgColor: const Color(0xFF0C1830),
                   textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.1),
+                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  imageUrl: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Family Vans',
                   count: '12 Cars Available',
                   icon: Icons.directions_bus_outlined,
-                  bgColor: Colors.white,
-                  textColor: const Color(0xFF0C1830),
-                  isBordered: true,
-                  btnBg: const Color(0xFFFDF0E9),
-                  iconColor: const Color(0xFFC84C00),
+                  bgColor: const Color(0xFF0C1830),
+                  textColor: Colors.white,
+                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Executive',
@@ -150,7 +153,8 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   icon: Icons.business_center,
                   bgColor: const Color(0xFF0C1830),
                   textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.1),
+                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  imageUrl: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80',
                 ),
               ],
             ),
@@ -179,12 +183,15 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
 
   Widget _buildBrandTile(String name, bool isSelected) {
     return GestureDetector(
-      onTap: () => setState(() => _selectedBrand = name),
+      onTap: () {
+        setState(() => _selectedBrand = name);
+        context.go('${AppRoutes.carListing}?search=${Uri.encodeComponent(name)}');
+      },
       child: Column(
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundColor: const Color(0xFFF3F4F6),
+            backgroundColor: isSelected ? const Color(0xFFC84C00) : const Color(0xFFF3F4F6),
             child: CircleAvatar(
               radius: 24,
               backgroundColor: Colors.white,
@@ -219,15 +226,33 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
     String? badge,
     bool isBordered = false,
     required Color btnBg,
+    String? imageUrl,
   }) {
     return GestureDetector(
-      onTap: () => context.go(AppRoutes.carListing),
+      onTap: () => context.go('${AppRoutes.carListing}?category=${Uri.encodeComponent(title)}'),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(20),
           border: isBordered ? Border.all(color: const Color(0xFFE5E7EB)) : null,
+          image: imageUrl != null && imageUrl.isNotEmpty
+              ? DecorationImage(
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withValues(alpha: 0.5),
+                    BlendMode.darken,
+                  ),
+                )
+              : null,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,16 +264,16 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.15),
+                    color: Colors.black.withValues(alpha: 0.35),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(icon, color: iconColor ?? Colors.white, size: 20),
                 ),
                 if (badge != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.25),
+                      color: const Color(0xFFC84C00),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(badge, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.white)),
@@ -264,7 +289,12 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                     Expanded(
                       child: Text(
                         title,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: textColor,
+                          shadows: const [Shadow(color: Colors.black54, blurRadius: 4)],
+                        ),
                       ),
                     ),
                     CircleAvatar(
@@ -275,7 +305,15 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   ],
                 ),
                 const SizedBox(height: 2),
-                Text(count, style: TextStyle(fontSize: 10, color: textColor.withValues(alpha: 0.7))),
+                Text(
+                  count,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: textColor.withValues(alpha: 0.9),
+                    shadows: const [Shadow(color: Colors.black54, blurRadius: 4)],
+                  ),
+                ),
               ],
             ),
           ],
