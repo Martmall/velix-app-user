@@ -16,48 +16,8 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
   String _activeFilter = 'All';
   final _amountController = TextEditingController();
 
-  final List<Map<String, dynamic>> _transactions = [
-    {
-      'id': 'tx_001',
-      'title': 'Wallet Top Up (Card)',
-      'date': 'Today, 04:30 PM',
-      'amount': 50000.0,
-      'isCredit': true,
-      'status': 'Completed',
-      'category': 'Deposit',
-      'ref': 'VLX-DEP-88491',
-    },
-    {
-      'id': 'tx_002',
-      'title': 'Trip Payment — Mercedes GLE 450',
-      'date': 'Yesterday, 11:15 AM',
-      'amount': 63000.0,
-      'isCredit': false,
-      'status': 'Completed',
-      'category': 'Bookings',
-      'ref': 'VLX-TRP-44012',
-    },
-    {
-      'id': 'tx_003',
-      'title': 'Security Deposit Refund',
-      'date': '08 Sep 2026, 02:20 PM',
-      'amount': 25000.0,
-      'isCredit': true,
-      'status': 'Completed',
-      'category': 'Refunds',
-      'ref': 'VLX-RFD-19034',
-    },
-    {
-      'id': 'tx_004',
-      'title': 'Trip Payment — Toyota Camry 2024',
-      'date': '01 Sep 2026, 09:00 AM',
-      'amount': 35000.0,
-      'isCredit': false,
-      'status': 'Completed',
-      'category': 'Bookings',
-      'ref': 'VLX-TRP-22981',
-    },
-  ];
+  // The API exposes no customer wallet history yet, so only this session's verified top-ups show.
+  final List<Map<String, dynamic>> _transactions = [];
 
   @override
   void dispose() {
@@ -251,23 +211,40 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
     );
   }
 
-  void _executeDeposit(double amount) {
-    setState(() {
-      _transactions.insert(0, {
-        'id': 'tx_${DateTime.now().millisecondsSinceEpoch}',
-        'title': 'Instant Wallet Top Up',
-        'date': 'Just now',
-        'amount': amount,
-        'isCredit': true,
-        'status': 'Completed',
-        'category': 'Deposit',
-        'ref': 'VLX-DEP-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
-      });
-    });
-
-    ref.read(userAuthProvider.notifier).topUpWallet(amount);
-
-    VelixToast.showSuccess(context, '₦${amount.toStringAsFixed(0)} deposited to your Velix Wallet!');
+  /// Tops up through Flutterwave's hosted checkout; the balance only changes once the backend
+  /// has verified the payment.
+  Future<void> _executeDeposit(double amount) async {
+    final payments = ref.read(paymentRepositoryProvider);
+    try {
+      final session = await payments.startWalletFunding(amount);
+      if (!mounted) return;
+      final result = await FlutterwaveCheckoutScreen.open(context, session);
+      if (!mounted || result.cancelled) return;
+      final outcome = await payments.confirmWalletFunding(session, result.transactionId!);
+      if (!mounted) return;
+      ref.invalidate(walletProvider);
+      if (outcome == PaymentOutcome.paid) {
+        setState(() {
+          _transactions.insert(0, {
+            'id': session.id,
+            'title': 'Wallet Top Up',
+            'date': 'Just now',
+            'amount': amount,
+            'isCredit': true,
+            'status': 'Completed',
+            'category': 'Deposit',
+            'ref': session.reference,
+          });
+        });
+        VelixToast.showSuccess(context, '₦${amount.toStringAsFixed(0)} added to your wallet.');
+      } else if (outcome == PaymentOutcome.pending) {
+        VelixToast.showInfo(context, 'Payment is being confirmed. Your balance will update shortly.');
+      } else {
+        VelixToast.showError(context, 'The payment failed. Your wallet was not charged.');
+      }
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    }
   }
 
   @override
@@ -280,8 +257,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
     final borderColor = isDark ? const Color(0xFF262B38) : const Color(0xFFE5E7EB);
     final dividerColor = isDark ? const Color(0xFF262B38) : const Color(0xFFF3F4F6);
 
-    final user = ref.watch(userAuthProvider).user;
-    final balance = user?.walletBalance ?? 0.0;
+    final balance = ref.watch(walletProvider).valueOrNull?.balance ?? 0.0;
 
     final filteredTx = _transactions.where((tx) {
       if (_activeFilter == 'All') return true;
