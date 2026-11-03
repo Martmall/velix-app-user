@@ -47,9 +47,7 @@ final GoRouter userAppRouter = GoRouter(
     GoRoute(
       path: AppRoutes.otpVerification,
       builder: (context, state) => UserOtpVerificationScreen(
-        phoneNumber: state.extra is String
-            ? state.extra as String
-            : (state.extra is Map ? (state.extra as Map)['phone'] as String? : null),
+        email: state.extra is String ? state.extra as String : null,
       ),
     ),
     GoRoute(path: AppRoutes.setUp, builder: (context, state) => const SetUpScreen()),

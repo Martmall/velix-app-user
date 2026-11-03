@@ -14,9 +14,11 @@ class IdentityVerificationScreen extends ConsumerStatefulWidget {
 
 class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificationScreen> {
   String _selectedIdType = "Driver's License";
-  String? _frontIdPhotoUrl;
-  String? _backIdPhotoUrl;
-  bool _selfieCaptured = false;
+  // Picked locally; uploaded together on submit (POST /customer/documents).
+  UploadFile? _frontIdPhotoUrl;
+  UploadFile? _backIdPhotoUrl;
+  UploadFile? _selfie;
+  bool get _selfieCaptured => _selfie != null;
   bool _isLoading = false;
 
   final List<String> _idTypes = [
@@ -68,7 +70,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
       category: 'selfie',
     );
     if (photo != null && mounted) {
-      setState(() => _selfieCaptured = true);
+      setState(() => _selfie = photo);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Facial selfie captured and uploaded!'),
@@ -79,18 +81,21 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
   }
 
   Future<void> _submitVerification() async {
+    final front = _frontIdPhotoUrl;
+    if (front == null) {
+      VelixToast.showInfo(context, 'Please add a photo of the front of your $_selectedIdType.');
+      return;
+    }
     setState(() => _isLoading = true);
-    final user = ref.read(userAuthProvider).user;
-    final license = user?.licenseNumber != null && user!.licenseNumber!.isNotEmpty
-        ? user.licenseNumber!
-        : 'NIN-${DateTime.now().millisecondsSinceEpoch.toString().substring(6)}-NG';
-
-    try {
-      await ref.read(userAuthProvider.notifier).completeKyc(
-        license,
-        _frontIdPhotoUrl ?? 'id_document.pdf',
-      );
-    } catch (_) {}
+    final status = await ref
+        .read(userAuthProvider.notifier)
+        .submitLicence([front, if (_backIdPhotoUrl != null) _backIdPhotoUrl!, if (_selfie != null) _selfie!]);
+    if (!mounted) return;
+    if (status == null) {
+      setState(() => _isLoading = false);
+      VelixToast.showError(context, ref.read(userAuthProvider).error ?? 'Upload failed. Please try again.');
+      return;
+    }
 
     if (mounted) {
       setState(() => _isLoading = false);
@@ -111,7 +116,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Your government ID and facial verification documents have been uploaded to the Admin Verification Desk for review.',
+                'Your documents have been uploaded for review.',
                 style: TextStyle(fontSize: 14, color: Color(0xFF4B5563)),
               ),
               SizedBox(height: 12),
@@ -243,7 +248,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            _frontIdPhotoUrl != null ? 'Front Verified' : 'Front of ID',
+                            _frontIdPhotoUrl != null ? 'Front added' : 'Front of ID',
                             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
                           ),
                           const SizedBox(height: 2),
@@ -280,7 +285,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            _backIdPhotoUrl != null ? 'Back Verified' : 'Back of ID',
+                            _backIdPhotoUrl != null ? 'Back added' : 'Back of ID',
                             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
                           ),
                           const SizedBox(height: 2),
@@ -325,12 +330,12 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _selfieCaptured ? 'Facial Liveness Approved' : 'Take Facial Selfie',
+                            _selfieCaptured ? 'Selfie added' : 'Take a Selfie',
                             style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            _selfieCaptured ? 'Match confidence: 99.4%' : 'Quick 3-second biometric scan',
+                            _selfieCaptured ? 'Sent with your ID for review' : 'Optional: helps the reviewer match your ID',
                             style: TextStyle(
                               fontSize: 11,
                               color: _selfieCaptured ? const Color(0xFF10B981) : const Color(0xFF6B7280),

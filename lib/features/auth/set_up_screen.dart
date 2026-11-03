@@ -32,37 +32,25 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
   }
 
   Future<void> _pickAvatar() async {
-    final url = await ImagePickerModal.show(
-      context: context,
-      title: 'Upload Profile Photo',
-      category: 'avatar',
-    );
-    if (url != null && mounted) {
-      setState(() => _avatarUrl = url);
-      await ref.read(userAuthProvider.notifier).updateAvatar(url);
-    }
+    // The backend stores an avatar URL but has no endpoint to upload the image itself yet.
+    VelixToast.showInfo(context, 'Profile photos are coming soon.');
   }
 
   void _submit() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-      final fullName = _nameController.text.trim();
-      final license = _licenseController.text.trim();
-      final phone = _emergencyController.text.trim();
-      final currentUser = ref.read(userAuthProvider).user;
-
-      await ref.read(userAuthProvider.notifier).updateProfile(
-        fullName: fullName,
-        email: currentUser?.email ?? '',
-        phone: phone.isNotEmpty ? phone : (currentUser?.phone ?? ''),
-        licenseNumber: license,
-        avatarUrl: _avatarUrl,
-      );
-
-      if (mounted) {
-        setState(() => _isLoading = false);
-        context.go(AppRoutes.identityVerification);
-      }
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isLoading = true);
+    final currentUser = ref.read(userAuthProvider).user;
+    final phone = _emergencyController.text.trim();
+    final ok = await ref.read(userAuthProvider.notifier).updateProfile(
+          fullName: _nameController.text.trim(),
+          phone: phone.isNotEmpty ? phone : (currentUser?.phone ?? ''),
+        );
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    if (ok) {
+      context.go(AppRoutes.identityVerification);
+    } else {
+      VelixToast.showError(context, ref.read(userAuthProvider).error ?? 'Could not save your profile.');
     }
   }
 
