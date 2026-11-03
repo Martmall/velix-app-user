@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:velix_core/velix_core.dart';
 import '../../core/routing/routes.dart';
+import '../../providers/user_app_providers.dart';
 
-class CarReturnedSuccessScreen extends StatelessWidget {
+class CarReturnedSuccessScreen extends ConsumerWidget {
   const CarReturnedSuccessScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trip = ref.watch(lastCompletedTripProvider);
+    const label = TextStyle(fontSize: 11, color: Color(0xFF6B7280));
+    const value = TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830));
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       body: SafeArea(
@@ -44,22 +50,22 @@ class CarReturnedSuccessScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Return Summary', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                    SizedBox(height: 14),
-                    Text('Vehicle', style: TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
-                    SizedBox(height: 2),
-                    Text('Toyota Prado 2023', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                    SizedBox(height: 12),
-                    Text('Rental Duration', style: TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
-                    SizedBox(height: 2),
-                    Text('3 Days', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                    SizedBox(height: 12),
-                    Text('Return Time', style: TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
-                    SizedBox(height: 2),
-                    Text('9:05 AM', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const Text('Return Summary', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const SizedBox(height: 14),
+                    const Text('Vehicle', style: label),
+                    const SizedBox(height: 2),
+                    Text(trip?.carName ?? '-', style: value),
+                    const SizedBox(height: 12),
+                    const Text('Rental Duration', style: label),
+                    const SizedBox(height: 2),
+                    Text(trip == null ? '-' : '${trip.days} day${trip.days == 1 ? '' : 's'}', style: value),
+                    const SizedBox(height: 12),
+                    const Text('Scheduled Return', style: label),
+                    const SizedBox(height: 2),
+                    Text(trip == null ? '-' : DateFormat('EEE, MMM d · h:mm a').format(trip.endDate), style: value),
                   ],
                 ),
               ),
@@ -73,7 +79,7 @@ class CarReturnedSuccessScreen extends StatelessWidget {
                   border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.4)),
                 ),
                 child: const Text(
-                  'We hope you enjoyed your ride! A confirmation has been sent to your email.',
+                  'We hope you enjoyed your ride! You can see this trip any time in My Bookings.',
                   style: TextStyle(fontSize: 12, color: Color(0xFF374151), height: 1.4),
                   textAlign: TextAlign.center,
                 ),

@@ -109,30 +109,17 @@ class _CarDetailScreenState extends ConsumerState<CarDetailScreen> {
   Widget build(BuildContext context) {
     final draft = ref.watch(bookingDraftProvider);
     final vehiclesAsync = ref.watch(vehicleListProvider);
-    final allCars = vehiclesAsync.when(
-      data: (list) => list,
-      loading: () => <CarModel>[],
-      error: (_, __) => <CarModel>[],
-    );
-    final car = widget.car ?? draft.selectedCar ?? (allCars.isNotEmpty ? allCars.first : CarModel(
-      id: 'car_default',
-      name: 'Mercedes-Benz GLE 450',
-      brand: 'Mercedes',
-      category: 'SUV',
-      pricePerDay: 48000.0,
-      rating: 4.9,
-      reviewsCount: 128,
-      imageUrl: CarImageCatalog.mercedesGLE,
-      transmission: 'Automatic',
-      fuelType: 'Gasoline',
-      seats: 5,
-      partnerId: 'ptr_1',
-      partnerName: 'Velix Fleet',
-      partnerAvatar: '',
-      isFavorite: false,
-      isAvailable: true,
-      location: 'Lagos, Nigeria',
-    ));
+    final car = widget.car ?? draft.selectedCar;
+    if (car == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: vehiclesAsync.isLoading
+              ? const CircularProgressIndicator()
+              : const Text('This vehicle is no longer available.'),
+        ),
+      );
+    }
 
     final gallery = car.galleryImages.isNotEmpty
         ? car.galleryImages

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:velix_core/velix_core.dart';
 import '../../core/routing/routes.dart';
-import '../../providers/user_app_providers.dart';
 
 class VehicleAccessScreen extends ConsumerStatefulWidget {
   const VehicleAccessScreen({super.key});
@@ -15,7 +14,7 @@ class VehicleAccessScreen extends ConsumerStatefulWidget {
 class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
   final List<TextEditingController> _pinControllers = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   void _verifyCode() async {
     final enteredPin = _pinControllers.map((c) => c.text).join();
@@ -26,18 +25,8 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
-    final draft = ref.read(bookingDraftProvider);
-    final bookingId = draft.lastBookingId ?? 'active_booking';
-
-    try {
-      await ref.read(bookingRepositoryProvider).toggleKeylessRemote(bookingId, true);
-    } catch (_) {}
-
-    if (mounted) {
-      setState(() => _isLoading = false);
-      context.go(AppRoutes.vehicleSecured);
-    }
+    // No vehicle has a connected keyless lock yet, so no code can unlock one. Don't pretend.
+    VelixToast.showInfo(context, 'Keyless unlock isn\'t available for this vehicle yet. Please collect the keys from your partner at pickup.');
   }
 
   @override
