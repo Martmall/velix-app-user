@@ -1,23 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:velix_core/velix_core.dart';
 import '../../core/routing/routes.dart';
+import '../../providers/user_app_providers.dart';
 
-class UserBookingDetailScreen extends StatelessWidget {
+class UserBookingDetailScreen extends ConsumerWidget {
   final BookingModel? booking;
   const UserBookingDetailScreen({super.key, this.booking});
 
+  /// Same "BK-..." reference format the backend uses in message threads.
+  static String _reference(String id) => 'BK-${id.length > 6 ? id.substring(id.length - 6).toUpperCase() : id.toUpperCase()}';
+
+  bool get _isOpen => booking?.status == BookingStatus.pending || booking?.status == BookingStatus.confirmed;
+
+  Future<void> _pay(BuildContext context, WidgetRef ref, BookingModel b) async {
+    final payments = ref.read(paymentRepositoryProvider);
+    try {
+      final session = await payments.startBookingCheckout(b.id);
+      if (!context.mounted) return;
+      final result = await FlutterwaveCheckoutScreen.open(context, session);
+      if (!context.mounted || result.cancelled) return;
+      final outcome = await payments.confirmBookingCheckout(session, result.transactionId!);
+      if (!context.mounted) return;
+      ref.invalidate(userBookingsProvider);
+      switch (outcome) {
+        case PaymentOutcome.paid:
+          VelixToast.showSuccess(context, 'Payment received. Thank you!');
+        case PaymentOutcome.pending:
+          VelixToast.showInfo(context, 'Payment is being confirmed.');
+        case PaymentOutcome.failed:
+          VelixToast.showError(context, 'The payment failed. Please try again.');
+      }
+    } catch (e) {
+      if (context.mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    }
+  }
+
+  Future<void> _cancel(BuildContext context, WidgetRef ref, BookingModel b) async {
+    try {
+      await ref.read(bookingRepositoryProvider).cancelBooking(b.id, reason: 'Cancelled by customer in app');
+      ref.invalidate(userBookingsProvider);
+      if (!context.mounted) return;
+      VelixToast.showSuccess(context, 'Booking cancelled.');
+      context.go(AppRoutes.myBookings);
+    } catch (e) {
+      if (context.mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final b = booking;
-    final id = b?.id ?? 'BK-VNG-00124';
-    final carName = b?.carName ?? 'Toyota Prado 2023';
-    final carImage = (b?.carImage != null && b!.carImage.isNotEmpty)
-        ? b.carImage
-        : CarImageCatalog.toyotaPrado;
-    final total = b?.totalPrice ?? 150000.0;
-    final statusStr = b?.status.name.toUpperCase() ?? 'CONFIRMED';
-    final isConfirmedOrActive = b?.status == BookingStatus.active || b?.status == BookingStatus.confirmed || b == null;
+    if (b == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: Text('Booking not found. Open it from My Bookings.')),
+      );
+    }
+    final id = b.id;
+    final carName = b.carName;
+    final carImage = b.carImage.isNotEmpty ? b.carImage : CarImageCatalog.toyotaPrado;
+    final total = b.totalPrice;
+    final statusStr = b.status.name.toUpperCase();
+    final isConfirmedOrActive = b.status == BookingStatus.active || b.status == BookingStatus.confirmed;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
@@ -85,9 +131,7 @@ class UserBookingDetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          b != null
-                              ? 'Pickup: ${b.startDate.day}/${b.startDate.month}/${b.startDate.year} • Return: ${b.endDate.day}/${b.endDate.month}/${b.endDate.year}'
-                              : 'Trip ongoing. Scheduled return: Apr 10, 2026',
+                          'Pickup: ${b.startDate.day}/${b.startDate.month}/${b.startDate.year} • Return: ${b.endDate.day}/${b.endDate.month}/${b.endDate.year}',
                           style: TextStyle(
                             fontSize: 11,
                             color: isConfirmedOrActive ? const Color(0xFF047857) : const Color(0xFFB91C1C),
@@ -100,7 +144,7 @@ class UserBookingDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            // Pickup Release Code OTP Banner Container
+            // Booking reference banner (there is no real handover OTP in the backend yet)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
@@ -118,8 +162,8 @@ class UserBookingDetailScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Handover Pickup OTP', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                          Text('Show to partner at vehicle pickup', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                          Text('Booking Reference', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                          Text('Quote this to your partner at pickup', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
                         ],
                       ),
                     ],
@@ -128,7 +172,7 @@ class UserBookingDetailScreen extends StatelessWidget {
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Handover OTP code copied to clipboard!'),
+                          content: Text('Booking reference copied!'),
                           backgroundColor: Color(0xFF10B981),
                           duration: Duration(seconds: 2),
                         ),
@@ -144,7 +188,7 @@ class UserBookingDetailScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            (b?.id.isNotEmpty == true) ? (b!.id.hashCode.abs().toString().padLeft(6, '0').substring(0, 6)) : '884219',
+                            _reference(b.id),
                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Color(0xFFC84C00), letterSpacing: 2.0),
                           ),
                           const SizedBox(width: 6),
@@ -189,7 +233,7 @@ class UserBookingDetailScreen extends StatelessWidget {
                       children: [
                         Text(carName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
                         const SizedBox(height: 2),
-                        Text(b?.pickupLocation.isNotEmpty == true ? b!.pickupLocation : 'Lagos • Nigeria', style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+                        Text(b.pickupLocation.isNotEmpty ? b.pickupLocation : 'Pickup location to be confirmed', style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
                         const SizedBox(height: 4),
                         Text('₦${(total / 3).toStringAsFixed(0)} / day', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
                       ],
@@ -231,11 +275,8 @@ class UserBookingDetailScreen extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.phone, color: Color(0xFFC84C00), size: 20),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Calling Host (+234 803 123 4567)...')),
-                          );
-                        },
+                        // The booking API doesn't expose the host's phone number; support relays.
+                        onPressed: () => context.push(AppRoutes.liveChat, extra: {'isHost': true}),
                       ),
                       IconButton(
                         icon: const Icon(Icons.chat_bubble_outline, color: Color(0xFF0C1830), size: 20),
@@ -262,14 +303,14 @@ class UserBookingDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   _buildReceiptRow('Total Rental Amount', '₦${total.toStringAsFixed(0)}'),
                   const SizedBox(height: 8),
-                  _buildReceiptRow('Payment Method', b?.paymentMethod.isNotEmpty == true ? b!.paymentMethod : 'Card Payment'),
+                  _buildReceiptRow('Payment Method', 'Flutterwave'),
                   const SizedBox(height: 8),
                   const Divider(color: Color(0xFFE5E7EB)),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total Paid', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                      const Text('Total', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
                       Text('₦${total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
                     ],
                   ),
@@ -277,27 +318,31 @@ class UserBookingDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 28),
+            if (_isOpen) ...[
+              PartnerOrangeButton(
+                text: 'Pay Now',
+                onPressed: () => _pay(context, ref, b),
+              ),
+              const SizedBox(height: 12),
+            ],
             PartnerOrangeButton(
               text: 'Live Trip Updates',
               onPressed: () => context.go(AppRoutes.tripUpdates),
             ),
             const SizedBox(height: 12),
-            OutlinedButton(
+            if (_isOpen) OutlinedButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
                     title: const Text('Cancel Booking?', style: TextStyle(fontWeight: FontWeight.bold)),
-                    content: const Text('Are you sure you want to cancel this booking? Cancellation within 24 hours of pickup is 100% refundable.'),
+                    content: const Text('Are you sure you want to cancel this booking?'),
                     actions: [
                       TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Keep Booking')),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pop(ctx);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Booking $id has been cancelled.')),
-                          );
-                          context.go(AppRoutes.myBookings);
+                          _cancel(context, ref, b);
                         },
                         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFEF4444)),
                         child: const Text('Yes, Cancel', style: TextStyle(color: Colors.white)),

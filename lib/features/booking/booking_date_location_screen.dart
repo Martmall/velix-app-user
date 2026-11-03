@@ -67,6 +67,24 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
     }
   }
 
+  static DateTime _at(DateTime day, TimeOfDay time) => DateTime(day.year, day.month, day.day, time.hour, time.minute);
+
+  /// The pickers keep date and time separately; the booking needs both combined.
+  void _continue() {
+    final pickup = _at(_pickupDate, _pickupTime);
+    final dropoff = _at(_returnDate, _returnTime);
+    if (pickup.isBefore(DateTime.now())) {
+      VelixToast.showInfo(context, 'Please choose a pickup time in the future.');
+      return;
+    }
+    if (!dropoff.isAfter(pickup)) {
+      VelixToast.showInfo(context, 'The return time must be after the pickup time.');
+      return;
+    }
+    ref.read(bookingDraftProvider.notifier).setDates(pickup, dropoff);
+    context.go(AppRoutes.bookingSummary);
+  }
+
   Future<void> _selectPickupTime() async {
     final picked = await showTimePicker(context: context, initialTime: _pickupTime);
     if (picked != null) setState(() => _pickupTime = picked);
@@ -310,7 +328,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Include Professional Chauffeur', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                              Text('Add +₦15,000/day for dedicated driver', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                              Text('Sent to the partner as a request; arranged with them', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
                             ],
                           ),
                         ),
@@ -319,7 +337,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                           activeTrackColor: const Color(0xFFC84C00),
                           onChanged: (val) {
                             setState(() => _includeDriver = val);
-                            ref.read(bookingDraftProvider.notifier).toggleAddOnPrice(15000.0);
+                            ref.read(bookingDraftProvider.notifier).toggleChauffeur(val);
                           },
                         ),
                       ],
@@ -347,7 +365,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                   ],
                 ),
                 ElevatedButton.icon(
-                  onPressed: () => context.go(AppRoutes.bookingSummary),
+                  onPressed: _continue,
                   icon: const Text('Continue to Extras', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
                   label: const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
                   style: ElevatedButton.styleFrom(

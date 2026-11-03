@@ -14,10 +14,6 @@ import '../../features/home/car_detail_screen.dart';
 import '../../features/home/favorites_screen.dart';
 import '../../features/booking/booking_date_location_screen.dart';
 import '../../features/booking/booking_summary_screen.dart';
-import '../../features/booking/payment_card_screen.dart';
-import '../../features/booking/payment_bank_screen.dart';
-import '../../features/booking/payment_wallet_screen.dart';
-import '../../features/booking/payment_otp_screen.dart';
 import '../../features/bookings/user_booking_detail_screen.dart';
 import '../../features/booking/booking_confirmation_screen.dart';
 import '../../features/trip/trip_updates_screen.dart';
@@ -61,10 +57,6 @@ final GoRouter userAppRouter = GoRouter(
     
     GoRoute(path: AppRoutes.bookingDateLocation, builder: (context, state) => const BookingDateLocationScreen()),
     GoRoute(path: AppRoutes.bookingSummary, builder: (context, state) => const BookingSummaryScreen()),
-    GoRoute(path: AppRoutes.paymentCard, builder: (context, state) => const PaymentCardScreen()),
-    GoRoute(path: AppRoutes.paymentBank, builder: (context, state) => const PaymentBankScreen()),
-    GoRoute(path: AppRoutes.paymentWallet, builder: (context, state) => const PaymentWalletScreen()),
-    GoRoute(path: AppRoutes.paymentOtp, builder: (context, state) => const PaymentOtpScreen()),
     GoRoute(path: AppRoutes.bookingConfirmation, builder: (context, state) => const BookingConfirmationScreen()),
     GoRoute(path: AppRoutes.bookingDetail, builder: (context, state) => UserBookingDetailScreen(booking: state.extra as BookingModel?)),
     
