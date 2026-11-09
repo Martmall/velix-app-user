@@ -24,17 +24,23 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
       return;
     }
 
+    // Completing a rental is the partner's action (they inspect the car and confirm in their
+    // app). Here we only check whether they have done so yet.
     setState(() => _isLoading = true);
-    final draft = ref.read(bookingDraftProvider);
-    final bookingId = draft.lastBookingId ?? 'active_booking';
-
+    ref.invalidate(userBookingsProvider);
     try {
-      await ref.read(bookingRepositoryProvider).updateBookingStatus(bookingId, BookingStatus.completed);
-    } catch (_) {}
-
-    if (mounted) {
-      setState(() => _isLoading = false);
-      context.go(AppRoutes.carReturnedSuccess);
+      final trip = ref.read(currentTripProvider);
+      final latest = trip == null ? null : await ref.read(bookingRepositoryProvider).getBookingById(trip.id);
+      if (!mounted) return;
+      if (latest == null || latest.status == BookingStatus.completed) {
+        context.go(AppRoutes.carReturnedSuccess);
+      } else {
+        VelixToast.showInfo(context, 'Your partner hasn\'t confirmed the return yet. Hand over the keys and they\'ll complete it in their app.');
+      }
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 

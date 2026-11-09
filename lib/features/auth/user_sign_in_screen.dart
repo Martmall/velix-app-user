@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:velix_core/velix_core.dart';
 import '../../core/routing/routes.dart';
+import '../../providers/user_app_providers.dart';
 
-class UserSignInScreen extends StatefulWidget {
+class UserSignInScreen extends ConsumerStatefulWidget {
   const UserSignInScreen({super.key});
 
   @override
-  State<UserSignInScreen> createState() => _UserSignInScreenState();
+  ConsumerState<UserSignInScreen> createState() => _UserSignInScreenState();
 }
 
-class _UserSignInScreenState extends State<UserSignInScreen> {
+class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -42,54 +44,41 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
   }
 
   Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-      try {
-        final authSource = AuthRemoteDataSource();
-        final user = await authSource.login(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-        if (mounted) {
-          setState(() => _isLoading = false);
-          VelixToast.showSuccess(context, 'Welcome back, ${user.fullName}!');
-          context.go(AppRoutes.home);
-        }
-      } catch (e) {
-        if (mounted) {
-          setState(() => _isLoading = false);
-          final message = e.toString().replaceAll('Exception:', '').trim();
-          VelixToast.showError(
-            context,
-            message.isNotEmpty ? message : 'Invalid email or password.',
-          );
-        }
-      }
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isLoading = true);
+    final email = _emailController.text.trim();
+    final notifier = ref.read(userAuthProvider.notifier);
+    final ok = await notifier.signIn(email, _passwordController.text);
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    final state = ref.read(userAuthProvider);
+    if (ok) {
+      VelixToast.showSuccess(context, 'Welcome back, ${state.user?.fullName ?? ''}!');
+      context.go(AppRoutes.home);
+      return;
+    }
+    final error = state.error ?? 'Invalid email or password.';
+    VelixToast.showError(context, error);
+    // Registered but never confirmed the emailed code: send a fresh one and go confirm it.
+    if (error.toLowerCase().contains('verify your email')) {
+      await notifier.resendVerificationEmail(email);
+      if (mounted) context.go(AppRoutes.otpVerification, extra: email);
     }
   }
 
   Future<void> _socialSignIn(String provider) async {
-    if (provider.toLowerCase() == 'google') {
-      setState(() => _isLoading = true);
-      try {
-        final authSource = AuthRemoteDataSource();
-        final user = await authSource.signInWithGoogle(role: UserRole.user);
-        if (mounted) {
-          setState(() => _isLoading = false);
-          VelixToast.showSuccess(context, 'Signed in with Google as ${user.fullName}!');
-          context.go(AppRoutes.home);
-        }
-      } catch (e) {
-        if (mounted) {
-          setState(() => _isLoading = false);
-          VelixToast.showError(
-            context,
-            'Google sign in: ${e.toString().replaceAll('Exception:', '').trim()}',
-          );
-        }
-      }
+    if (provider.toLowerCase() != 'google') {
+      VelixToast.showInfo(context, 'Apple sign-in isn\'t available yet. Please use Google or email.');
+      return;
+    }
+    setState(() => _isLoading = true);
+    final ok = await ref.read(userAuthProvider.notifier).signInWithGoogle();
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    if (ok) {
+      context.go(AppRoutes.home);
     } else {
-      context.go(AppRoutes.createAccount);
+      VelixToast.showError(context, ref.read(userAuthProvider).error ?? 'Google sign-in failed.');
     }
   }
 
@@ -123,26 +112,15 @@ class _UserSignInScreenState extends State<UserSignInScreen> {
 
     if (!success || !mounted) return;
 
-    try {
-      final authSource = AuthRemoteDataSource();
-      final user = await authSource.login(
-        email: enrolledEmail,
-        password: 'password123',
-      );
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Biometric Verified! Logged in as ${user.fullName} ($enrolledEmail).'),
-            backgroundColor: const Color(0xFF0C1830),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-        context.go(AppRoutes.home);
-      }
-    } catch (_) {
-      if (mounted) {
-        context.go(AppRoutes.home);
-      }
+    // Biometrics only unlock a session already stored on this device; they never stand in for
+    // the password. No stored (or a revoked) session means a normal sign-in is needed.
+    await ref.read(userAuthProvider.notifier).refreshUser();
+    if (!mounted) return;
+    final user = ref.read(userAuthProvider).user;
+    if (user != null && user.email.toLowerCase() == enrolledEmail.toLowerCase()) {
+      context.go(AppRoutes.home);
+    } else {
+      VelixToast.showInfo(context, 'Your session has expired. Please sign in with your password.');
     }
   }
 

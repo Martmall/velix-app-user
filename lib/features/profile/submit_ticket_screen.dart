@@ -30,43 +30,30 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
   ];
 
   Future<void> _pickAttachment() async {
-    final photo = await ImagePickerModal.show(
-      context: context,
-      title: 'Attach Photo / Receipt',
-    );
-    if (photo != null && mounted) {
-      setState(() => _attachmentUrl = photo);
-      VelixToast.showInfo(context, 'Screenshot / photo attached!');
-    }
+    // The helpdesk API stores an attachment URL but there is no upload endpoint for it yet.
+    VelixToast.showInfo(context, 'Attachments are coming soon -- please describe the issue in the message.');
   }
 
   void _submit() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-
-      final user = ref.read(userAuthProvider).user;
-
-      try {
-        final created = await ref.read(supportRepositoryProvider).createSupportTicket(
-              userId: user?.id ?? 'user_${DateTime.now().millisecondsSinceEpoch}',
-              subject: _subjectController.text.trim(),
-              category: _selectedCategory,
-              description: _descriptionController.text.trim(),
-              attachmentUrl: _attachmentUrl,
-            );
-        if (mounted) {
-          setState(() => _isLoading = false);
-          VelixToast.showSuccess(
-            context,
-            'Support ticket #${created.id} submitted! Team assigned.',
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isLoading = true);
+    try {
+      await ref.read(supportRepositoryProvider).createSupportTicket(
+            subject: _subjectController.text.trim(),
+            category: _selectedCategory,
+            description: _descriptionController.text.trim(),
+            attachmentUrl: _attachmentUrl,
           );
-          context.go(AppRoutes.helpSupport);
-        }
-      } catch (e) {
-        if (mounted) {
-          setState(() => _isLoading = false);
-          VelixToast.showError(context, 'Failed to submit ticket: $e');
-        }
+      ref.invalidate(userSupportTicketsProvider);
+      if (mounted) {
+        setState(() => _isLoading = false);
+        VelixToast.showSuccess(context, 'Ticket submitted. Our support team will reply here.');
+        context.go(AppRoutes.helpSupport);
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        VelixToast.showError(context, ApiClient.parseErrorMessage(e));
       }
     }
   }

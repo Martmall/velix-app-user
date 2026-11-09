@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:velix_core/velix_core.dart';
@@ -23,52 +24,36 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
   bool _isLoading = false;
 
   Future<void> _addPhoto() async {
-    final photo = await ImagePickerModal.show(
-      context: context,
-      title: 'Attach Trip Photo',
-    );
-    if (photo != null && mounted) {
-      setState(() {
-        _photos.add(photo);
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Trip photo attached to review!'),
-          backgroundColor: Color(0xFF0C1830),
-        ),
-      );
-    }
+    // Reviews are text + rating only on the backend (POST /bookings/:id/reviews).
+    VelixToast.showInfo(context, 'Photos on reviews are coming soon.');
   }
 
   void _submitReview() async {
+    final trip = ref.read(lastCompletedTripProvider);
+    if (trip == null) {
+      VelixToast.showInfo(context, 'You can review a trip once it has been completed.');
+      return;
+    }
     setState(() => _isLoading = true);
-    final draft = ref.read(bookingDraftProvider);
-    final user = ref.read(userAuthProvider).user;
-
     try {
       await ref.read(supportRepositoryProvider).submitReview(
-        bookingId: draft.lastBookingId ?? 'booking_completed',
-        vehicleId: draft.selectedCar?.id ?? 'vehicle_reviewed',
-        rating: _overallRating.toDouble(),
-        comment: _commentController.text.trim(),
-        userId: user?.id,
-      );
-    } catch (_) {}
-
-    if (mounted) {
-      setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Thank you for your rating & feedback!'),
-          backgroundColor: Color(0xFF10B981),
-        ),
-      );
+            bookingId: trip.id,
+            rating: _overallRating,
+            comment: _commentController.text.trim(),
+          );
+      if (!mounted) return;
+      VelixToast.showSuccess(context, 'Thank you for your rating & feedback!');
       context.go(AppRoutes.home);
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final trip = ref.watch(lastCompletedTripProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       appBar: AppBar(
@@ -128,13 +113,16 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Toyota Prado 2023', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                        SizedBox(height: 2),
-                        Text('Apr 7 - Apr 10, 2026', style: TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+                        Text(trip?.carName ?? 'Your last trip', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                        const SizedBox(height: 2),
+                        Text(
+                          trip == null ? 'No completed trip yet' : '${DateFormat('MMM d').format(trip.startDate)} - ${DateFormat('MMM d, yyyy').format(trip.endDate)}',
+                          style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                        ),
                       ],
                     ),
                   ),

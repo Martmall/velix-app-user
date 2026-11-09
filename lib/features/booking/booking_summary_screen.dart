@@ -15,26 +15,50 @@ class BookingSummaryScreen extends ConsumerStatefulWidget {
 class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
   bool _driverAddon = false;
   bool _childSeatAddon = false;
-  final _promoController = TextEditingController();
+  bool _processing = false;
 
-  void _applyPromoCode() {
-    final code = _promoController.text.trim();
-    if (code.isNotEmpty) {
-      ref.read(bookingDraftProvider.notifier).setPromoCode(code);
-      VelixToast.showSuccess(context, 'Promo code "$code" applied!');
-    }
-  }
-
-  void _handleProceedToPayment() {
+  /// Creates the booking on the server, takes payment through Flutterwave's hosted checkout,
+  /// and only shows the confirmation once the backend has verified the payment.
+  Future<void> _handleProceedToPayment() async {
     final user = ref.read(userAuthProvider).user;
-    final isVerified = user?.isVerified ?? false;
-
-    if (!isVerified) {
+    if (!(user?.isVerified ?? false)) {
       _showVerificationRequiredDialog();
       return;
     }
+    if (_processing) return;
+    setState(() => _processing = true);
+    try {
+      // Reuse the booking if the customer already created it and is retrying payment.
+      final draft = ref.read(bookingDraftProvider);
+      final booking = draft.lastBooking ?? await ref.read(bookingDraftProvider.notifier).confirmAndPay(user: user);
+      if (booking == null || !mounted) return;
 
-    context.go(AppRoutes.paymentCard);
+      final payments = ref.read(paymentRepositoryProvider);
+      final session = await payments.startBookingCheckout(booking.id);
+      if (!mounted) return;
+      final result = await FlutterwaveCheckoutScreen.open(context, session);
+      if (!mounted) return;
+      if (result.cancelled) {
+        VelixToast.showInfo(context, 'Payment not completed. Your booking is saved -- you can pay from My Bookings.');
+        return;
+      }
+      final outcome = await payments.confirmBookingCheckout(session, result.transactionId!);
+      if (!mounted) return;
+      switch (outcome) {
+        case PaymentOutcome.paid:
+          ref.invalidate(userBookingsProvider);
+          context.go(AppRoutes.bookingConfirmation);
+        case PaymentOutcome.pending:
+          VelixToast.showInfo(context, 'Payment is being confirmed. We\'ll update your booking shortly.');
+          context.go(AppRoutes.myBookings);
+        case PaymentOutcome.failed:
+          VelixToast.showError(context, 'The payment failed. Please try again.');
+      }
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    } finally {
+      if (mounted) setState(() => _processing = false);
+    }
   }
 
   void _showVerificationRequiredDialog() {
@@ -218,8 +242,8 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                   _buildAddonCard(
                     icon: Icons.person_pin,
                     title: 'Executive Dedicated Chauffeur',
-                    subtitle: 'Professional vetted driver for entire booking duration',
-                    price: '₦20,000 / day',
+                    subtitle: 'Sent to the partner as a request; priced and arranged with them',
+                    price: 'On request',
                     value: _driverAddon,
                     cardBg: cardBg,
                     textColor: textColor,
@@ -233,8 +257,8 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                   _buildAddonCard(
                     icon: Icons.child_care,
                     title: 'Child Safety Car Seat',
-                    subtitle: 'Certified ISOFIX infant/child protection seat',
-                    price: '₦5,000 / day',
+                    subtitle: 'Sent to the partner as a request; priced and arranged with them',
+                    price: 'On request',
                     value: _childSeatAddon,
                     cardBg: cardBg,
                     textColor: textColor,
@@ -266,7 +290,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                           _buildPriceRow('Child Safety Seat', '₦${breakdown.childSeatTotal.toStringAsFixed(0)}', textColor, subtextColor),
                         ],
                         const SizedBox(height: 8),
-                        _buildPriceRow('Service & Platform Fee (5%)', '₦${breakdown.serviceFee.toStringAsFixed(0)}', textColor, subtextColor),
+                        _buildPriceRow('Service & Platform Fee (10%)', '₦${breakdown.serviceFee.toStringAsFixed(0)}', textColor, subtextColor),
                         const SizedBox(height: 8),
                         _buildPriceRow('VAT (7.5%)', '₦${breakdown.vat.toStringAsFixed(0)}', textColor, subtextColor),
                         if (breakdown.discount > 0) ...[
@@ -274,37 +298,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                           _buildPriceRow('Discount Applied', '-₦${breakdown.discount.toStringAsFixed(0)}', textColor, subtextColor),
                         ],
                         Divider(height: 20, color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
-                        _buildPriceRow('Refundable Security Deposit', '₦${breakdown.securityDeposit.toStringAsFixed(0)}', textColor, subtextColor),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: _promoController,
-                                style: TextStyle(color: textColor),
-                                decoration: InputDecoration(
-                                  hintText: 'Try code VELO5K',
-                                  hintStyle: TextStyle(color: subtextColor, fontSize: 13),
-                                  filled: true,
-                                  fillColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF4F6F9),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              onPressed: _applyPromoCode,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFC84C00),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                                elevation: 0,
-                              ),
-                              child: const Text('Apply', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white)),
-                            ),
-                          ],
-                        ),
+                        _buildPriceRow('Refundable Deposit (not charged now)', '₦${breakdown.securityDeposit.toStringAsFixed(0)}', textColor, subtextColor),
                       ],
                     ),
                   ),
@@ -338,8 +332,8 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                   ],
                 ),
                 ElevatedButton.icon(
-                  onPressed: _handleProceedToPayment,
-                  icon: const Text('Proceed to Payment', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+                  onPressed: _processing ? null : _handleProceedToPayment,
+                  icon: Text(_processing ? 'Processing...' : 'Confirm & Pay', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
                   label: const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFC84C00),

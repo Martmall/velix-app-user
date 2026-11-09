@@ -41,10 +41,6 @@ class _DevPreviewScreenState extends State<DevPreviewScreen> {
         {'title': '12. Car Detail Page', 'route': AppRoutes.carDetail, 'icon': Icons.info_outline},
         {'title': '13. Booking Flow - Date & Location', 'route': AppRoutes.bookingDateLocation, 'icon': Icons.calendar_month},
         {'title': '14. Booking Flow - Add-ons & Summary', 'route': AppRoutes.bookingSummary, 'icon': Icons.receipt_long},
-        {'title': '15a. Payment Screen (Card)', 'route': AppRoutes.paymentCard, 'icon': Icons.credit_card},
-        {'title': '15b. Payment Screen (Bank Transfer)', 'route': AppRoutes.paymentBank, 'icon': Icons.account_balance},
-        {'title': '15c. Payment Screen (Wallet)', 'route': AppRoutes.paymentWallet, 'icon': Icons.account_balance_wallet},
-        {'title': '16. OTP Payment Confirmation', 'route': AppRoutes.paymentOtp, 'icon': Icons.shield},
         {'title': '17. Booking Confirmation', 'route': AppRoutes.bookingConfirmation, 'icon': Icons.check_circle_outline},
         {'title': '17b. Booking Detail View', 'route': AppRoutes.bookingDetail, 'icon': Icons.article_outlined},
       ]

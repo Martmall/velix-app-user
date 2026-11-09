@@ -15,10 +15,6 @@ class AppRoutes {
   
   static const String bookingDateLocation = '/user/booking/step1';
   static const String bookingSummary = '/user/booking/step2';
-  static const String paymentCard = '/user/payment/card';
-  static const String paymentBank = '/user/payment/bank';
-  static const String paymentWallet = '/user/payment/wallet';
-  static const String paymentOtp = '/user/payment/otp';
   static const String bookingConfirmation = '/user/booking/success';
   static const String bookingDetail = '/user/booking/detail';
   

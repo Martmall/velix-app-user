@@ -75,29 +75,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   UserModel get _currentUser {
     return ref.watch(userAuthProvider).user ??
-        UserModel(
-          id: 'usr_new',
-          fullName: 'New Velix User',
-          email: 'user@velix.ng',
-          phone: '+234 800 000 0000',
-          role: UserRole.user,
-          isVerified: false,
-        );
+        UserModel(id: '', fullName: 'Guest', email: '', phone: '', role: UserRole.user);
   }
 
   Future<void> _changeAvatar() async {
-    final newUrl = await ImagePickerModal.show(
-      context: context,
-      title: 'Update Profile Photo',
-      category: 'avatar',
-    );
-
-    if (newUrl != null && mounted) {
-      await ref.read(userAuthProvider.notifier).updateAvatar(newUrl);
-      if (mounted) {
-        VelixToast.showSuccess(context, 'Profile photo updated successfully!');
-      }
-    }
+    // The backend stores an avatar URL but has no endpoint to upload the image itself yet.
+    VelixToast.showInfo(context, 'Profile photos are coming soon.');
   }
 
   void _showEditProfileModal() {
@@ -106,7 +89,6 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     final nameCtrl = TextEditingController(text: currentUser.fullName);
     final phoneCtrl = TextEditingController(text: currentUser.phone);
     final emailCtrl = TextEditingController(text: currentUser.email);
-    final licenseCtrl = TextEditingController(text: currentUser.licenseNumber ?? '');
 
     final sheetBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
@@ -178,6 +160,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               const SizedBox(height: 6),
               TextField(
                 controller: emailCtrl,
+                // Changing the email needs re-verification, which this sheet doesn't do.
+                readOnly: true,
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: textColor),
                 decoration: InputDecoration(
@@ -207,41 +191,21 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 ),
               ),
-              const SizedBox(height: 14),
-              Text('Driver License / NIN', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: labelColor)),
-              const SizedBox(height: 6),
-              TextField(
-                controller: licenseCtrl,
-                style: TextStyle(color: textColor),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: inputBg,
-                  hintText: 'e.g. NIN-89210-LA',
-                  hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
-                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                ),
-              ),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await ref.read(userAuthProvider.notifier).updateProfile(
+                    final ok = await ref.read(userAuthProvider.notifier).updateProfile(
                       fullName: nameCtrl.text.trim(),
-                      email: emailCtrl.text.trim(),
                       phone: phoneCtrl.text.trim(),
-                      licenseNumber: licenseCtrl.text.trim(),
                     );
-                    if (ctx.mounted) {
+                    if (!ctx.mounted) return;
+                    if (ok) {
                       Navigator.pop(ctx);
-                      ScaffoldMessenger.of(ctx).showSnackBar(
-                        const SnackBar(
-                          content: Text('Profile details saved successfully!'),
-                          backgroundColor: Color(0xFF0C1830),
-                        ),
-                      );
+                      VelixToast.showSuccess(ctx, 'Profile details saved.');
+                    } else {
+                      VelixToast.showError(ctx, ref.read(userAuthProvider).error ?? 'Could not save your profile.');
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -642,8 +606,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     iconBg: isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5),
                     iconColor: const Color(0xFF10B981),
                     title: 'Wallet Balance',
-                    subtitle: '₦${user.walletBalance.toStringAsFixed(0)} available',
-                    badge: '₦${user.walletBalance.toStringAsFixed(0)}',
+                    subtitle: '₦${(ref.watch(walletProvider).valueOrNull?.balance ?? 0).toStringAsFixed(0)} available',
+                    badge: '₦${(ref.watch(walletProvider).valueOrNull?.balance ?? 0).toStringAsFixed(0)}',
                     textColor: textColor,
                     subtextColor: subtextColor,
                     onTap: () => context.go(AppRoutes.wallet),

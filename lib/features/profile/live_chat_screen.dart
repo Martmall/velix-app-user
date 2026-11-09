@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,8 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   final _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<ChatMessageModel> _chatMessages = [];
+  Timer? _poll;
+  bool _sending = false;
 
   late bool _isHostChat;
   late String _title;
@@ -27,87 +30,51 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   @override
   void initState() {
     super.initState();
+    // There is no customer-to-host messaging API; every conversation here is with Velix support
+    // (answered from the admin support inbox), who relay to the host when needed.
     _isHostChat = widget.extra?['isHost'] == true;
-    _title = widget.extra?['hostName'] as String? ?? (_isHostChat ? 'Car Host' : 'Velix Live Support');
     final carName = widget.extra?['carName'] as String?;
-    _subtitle = carName != null ? 'Host • $carName' : 'Concierge & Fleet Host';
-    _avatar = widget.extra?['partnerAvatar'] as String? ?? '';
+    _title = 'Velix Support';
+    _subtitle = _isHostChat && carName != null ? 'About $carName -- we\'ll relay to your host' : 'We usually reply within a few hours';
+    _avatar = '';
+    _load();
+    _poll = Timer.periodic(const Duration(seconds: 15), (_) => _load());
+  }
 
-    // If initial host message not added yet, add one
-    if (_isHostChat && _chatMessages.isEmpty) {
-      _chatMessages.add(
-        ChatMessageModel(
-          id: 'host_init_${DateTime.now().millisecondsSinceEpoch}',
-          conversationId: 'conv_host',
-          senderId: 'host_01',
-          senderName: _title,
-          text: 'Hello! I am $_title, the host for this ${carName ?? 'vehicle'}. Feel free to ask any questions about pickup, features, or scheduling!',
-          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-          isUser: false,
-        ),
-      );
+  @override
+  void dispose() {
+    _poll?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    final user = ref.read(userAuthProvider).user;
+    if (user == null) return;
+    try {
+      final messages = await ref.read(supportRepositoryProvider).getSupportChat(currentUserId: user.id);
+      if (!mounted) return;
+      final grew = messages.length != _chatMessages.length;
+      setState(() => _chatMessages
+        ..clear()
+        ..addAll(messages));
+      if (grew) _scrollToBottom();
+    } catch (_) {
+      // Keep showing what we have; the next poll retries.
     }
   }
 
-  void _sendMessage() {
+  Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
-    final user = ref.read(userAuthProvider).user;
-    final userName = user?.fullName.isNotEmpty == true ? user!.fullName : 'User';
-    final userId = user?.id ?? 'user_${DateTime.now().millisecondsSinceEpoch}';
-
-    if (text.isNotEmpty) {
-      final userMsg = ChatMessageModel(
-        id: 'msg_${DateTime.now().millisecondsSinceEpoch}',
-        conversationId: _isHostChat ? 'conv_host' : 'conv_01',
-        senderId: userId,
-        senderName: userName,
-        text: text,
-        timestamp: DateTime.now(),
-        isUser: true,
-      );
-
-      setState(() {
-        _chatMessages.add(userMsg);
-        _messageController.clear();
-      });
-
-      _scrollToBottom();
-
-      // Forward to backend API asynchronously
-      try {
-        ApiClient().post(
-          '/support/messages',
-          data: {
-            'text': text,
-            'senderName': userName,
-            'senderId': userId,
-            'conversationId': _isHostChat ? 'conv_host' : 'conv_support',
-            'isUser': true,
-          },
-        );
-      } catch (_) {}
-
-      Future.delayed(const Duration(seconds: 1), () {
-        if (mounted) {
-          final replyText = _isHostChat
-              ? 'Thanks for the message! Yes, the vehicle is available and in pristine condition. I will ensure everything is prepared for your rental period.'
-              : 'Thank you for reaching out! A support representative has received your query: "$text" and is reviewing your booking details.';
-
-          final reply = ChatMessageModel(
-            id: 'msg_${DateTime.now().millisecondsSinceEpoch}',
-            conversationId: _isHostChat ? 'conv_host' : 'conv_01',
-            senderId: _isHostChat ? 'host_01' : 'agent_01',
-            senderName: _title,
-            text: replyText,
-            timestamp: DateTime.now(),
-            isUser: false,
-          );
-          setState(() {
-            _chatMessages.add(reply);
-          });
-          _scrollToBottom();
-        }
-      });
+    if (text.isEmpty || _sending) return;
+    setState(() => _sending = true);
+    try {
+      await ref.read(supportRepositoryProvider).sendSupportMessage(text);
+      _messageController.clear();
+      await _load();
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    } finally {
+      if (mounted) setState(() => _sending = false);
     }
   }
 

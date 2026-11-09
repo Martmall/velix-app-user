@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:velix_core/velix_core.dart';
@@ -28,33 +29,27 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
     }
 
     setState(() => _isLoading = true);
-    final user = ref.read(userAuthProvider).user;
-
     try {
       await ref.read(supportRepositoryProvider).createSupportTicket(
-        userId: user?.id ?? 'usr_current',
-        subject: 'Trip Incident Report: $issue',
-        category: 'Vehicle Condition & Damage',
-        description: desc,
-      );
-    } catch (_) {}
-
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-        _descriptionController.clear();
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Trip update submitted successfully to host and Velix Concierge!'),
-          backgroundColor: Color(0xFF0C1830),
-        ),
-      );
+            subject: 'Trip Incident Report: $issue',
+            category: 'Vehicle Condition & Damage',
+            description: desc,
+          );
+      if (!mounted) return;
+      _descriptionController.clear();
+      VelixToast.showSuccess(context, 'Report sent to Velix support. We\'ll reply in Help & Support.');
+    } catch (e) {
+      if (mounted) VelixToast.showError(context, ApiClient.parseErrorMessage(e));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final trip = ref.watch(currentTripProvider);
+    final fmt = DateFormat('MMM dd, yyyy');
+    final place = trip?.pickupLocation.isNotEmpty == true ? trip!.pickupLocation : '-';
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       appBar: AppBar(
@@ -120,7 +115,7 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                   ClipRRect(
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                     child: Image.network(
-                      CarImageCatalog.toyotaPrado,
+                      trip?.carImage.isNotEmpty == true ? trip!.carImage : CarImageCatalog.toyotaPrado,
                       height: 170,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -144,7 +139,7 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Toyota Prado 2023', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                Text(trip?.carName ?? 'No active trip', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
                                 const SizedBox(height: 4),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -152,21 +147,21 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                                     color: const Color(0xFFF3F4F6),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                     children: [
-                                      Icon(Icons.description_outlined, size: 10, color: Color(0xFF6B7280)),
-                                      SizedBox(width: 4),
-                                      Text('BK-VNG-00124', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                                      const Icon(Icons.description_outlined, size: 10, color: Color(0xFF6B7280)),
+                                      const SizedBox(width: 4),
+                                      Text(trip == null ? '-' : 'BK-${trip.id.substring(trip.id.length > 6 ? trip.id.length - 6 : 0).toUpperCase()}', style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text('₦85,000', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                                Text('total', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                Text(trip == null ? '-' : '₦${trip.totalPrice.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                const Text('total', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
                               ],
                             ),
                           ],
@@ -183,16 +178,16 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('PICKUP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
-                                  Text('Apr 07, 2026', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                  const Text('PICKUP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
+                                  Text(trip == null ? '-' : fmt.format(trip.startDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
                                   Row(
                                     children: [
-                                      Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
-                                      SizedBox(width: 2),
-                                      Text('Ikeja, Lagos', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                      const Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
+                                      const SizedBox(width: 2),
+                                      Text(place, style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
                                     ],
                                   ),
                                 ],
@@ -203,18 +198,18 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                                   color: const Color(0xFFFDF0E9),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: const Text('3 days', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                                child: Text(trip == null ? '-' : '${trip.days} days', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
                               ),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text('RETURN', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
-                                  Text('Apr 10, 2026', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                  const Text('RETURN', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
+                                  Text(trip == null ? '-' : fmt.format(trip.endDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
                                   Row(
                                     children: [
-                                      Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
-                                      SizedBox(width: 2),
-                                      Text('Ikeja, Lagos', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                      const Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
+                                      const SizedBox(width: 2),
+                                      Text(place, style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
                                     ],
                                   ),
                                 ],

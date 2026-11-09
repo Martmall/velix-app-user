@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:velix_core/velix_core.dart';
 
-// Repository Providers (Live Backend & Supabase Realtime)
+// Repository Providers (live backend REST API)
 final authRepositoryProvider = Provider<IAuthRepository>((ref) => RemoteAuthRepository());
 final vehicleRepositoryProvider = Provider<IVehicleRepository>((ref) => RemoteVehicleRepository());
 final bookingRepositoryProvider = Provider<IBookingRepository>((ref) => RemoteBookingRepository());
 final paymentRepositoryProvider = Provider<IPaymentRepository>((ref) => RemotePaymentRepository());
 final supportRepositoryProvider = Provider<ISupportRepository>((ref) => RemoteSupportRepository());
-final fileUploadServiceProvider = Provider<FileUploadService>((ref) => RemoteFileUploadService());
 
 // User Auth State
 class AuthState {
@@ -38,32 +38,53 @@ class AuthState {
   }
 }
 
+/// Every method reports failure via its return value and [AuthState.error] (the server's own
+/// message) -- nothing is ever "succeeded" locally when the server said no.
 class AuthNotifier extends StateNotifier<AuthState> {
   final IAuthRepository _repository;
+  StreamSubscription<void>? _expiry;
+
   AuthNotifier(this._repository) : super(AuthState()) {
+    _expiry = ApiClient().onSessionExpired.listen((_) => state = AuthState());
     _init();
   }
 
+  @override
+  void dispose() {
+    _expiry?.cancel();
+    super.dispose();
+  }
+
   Future<void> _init() async {
-    final currentUser = await _repository.getCurrentUser();
-    if (currentUser != null) {
-      state = state.copyWith(user: currentUser, isAuthenticated: true);
+    try {
+      final currentUser = await _repository.getCurrentUser();
+      if (currentUser != null) {
+        state = state.copyWith(user: currentUser, isAuthenticated: true);
+      }
+    } catch (_) {
+      // Offline at launch: stay signed out in the UI; the stored session is kept for next time.
     }
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<bool> _run(Future<UserModel> Function() call) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final user = await _repository.signIn(email: email, password: password);
+      final user = await call();
       state = state.copyWith(user: user, isLoading: false, isAuthenticated: true);
       return true;
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(isLoading: false, error: ApiClient.parseErrorMessage(e));
       return false;
     }
   }
 
-  Future<bool> register({
+  Future<bool> signIn(String email, String password) =>
+      _run(() => _repository.signIn(email: email, password: password));
+
+  Future<bool> signInWithGoogle() => _run(() => _repository.signInWithGoogle());
+
+  /// Returns the registration result (an emailed code to confirm), or null on failure.
+  Future<RegistrationResult?> register({
     required String fullName,
     required String email,
     required String phone,
@@ -71,114 +92,63 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final user = await _repository.registerUser(
+      final result = await _repository.registerUser(
         fullName: fullName,
         email: email,
         phone: phone,
         password: password,
         role: UserRole.user,
       );
-      state = state.copyWith(user: user, isLoading: false);
+      state = state.copyWith(isLoading: false);
+      return result;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: ApiClient.parseErrorMessage(e));
+      return null;
+    }
+  }
+
+  /// Confirms the emailed registration code; this is what starts the first session.
+  Future<bool> verifyRegistration(String email, String code) =>
+      _run(() => _repository.verifyRegistrationOtp(email: email, code: code));
+
+  Future<bool> resendVerificationEmail(String email) async {
+    try {
+      await _repository.resendVerificationEmail(email: email);
       return true;
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(error: ApiClient.parseErrorMessage(e));
       return false;
     }
   }
 
-  Future<bool> verifyOtp(String phone, String code) async {
+  /// Uploads driver's-licence images for review. Returns the review status, or null on failure.
+  Future<VerificationStatus?> submitLicence(List<UploadFile> files) async {
     state = state.copyWith(isLoading: true, error: null);
-    final ok = await _repository.verifyOtp(phone: phone, code: code);
-    state = state.copyWith(isLoading: false, isAuthenticated: ok);
-    return ok;
+    try {
+      final status = await _repository.submitVerificationDocuments(files: files, asPartner: false);
+      final user = await _repository.getCurrentUser(refresh: true);
+      state = state.copyWith(user: user, isLoading: false);
+      return status;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: ApiClient.parseErrorMessage(e));
+      return null;
+    }
   }
 
-  Future<void> completeKyc(String licenseNumber, String docPath) async {
-    state = state.copyWith(isLoading: true);
-    final updated = await _repository.completeKyc(licenseNumber: licenseNumber, documentPath: docPath);
-    state = state.copyWith(user: updated, isLoading: false);
-  }
-
+  /// Adopts a user whose session was already stored (e.g. by the social sign-in modal).
   void updateUser(UserModel updatedUser) {
-    state = state.copyWith(user: updatedUser);
+    state = state.copyWith(user: updatedUser, isAuthenticated: true);
   }
 
-  Future<void> updateProfile({
-    required String fullName,
-    required String email,
-    required String phone,
-    String? avatarUrl,
-    String? licenseNumber,
-  }) async {
-    state = state.copyWith(isLoading: true);
+  /// Email changes need re-verification and aren't supported here; only name and phone are sent.
+  Future<bool> updateProfile({required String fullName, required String phone}) =>
+      _run(() => _repository.updateProfile(fullName: fullName, phone: phone));
+
+  Future<void> refreshUser() async {
     try {
-      final updated = await _repository.updateProfile(
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        avatarUrl: avatarUrl,
-        licenseNumber: licenseNumber,
-      );
-      state = state.copyWith(user: updated, isLoading: false);
-    } catch (_) {
-      if (state.user != null) {
-        final fallback = state.user!.copyWith(
-          fullName: fullName,
-          email: email,
-          phone: phone,
-          avatarUrl: avatarUrl ?? state.user!.avatarUrl,
-          licenseNumber: licenseNumber ?? state.user!.licenseNumber,
-        );
-        state = state.copyWith(user: fallback, isLoading: false);
-      }
-    }
-  }
-
-  Future<void> updateAvatar(String avatarUrl) async {
-    if (state.user != null) {
-      await updateProfile(
-        fullName: state.user!.fullName,
-        email: state.user!.email,
-        phone: state.user!.phone,
-        avatarUrl: avatarUrl,
-        licenseNumber: state.user!.licenseNumber,
-      );
-    }
-  }
-
-  Future<void> topUpWallet(double amount) async {
-    state = state.copyWith(isLoading: true);
-    try {
-      final updated = await _repository.topUpWallet(amount: amount, userId: state.user?.id);
-      state = state.copyWith(user: updated, isLoading: false);
-    } catch (_) {
-      if (state.user != null) {
-        final newBal = (state.user!.walletBalance) + amount;
-        state = state.copyWith(
-          user: state.user!.copyWith(walletBalance: newBal),
-          isLoading: false,
-        );
-      }
-    }
-  }
-
-  Future<bool> deductWallet(double amount, {String? bookingId}) async {
-    state = state.copyWith(isLoading: true);
-    try {
-      final updated = await _repository.deductWallet(amount: amount, userId: state.user?.id, bookingId: bookingId);
-      state = state.copyWith(user: updated, isLoading: false);
-      return true;
-    } catch (_) {
-      if (state.user != null) {
-        final newBal = (state.user!.walletBalance) - amount;
-        state = state.copyWith(
-          user: state.user!.copyWith(walletBalance: newBal < 0 ? 0.0 : newBal),
-          isLoading: false,
-        );
-        return true;
-      }
-      return false;
-    }
+      final user = await _repository.getCurrentUser(refresh: true);
+      if (user != null) state = state.copyWith(user: user);
+    } catch (_) {}
   }
 
   Future<void> signOut() async {
@@ -191,7 +161,14 @@ final userAuthProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier(ref.watch(authRepositoryProvider));
 });
 
-// Vehicle List Provider with Real-Time Streams and Filters
+/// Server-side wallet balance. Invalidate after a top-up to refetch.
+final walletProvider = FutureProvider<WalletSummary>((ref) async {
+  final auth = ref.watch(userAuthProvider);
+  if (!auth.isAuthenticated) return WalletSummary(balance: 0, currency: 'NGN');
+  return ref.watch(paymentRepositoryProvider).getWallet();
+});
+
+// Vehicle List Provider with Filters
 final vehicleSearchCategoryProvider = StateProvider<String>((ref) => 'All');
 final vehicleSearchQueryProvider = StateProvider<String>((ref) => '');
 
@@ -209,40 +186,41 @@ class BookingDraftState {
   final DateTime returnDate;
   final String pickupLocation;
   final String dropoffLocation;
-  final List<double> selectedAddOnPrices;
-  final String? promoCode;
+  /// Extras the customer asked for (chauffeur, child seat). Not priced by the backend -- they
+  /// travel to the partner as a note on the booking request.
+  final Set<String> requestedExtras;
   final String paymentMethod;
   final bool isProcessing;
-  final String? lastBookingId;
+  /// The booking as created by the server (authoritative id and totals).
+  final BookingModel? lastBooking;
+
+  String? get lastBookingId => lastBooking?.id;
 
   BookingDraftState({
     this.selectedCar,
     DateTime? pickupDate,
     DateTime? returnDate,
-    this.pickupLocation = 'Lekki Phase 1, Lagos',
-    this.dropoffLocation = 'Lekki Phase 1, Lagos',
-    this.selectedAddOnPrices = const [],
-    this.promoCode,
-    this.paymentMethod = 'Visa ending in 4242',
+    this.pickupLocation = '',
+    this.dropoffLocation = '',
+    this.requestedExtras = const {},
+    this.paymentMethod = 'Flutterwave',
     this.isProcessing = false,
-    this.lastBookingId,
+    this.lastBooking,
   })  : pickupDate = pickupDate ?? DateTime.now().add(const Duration(days: 1)),
         returnDate = returnDate ?? DateTime.now().add(const Duration(days: 3));
 
-  PricingBreakdown get breakdown {
-    final rate = selectedCar?.pricePerDay ?? 25000.0;
-    return PricingService.calculatePrice(
-      baseRatePerDay: rate,
-      pickupDate: pickupDate,
-      returnDate: returnDate,
-      selectedAddOnPrices: selectedAddOnPrices,
-      promoCode: promoCode,
-    );
-  }
+  PricingBreakdown get breakdown => PricingService.calculatePrice(
+        baseRatePerDay: selectedCar?.pricePerDay ?? 0,
+        pickupDate: pickupDate,
+        returnDate: returnDate,
+      );
 
   int get totalDays => breakdown.days;
-  bool get hasChauffeur => selectedAddOnPrices.contains(15000.0);
-  bool get hasChildSeat => selectedAddOnPrices.contains(3500.0);
+  bool get hasChauffeur => requestedExtras.contains(chauffeurExtra);
+  bool get hasChildSeat => requestedExtras.contains(childSeatExtra);
+
+  static const chauffeurExtra = 'Chauffeur';
+  static const childSeatExtra = 'Child seat';
 
   BookingDraftState copyWith({
     CarModel? selectedCar,
@@ -250,11 +228,10 @@ class BookingDraftState {
     DateTime? returnDate,
     String? pickupLocation,
     String? dropoffLocation,
-    List<double>? selectedAddOnPrices,
-    String? promoCode,
+    Set<String>? requestedExtras,
     String? paymentMethod,
     bool? isProcessing,
-    String? lastBookingId,
+    BookingModel? lastBooking,
   }) {
     return BookingDraftState(
       selectedCar: selectedCar ?? this.selectedCar,
@@ -262,11 +239,10 @@ class BookingDraftState {
       returnDate: returnDate ?? this.returnDate,
       pickupLocation: pickupLocation ?? this.pickupLocation,
       dropoffLocation: dropoffLocation ?? this.dropoffLocation,
-      selectedAddOnPrices: selectedAddOnPrices ?? this.selectedAddOnPrices,
-      promoCode: promoCode ?? this.promoCode,
+      requestedExtras: requestedExtras ?? this.requestedExtras,
       paymentMethod: paymentMethod ?? this.paymentMethod,
       isProcessing: isProcessing ?? this.isProcessing,
-      lastBookingId: lastBookingId ?? this.lastBookingId,
+      lastBooking: lastBooking ?? this.lastBooking,
     );
   }
 }
@@ -275,8 +251,15 @@ class BookingDraftNotifier extends StateNotifier<BookingDraftState> {
   final IBookingRepository _bookingRepo;
   BookingDraftNotifier(this._bookingRepo) : super(BookingDraftState());
 
+  /// Selecting a car fixes the pickup point: bookings are collected at the listing's location.
   void selectCar(CarModel car) {
-    state = state.copyWith(selectedCar: car);
+    state = BookingDraftState(
+      selectedCar: car,
+      pickupDate: state.pickupDate,
+      returnDate: state.returnDate,
+      pickupLocation: car.location,
+      dropoffLocation: car.location,
+    );
   }
 
   void setDates(DateTime pickup, DateTime returnD) {
@@ -287,78 +270,40 @@ class BookingDraftNotifier extends StateNotifier<BookingDraftState> {
     state = state.copyWith(pickupLocation: pickup, dropoffLocation: dropoff);
   }
 
-  void toggleAddOnPrice(double price) {
-    final current = List<double>.from(state.selectedAddOnPrices);
-    if (current.contains(price)) {
-      current.remove(price);
-    } else {
-      current.add(price);
-    }
-    state = state.copyWith(selectedAddOnPrices: current);
+  void _setExtra(String extra, bool? enabled) {
+    final extras = Set<String>.from(state.requestedExtras);
+    final on = enabled ?? !extras.contains(extra);
+    on ? extras.add(extra) : extras.remove(extra);
+    state = state.copyWith(requestedExtras: extras);
   }
 
-  void toggleChauffeur([bool? enabled, double price = 15000.0]) {
-    final current = List<double>.from(state.selectedAddOnPrices);
-    if (enabled == true) {
-      if (!current.contains(price)) current.add(price);
-    } else if (enabled == false) {
-      current.remove(price);
-    } else {
-      if (current.contains(price)) {
-        current.remove(price);
-      } else {
-        current.add(price);
-      }
-    }
-    state = state.copyWith(selectedAddOnPrices: current);
-  }
-
-  void toggleChildSeat([bool? enabled, double price = 5000.0]) {
-    final current = List<double>.from(state.selectedAddOnPrices);
-    if (enabled == true) {
-      if (!current.contains(price)) current.add(price);
-    } else if (enabled == false) {
-      current.remove(price);
-    } else {
-      if (current.contains(price)) {
-        current.remove(price);
-      } else {
-        current.add(price);
-      }
-    }
-    state = state.copyWith(selectedAddOnPrices: current);
-  }
-
-  void setPromoCode(String code) {
-    state = state.copyWith(promoCode: code);
-  }
+  void toggleChauffeur([bool? enabled, double _ = 0]) => _setExtra(BookingDraftState.chauffeurExtra, enabled);
+  void toggleChildSeat([bool? enabled, double _ = 0]) => _setExtra(BookingDraftState.childSeatExtra, enabled);
 
   void setPaymentMethod(String method) {
     state = state.copyWith(paymentMethod: method);
   }
 
+  /// Creates the booking on the server (status PENDING until the partner confirms). Payment
+  /// is then taken for [BookingDraftState.lastBooking] through Flutterwave checkout. Throws
+  /// [ApiException] with the server's reason (vehicle unavailable, dates invalid, ...).
   Future<BookingModel?> confirmAndPay({UserModel? user}) async {
-    if (state.selectedCar == null) return null;
+    final car = state.selectedCar;
+    if (car == null) return null;
     state = state.copyWith(isProcessing: true);
-    final car = state.selectedCar!;
-    final userId = user?.id ?? 'usr_${DateTime.now().millisecondsSinceEpoch}';
-    final userName = user?.fullName.isNotEmpty == true ? user!.fullName : 'Valued Customer';
-    final booking = await _bookingRepo.createBooking(
-      carId: car.id,
-      carName: car.name,
-      carImage: car.imageUrl,
-      userId: userId,
-      userName: userName,
-      partnerId: car.partnerId,
-      startDate: state.pickupDate,
-      endDate: state.returnDate,
-      pickupLocation: state.pickupLocation,
-      dropoffLocation: state.dropoffLocation,
-      totalPrice: state.breakdown.grandTotal,
-      paymentMethod: state.paymentMethod,
-    );
-    state = state.copyWith(isProcessing: false, lastBookingId: booking.id);
-    return booking;
+    try {
+      final booking = await _bookingRepo.createBooking(
+        car: car,
+        pickupAt: state.pickupDate,
+        dropoffAt: state.returnDate,
+        notes: state.requestedExtras.isEmpty ? null : 'Requested extras: ${state.requestedExtras.join(', ')}',
+      );
+      state = state.copyWith(isProcessing: false, lastBooking: booking);
+      return booking;
+    } catch (_) {
+      state = state.copyWith(isProcessing: false);
+      rethrow;
+    }
   }
 }
 
@@ -366,25 +311,43 @@ final bookingDraftProvider = StateNotifierProvider<BookingDraftNotifier, Booking
   return BookingDraftNotifier(ref.watch(bookingRepositoryProvider));
 });
 
-// Bookings List Real-Time Stream Provider
+// The signed-in customer's bookings, refreshed periodically.
 final userBookingsProvider = StreamProvider<List<BookingModel>>((ref) {
   final repo = ref.watch(bookingRepositoryProvider);
   final auth = ref.watch(userAuthProvider);
-  final userId = auth.user?.id;
-  if (userId == null || userId.isEmpty) {
-    return Stream.value(<BookingModel>[]);
-  }
-  return repo.streamUserBookings(userId);
+  if (!auth.isAuthenticated) return Stream.value(<BookingModel>[]);
+  return repo.streamMyBookings();
 });
 
 // User Support Tickets Provider
 final userSupportTicketsProvider = FutureProvider<List<SupportTicketModel>>((ref) async {
   final repo = ref.watch(supportRepositoryProvider);
   final auth = ref.watch(userAuthProvider);
-  final userId = auth.user?.id;
-  if (userId == null || userId.isEmpty) {
-    return <SupportTicketModel>[];
-  }
-  return repo.getUserTickets(userId);
+  if (!auth.isAuthenticated) return <SupportTicketModel>[];
+  return repo.getMyTickets();
 });
 
+final userNotificationsProvider = FutureProvider<List<NotificationModel>>((ref) async {
+  final auth = ref.watch(userAuthProvider);
+  if (!auth.isAuthenticated) return <NotificationModel>[];
+  return ref.watch(supportRepositoryProvider).getNotifications();
+});
+
+/// The customer's ongoing trip (ACTIVE, else the next CONFIRMED one), from their bookings.
+final currentTripProvider = Provider<BookingModel?>((ref) {
+  final bookings = ref.watch(userBookingsProvider).valueOrNull ?? const <BookingModel>[];
+  for (final status in [BookingStatus.active, BookingStatus.confirmed]) {
+    for (final booking in bookings) {
+      if (booking.status == status) return booking;
+    }
+  }
+  return null;
+});
+
+/// The most recent completed trip -- the one a review is for.
+final lastCompletedTripProvider = Provider<BookingModel?>((ref) {
+  final bookings = ref.watch(userBookingsProvider).valueOrNull ?? const <BookingModel>[];
+  final completed = bookings.where((b) => b.status == BookingStatus.completed).toList()
+    ..sort((a, b) => b.endDate.compareTo(a.endDate));
+  return completed.isEmpty ? null : completed.first;
+});
