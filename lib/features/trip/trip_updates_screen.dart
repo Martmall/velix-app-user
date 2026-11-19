@@ -51,18 +51,18 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
     final fmt = DateFormat('MMM dd, yyyy');
     final place = trip?.pickupLocation.isNotEmpty == true ? trip!.pickupLocation : '-';
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -75,12 +75,12 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Trip Update', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+            Text('Trip Update', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
             Row(
               children: [
-                CircleAvatar(radius: 3, backgroundColor: Color(0xFFC84C00)),
+                CircleAvatar(radius: 3, backgroundColor: VelixPalette.copper),
                 SizedBox(width: 4),
-                Text('Trip in Progress', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                Text('Trip in Progress', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
               ],
             ),
           ],
@@ -91,10 +91,10 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF3F4F6),
+              color: VelixPalette.stone,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.tune, color: Color(0xFF0C1830), size: 18),
+            child: const Icon(Icons.tune, color: VelixPalette.ink, size: 18),
           ),
         ],
       ),
@@ -105,9 +105,9 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
             // Active Vehicle Card Container
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,9 +121,9 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
                         height: 170,
-                        color: const Color(0xFFF3F4F6),
+                        color: VelixPalette.stone,
                         child: const Center(
-                          child: Icon(Icons.directions_car, size: 90, color: Color(0xFF9CA3AF)),
+                          child: Icon(Icons.directions_car, size: 90, color: VelixPalette.lineStrong),
                         ),
                       ),
                     ),
@@ -139,19 +139,19 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(trip?.carName ?? 'No active trip', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                Text(trip?.carName ?? 'No active trip', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                                 const SizedBox(height: 4),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFF3F4F6),
+                                    color: VelixPalette.stone,
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Row(
                                     children: [
-                                      const Icon(Icons.description_outlined, size: 10, color: Color(0xFF6B7280)),
+                                      const Icon(Icons.description_outlined, size: 10, color: VelixPalette.muted),
                                       const SizedBox(width: 4),
-                                      Text(trip == null ? '-' : 'BK-${trip.id.substring(trip.id.length > 6 ? trip.id.length - 6 : 0).toUpperCase()}', style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                                      Text(trip == null ? '-' : 'BK-${trip.id.substring(trip.id.length > 6 ? trip.id.length - 6 : 0).toUpperCase()}', style: const TextStyle(fontSize: 10, color: VelixPalette.muted)),
                                     ],
                                   ),
                                 ),
@@ -160,8 +160,8 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(trip == null ? '-' : '₦${trip.totalPrice.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                                const Text('total', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                Text(trip == null ? '-' : '₦${trip.totalPrice.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                                const Text('total', style: TextStyle(fontSize: 9, color: VelixPalette.muted)),
                               ],
                             ),
                           ],
@@ -171,9 +171,9 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF9FAFB),
+                            color: VelixPalette.stone,
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: const Color(0xFFE5E7EB)),
+                            border: Border.all(color: VelixPalette.line),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,13 +181,13 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('PICKUP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
-                                  Text(trip == null ? '-' : fmt.format(trip.startDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                  const Text('PICKUP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.lineStrong)),
+                                  Text(trip == null ? '-' : fmt.format(trip.startDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                                   Row(
                                     children: [
-                                      const Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
+                                      const Icon(Icons.location_on, size: 10, color: VelixPalette.copper),
                                       const SizedBox(width: 2),
-                                      Text(place, style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                      Text(place, style: const TextStyle(fontSize: 9, color: VelixPalette.muted)),
                                     ],
                                   ),
                                 ],
@@ -195,21 +195,21 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFFDF0E9),
+                                  color: VelixPalette.copperSoft,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(trip == null ? '-' : '${trip.days} days', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                                child: Text(trip == null ? '-' : '${trip.days} days', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  const Text('RETURN', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
-                                  Text(trip == null ? '-' : fmt.format(trip.endDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                  const Text('RETURN', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.lineStrong)),
+                                  Text(trip == null ? '-' : fmt.format(trip.endDate), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                                   Row(
                                     children: [
-                                      const Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
+                                      const Icon(Icons.location_on, size: 10, color: VelixPalette.copper),
                                       const SizedBox(width: 2),
-                                      Text(place, style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                                      Text(place, style: const TextStyle(fontSize: 9, color: VelixPalette.muted)),
                                     ],
                                   ),
                                 ],
@@ -221,15 +221,15 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Rental Progress', style: TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
-                            Text('Day 2 of 3', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                            Text('Rental Progress', style: TextStyle(fontSize: 11, color: VelixPalette.muted)),
+                            Text('Day 2 of 3', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.go)),
                           ],
                         ),
                         const SizedBox(height: 6),
                         LinearProgressIndicator(
                           value: 0.66,
-                          backgroundColor: const Color(0xFFE5E7EB),
-                          color: const Color(0xFF10B981),
+                          backgroundColor: VelixPalette.line,
+                          color: VelixPalette.go,
                           minHeight: 6,
                           borderRadius: BorderRadius.circular(6),
                         ),
@@ -238,14 +238,14 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                         Container(
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: VelixPalette.paper,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
+                            border: Border.all(color: VelixPalette.lineStrong, style: BorderStyle.solid),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Select Issue Type', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF6B7280))),
+                              const Text('Select Issue Type', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.muted)),
                               const SizedBox(height: 10),
                               GridView.count(
                                 crossAxisCount: 2,
@@ -269,17 +269,17 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF9FAFB),
+                            color: VelixPalette.stone,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
+                            border: Border.all(color: VelixPalette.lineStrong, style: BorderStyle.solid),
                           ),
                           child: TextField(
                             controller: _descriptionController,
                             maxLines: 3,
-                            style: const TextStyle(fontSize: 13, color: Color(0xFF0C1830)),
+                            style: const TextStyle(fontSize: 13, color: VelixPalette.ink),
                             decoration: const InputDecoration(
                               hintText: 'Describe your update or issues in detail...',
-                              hintStyle: TextStyle(color: Color(0xFF9CA3AF), fontSize: 13),
+                              hintStyle: TextStyle(color: VelixPalette.lineStrong, fontSize: 13),
                               border: InputBorder.none,
                             ),
                           ),
@@ -289,15 +289,15 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: VelixPalette.paper,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
+                            border: Border.all(color: VelixPalette.lineStrong, style: BorderStyle.solid),
                           ),
                           child: const Column(
                             children: [
-                              Icon(Icons.file_upload_outlined, size: 28, color: Color(0xFF6B7280)),
+                              Icon(Icons.file_upload_outlined, size: 28, color: VelixPalette.muted),
                               SizedBox(height: 6),
-                              Text('Upload evidence (Optional)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF6B7280))),
+                              Text('Upload evidence (Optional)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.muted)),
                             ],
                           ),
                         ),
@@ -317,11 +317,11 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
             // Keyless Access Button
             ElevatedButton.icon(
               onPressed: () => context.go(AppRoutes.vehicleAccess),
-              icon: const Icon(Icons.key, size: 18, color: Colors.white),
-              label: const Text('Digital Key & Unlock', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+              icon: const Icon(Icons.key, size: 18, color: VelixPalette.paper),
+              label: const Text('Digital Key & Unlock', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
-                backgroundColor: const Color(0xFF0C1830),
+                backgroundColor: VelixPalette.ink,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
             ),
@@ -331,11 +331,11 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
               onPressed: () => context.go(AppRoutes.returnVehicle),
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
-                backgroundColor: Colors.white,
-                side: const BorderSide(color: Color(0xFFD1D5DB), style: BorderStyle.solid),
+                backgroundColor: VelixPalette.paper,
+                side: const BorderSide(color: VelixPalette.lineStrong, style: BorderStyle.solid),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
-              child: const Text('Return Vehicle', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF374151))),
+              child: const Text('Return Vehicle', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.muted)),
             ),
             const SizedBox(height: 30),
           ],
@@ -344,7 +344,7 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
       bottomNavigationBar: Container(
         height: 65,
         decoration: const BoxDecoration(
-          color: Color(0xFF0C1830),
+          color: VelixPalette.ink,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -366,9 +366,9 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
       onTap: () => setState(() => _selectedIssue = label),
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFDF0E9) : Colors.white,
+          color: isSelected ? VelixPalette.copperSoft : VelixPalette.paper,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: isSelected ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB)),
+          border: Border.all(color: isSelected ? VelixPalette.copper : VelixPalette.line),
         ),
         child: Center(
           child: Text(
@@ -376,7 +376,7 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? const Color(0xFFC84C00) : const Color(0xFF374151),
+              color: isSelected ? VelixPalette.copper : VelixPalette.muted,
             ),
           ),
         ),
@@ -393,10 +393,10 @@ class _TripUpdatesScreenState extends ConsumerState<TripUpdatesScreen> {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: isActive ? const Color(0xFFC84C00) : Colors.transparent,
+              color: isActive ? VelixPalette.copper : Colors.transparent,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: VelixPalette.paper, size: 18),
           ),
           Text(label, style: const TextStyle(fontSize: 9, color: Colors.white70)),
         ],

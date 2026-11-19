@@ -18,11 +18,11 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
 
     final bookingsAsync = ref.watch(userBookingsProvider);
     final allBookings = bookingsAsync.valueOrNull ?? [];
@@ -89,11 +89,11 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                             width: 80,
                             height: 80,
                             decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
+                              color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                               shape: BoxShape.circle,
                             ),
                             child: const Center(
-                              child: Icon(Icons.calendar_today_outlined, size: 36, color: Color(0xFFC84C00)),
+                              child: Icon(Icons.calendar_today_outlined, size: 36, color: VelixPalette.copper),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -117,12 +117,12 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                             child: ElevatedButton(
                               onPressed: () => context.go(AppRoutes.carListing),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFC84C00),
+                                backgroundColor: VelixPalette.copper,
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 elevation: 0,
                               ),
-                              child: const Text('Explore Cars', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              child: const Text('Explore Cars', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold)),
                             ),
                           ),
                         ],
@@ -187,7 +187,7 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => Container(
                   height: 120,
-                  color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6),
+                  color: isDark ? VelixPalette.nightLine : VelixPalette.stone,
                   child: Center(
                     child: Icon(Icons.directions_car, size: 60, color: subtextColor),
                   ),
@@ -214,7 +214,7 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6),
+                              color: isDark ? VelixPalette.nightLine : VelixPalette.stone,
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -230,7 +230,7 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                       children: [
                         Text(
                           '₦${booking.totalPrice.toStringAsFixed(0)}',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                         ),
                         Text('total', style: TextStyle(fontSize: 9, color: subtextColor)),
                       ],
@@ -241,7 +241,7 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
+                    color: isDark ? VelixPalette.nightStone : VelixPalette.stone,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: borderColor),
                   ),
@@ -261,12 +261,12 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
+                          color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           '${booking.endDate.difference(booking.startDate).inDays} days',
-                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                         ),
                       ),
                       Column(
@@ -300,7 +300,7 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isSelected ? const Color(0xFFC84C00) : Colors.transparent,
+              color: isSelected ? VelixPalette.copper : Colors.transparent,
               width: 2.5,
             ),
           ),
@@ -312,21 +312,21 @@ class _MyBookingsScreenState extends ConsumerState<MyBookingsScreen> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? const Color(0xFFC84C00) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
+                color: isSelected ? VelixPalette.copper : (isDark ? VelixPalette.nightMuted : VelixPalette.muted),
               ),
             ),
             const SizedBox(width: 6),
             CircleAvatar(
               radius: 9,
               backgroundColor: isSelected
-                  ? const Color(0xFFC84C00)
-                  : (isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+                  ? VelixPalette.copper
+                  : (isDark ? VelixPalette.nightLine : VelixPalette.line),
               child: Text(
                 count,
                 style: TextStyle(
                   fontSize: 9,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.white : (isDark ? Colors.white70 : const Color(0xFF6B7280)),
+                  color: isSelected ? VelixPalette.paper : (isDark ? Colors.white70 : VelixPalette.muted),
                 ),
               ),
             ),

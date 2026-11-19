@@ -32,18 +32,18 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: VelixPalette.stone,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -55,7 +55,7 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
         ),
         title: const Text(
           'Vehicle Access',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
       ),
       body: SingleChildScrollView(
@@ -66,9 +66,9 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: const Color(0xFFF3F4F6).withValues(alpha: 0.5),
+                color: VelixPalette.stone.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
+                border: Border.all(color: VelixPalette.lineStrong, style: BorderStyle.solid),
               ),
               child: Column(
                 children: [
@@ -76,22 +76,22 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
                   // Center Key Icon Badge
                   CircleAvatar(
                     radius: 46,
-                    backgroundColor: const Color(0xFFFDF0E9),
+                    backgroundColor: VelixPalette.copperSoft,
                     child: CircleAvatar(
                       radius: 36,
-                      backgroundColor: const Color(0xFFFCD34D).withValues(alpha: 0.4),
-                      child: const Icon(Icons.key, size: 36, color: Color(0xFF0C1830)),
+                      backgroundColor: VelixPalette.amberSoft.withValues(alpha: 0.4),
+                      child: const Icon(Icons.key, size: 36, color: VelixPalette.ink),
                     ),
                   ),
                   const SizedBox(height: 20),
                   const Text(
                     'Enter Pickup Code',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     'Enter the 6-digit code sent to you to confirm your identity and unlock your vehicle',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF6B7280), height: 1.4),
+                    style: TextStyle(fontSize: 13, color: VelixPalette.muted, height: 1.4),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 28),
@@ -104,14 +104,14 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Resend Code ', style: TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
+                      const Text('Resend Code ', style: TextStyle(fontSize: 12, color: VelixPalette.muted)),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE5E7EB),
+                          color: VelixPalette.line,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text('00:59', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF374151))),
+                        child: const Text('00:59', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.muted)),
                       ),
                     ],
                   ),
@@ -143,22 +143,22 @@ class _VehicleAccessScreenState extends ConsumerState<VehicleAccessScreen> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         maxLength: 1,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         decoration: InputDecoration(
           counterText: '',
           filled: true,
-          fillColor: Colors.white,
+          fillColor: VelixPalette.paper,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: isFirst ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB), width: isFirst ? 1.5 : 1),
+            borderSide: BorderSide(color: isFirst ? VelixPalette.copper : VelixPalette.line, width: isFirst ? 1.5 : 1),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: isFirst ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB), width: isFirst ? 1.5 : 1),
+            borderSide: BorderSide(color: isFirst ? VelixPalette.copper : VelixPalette.line, width: isFirst ? 1.5 : 1),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: Color(0xFFC84C00), width: 2),
+            borderSide: const BorderSide(color: VelixPalette.copper, width: 2),
           ),
         ),
         onChanged: (val) {

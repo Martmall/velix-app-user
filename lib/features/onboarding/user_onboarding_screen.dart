@@ -34,7 +34,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     OnboardingCarSlide(
       carName: 'Range Rover Velar',
       colorTag: 'Sunset Orange',
-      accentColor: Color(0xFFE05A00),
+      accentColor: VelixPalette.copper,
       assetPath: 'assets/images/range_rover_sunset.jpg',
       fallbackUrl: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1600&q=90',
     ),
@@ -42,7 +42,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     OnboardingCarSlide(
       carName: 'Mercedes-Benz GLE',
       colorTag: 'Obsidian Black',
-      accentColor: Color(0xFF1E293B),
+      accentColor: VelixPalette.nightPaper,
       assetPath: 'assets/images/mercedes_luxury.jpg',
       fallbackUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1600&q=90',
     ),
@@ -50,7 +50,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     OnboardingCarSlide(
       carName: 'Lexus RX 350',
       colorTag: 'Pearl White',
-      accentColor: Color(0xFFF8FAFC),
+      accentColor: VelixPalette.stone,
       assetPath: 'assets/images/lexus_suv.jpg',
       fallbackUrl: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1600&q=90',
     ),
@@ -58,7 +58,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     OnboardingCarSlide(
       carName: 'Tesla Model 3',
       colorTag: 'Electric Blue',
-      accentColor: Color(0xFF0284C7),
+      accentColor: VelixPalette.ink,
       assetPath: 'assets/images/tesla_electric.jpg',
       fallbackUrl: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1600&q=90',
     ),
@@ -66,7 +66,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     OnboardingCarSlide(
       carName: 'Porsche 911 Carrera',
       colorTag: 'Crimson Red',
-      accentColor: Color(0xFFDC2626),
+      accentColor: VelixPalette.claim,
       assetPath: 'assets/images/sports_exotic.jpg',
       fallbackUrl: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1600&q=90',
     ),
@@ -123,7 +123,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     final currentCar = _carSlides[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
+      backgroundColor: VelixPalette.nightStone,
       body: Stack(
         children: [
           // 5-Car High-Definition Background Slideshow with Smooth Crossfade & Ken-Burns Motion
@@ -184,7 +184,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                         height: 5,
                         width: isSelected ? 30 : 10,
                         decoration: BoxDecoration(
-                          color: isSelected ? const Color(0xFFE05A00) : Colors.white.withValues(alpha: 0.45),
+                          color: isSelected ? VelixPalette.copper : VelixPalette.paper.withValues(alpha: 0.45),
                           borderRadius: BorderRadius.circular(3),
                           boxShadow: isSelected
                               ? [
@@ -216,9 +216,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFE05A00),
-                    Color(0xFFC84C00),
-                    Color(0xFFB84000),
+                    VelixPalette.copper,
+                    VelixPalette.copper,
+                    VelixPalette.copper,
                   ],
                 ),
                 shape: BoxShape.circle,
@@ -229,7 +229,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                     offset: const Offset(0, -6),
                   ),
                   BoxShadow(
-                    color: const Color(0xFFC84C00).withValues(alpha: 0.35),
+                    color: VelixPalette.copper.withValues(alpha: 0.35),
                     blurRadius: 45,
                     spreadRadius: 8,
                   ),
@@ -245,7 +245,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                       'Welcome to',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -255,7 +255,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                       style: TextStyle(
                         fontSize: 38,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         height: 1.05,
                       ),
                     ),
@@ -264,7 +264,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         letterSpacing: 2.5,
                       ),
                     ),
@@ -273,7 +273,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                     ElevatedButton(
                       onPressed: () => context.go(AppRoutes.home),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: VelixPalette.paper,
                         minimumSize: const Size.fromHeight(48),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                         elevation: 4,
@@ -286,14 +286,14 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF0C1830),
+                              color: VelixPalette.ink,
                             ),
                           ),
                           SizedBox(width: 8),
                           CircleAvatar(
                             radius: 12,
-                            backgroundColor: Color(0xFF0C1830),
-                            child: Icon(Icons.arrow_forward, size: 13, color: Colors.white),
+                            backgroundColor: VelixPalette.ink,
+                            child: Icon(Icons.arrow_forward, size: 13, color: VelixPalette.paper),
                           ),
                         ],
                       ),
@@ -311,7 +311,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                           ),
                           Text(
                             'Login',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                            style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold, fontSize: 12),
                           ),
                         ],
                       ),
@@ -397,9 +397,9 @@ class _FiveCarCinematicBackgroundState extends State<_FiveCarCinematicBackground
                   fit: BoxFit.cover,
                   alignment: const Alignment(0.0, -0.25),
                   errorBuilder: (_, __, ___) => Container(
-                    color: const Color(0xFF111827),
+                    color: VelixPalette.ink,
                     child: const Center(
-                      child: Icon(Icons.directions_car, size: 90, color: Color(0xFFE05A00)),
+                      child: Icon(Icons.directions_car, size: 90, color: VelixPalette.copper),
                     ),
                   ),
                 ),

@@ -23,7 +23,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -41,7 +41,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       width: 40,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE5E7EB),
+                        color: VelixPalette.line,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -50,7 +50,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Filter Vehicles', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                      const Text('Filter Vehicles', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                       TextButton(
                         onPressed: () {
                           setModalState(() {
@@ -59,12 +59,12 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                             priceRange = const RangeValues(25000, 150000);
                           });
                         },
-                        child: const Text('Reset', style: TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold)),
+                        child: const Text('Reset', style: TextStyle(color: VelixPalette.copper, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text('Vehicle Type', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                  const Text('Vehicle Type', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -73,14 +73,14 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       return ChoiceChip(
                         label: Text(t),
                         selected: isSelected,
-                        selectedColor: const Color(0xFFC84C00),
-                        labelStyle: TextStyle(color: isSelected ? Colors.white : const Color(0xFF374151), fontWeight: FontWeight.bold),
+                        selectedColor: VelixPalette.copper,
+                        labelStyle: TextStyle(color: isSelected ? VelixPalette.paper : VelixPalette.muted, fontWeight: FontWeight.bold),
                         onSelected: (_) => setModalState(() => filterType = t),
                       );
                     }).toList(),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Transmission', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                  const Text('Transmission', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -89,8 +89,8 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       return ChoiceChip(
                         label: Text(tr),
                         selected: isSelected,
-                        selectedColor: const Color(0xFFC84C00),
-                        labelStyle: TextStyle(color: isSelected ? Colors.white : const Color(0xFF374151), fontWeight: FontWeight.bold),
+                        selectedColor: VelixPalette.copper,
+                        labelStyle: TextStyle(color: isSelected ? VelixPalette.paper : VelixPalette.muted, fontWeight: FontWeight.bold),
                         onSelected: (_) => setModalState(() => filterTransmission = tr),
                       );
                     }).toList(),
@@ -99,8 +99,8 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Price Range / Day', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                      Text('₦${priceRange.start.round()} - ₦${priceRange.end.round()}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                      const Text('Price Range / Day', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                      Text('₦${priceRange.start.round()} - ₦${priceRange.end.round()}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                     ],
                   ),
                   RangeSlider(
@@ -108,7 +108,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                     min: 15000,
                     max: 250000,
                     divisions: 47,
-                    activeColor: const Color(0xFFC84C00),
+                    activeColor: VelixPalette.copper,
                     onChanged: (vals) => setModalState(() => priceRange = vals),
                   ),
                   const SizedBox(height: 20),
@@ -117,7 +117,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFC84C00),
+                        backgroundColor: VelixPalette.copper,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       ),
                       onPressed: () {
@@ -129,7 +129,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                           SnackBar(content: Text('Applied filters: $filterType • $filterTransmission • ₦${priceRange.start.round()} - ₦${priceRange.end.round()}')),
                         );
                       },
-                      child: const Text('Apply Filters', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
+                      child: const Text('Apply Filters', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold, fontSize: 15)),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -145,9 +145,9 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: const Center(
           child: VelixBackButton(fallbackRoute: AppRoutes.home),
@@ -155,21 +155,21 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
         title: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF4F6F9),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(14),
           ),
           child: const Row(
             children: [
-              Icon(Icons.location_on, color: Color(0xFFC84C00), size: 16),
+              Icon(Icons.location_on, color: VelixPalette.copper, size: 16),
               SizedBox(width: 6),
               Text(
                 'Lagos, Ikeja',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink),
               ),
               Spacer(),
               Text(
                 'Jun 12-18',
-                style: TextStyle(fontSize: 10, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 10, color: VelixPalette.muted),
               ),
             ],
           ),
@@ -181,10 +181,10 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
               margin: const EdgeInsets.only(right: 16),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFFC84C00),
+                color: VelixPalette.copper,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.tune, color: Colors.white, size: 20),
+              child: const Icon(Icons.tune, color: VelixPalette.paper, size: 20),
             ),
           ),
         ],
@@ -227,17 +227,17 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                         Text.rich(
                           TextSpan(
                             text: '${cars.length} ',
-                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                             children: const [
-                              TextSpan(text: 'Cars Available', style: TextStyle(color: Color(0xFF0C1830))),
+                              TextSpan(text: 'Cars Available', style: TextStyle(color: VelixPalette.ink)),
                             ],
                           ),
                         ),
                         const Row(
                           children: [
-                            Icon(Icons.swap_vert, size: 16, color: Color(0xFF6B7280)),
+                            Icon(Icons.swap_vert, size: 16, color: VelixPalette.muted),
                             SizedBox(width: 4),
-                            Text('Recommended', style: TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
+                            Text('Recommended', style: TextStyle(fontSize: 12, color: VelixPalette.muted)),
                           ],
                         ),
                       ],
@@ -278,16 +278,16 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFC84C00) : Colors.white,
+          color: isSelected ? VelixPalette.copper : VelixPalette.paper,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: isSelected ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB)),
+          border: Border.all(color: isSelected ? VelixPalette.copper : VelixPalette.line),
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            color: isSelected ? Colors.white : const Color(0xFF374151),
+            color: isSelected ? VelixPalette.paper : VelixPalette.muted,
           ),
         ),
       ),
@@ -299,9 +299,9 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
       onTap: () => context.go(AppRoutes.carDetail, extra: car),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: VelixPalette.paper,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: VelixPalette.line),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.04),
@@ -321,12 +321,12 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                   child: Container(
                     height: 135,
                     width: double.infinity,
-                    color: const Color(0xFFF3F4F6),
+                    color: VelixPalette.stone,
                     child: Image.network(
                       car.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => const Center(
-                        child: Icon(Icons.directions_car, size: 80, color: Color(0xFF9CA3AF)),
+                        child: Icon(Icons.directions_car, size: 80, color: VelixPalette.lineStrong),
                       ),
                     ),
                   ),
@@ -337,14 +337,14 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: car.isAvailable ? const Color(0xFFECFDF5) : const Color(0xFFFEE2E2),
+                      color: car.isAvailable ? VelixPalette.goSoft : VelixPalette.claimSoft,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: 3,
-                          backgroundColor: car.isAvailable ? const Color(0xFF10B981) : const Color(0xFFEF4444),
+                          backgroundColor: car.isAvailable ? VelixPalette.go : VelixPalette.claim,
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -352,7 +352,7 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: car.isAvailable ? const Color(0xFF10B981) : const Color(0xFFEF4444),
+                            color: car.isAvailable ? VelixPalette.go : VelixPalette.claim,
                           ),
                         ),
                       ],
@@ -368,11 +368,11 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                     },
                     child: CircleAvatar(
                       radius: 16,
-                      backgroundColor: Colors.white,
+                      backgroundColor: VelixPalette.paper,
                       child: Icon(
                         car.isFavorite ? Icons.favorite : Icons.favorite_border,
                         size: 16,
-                        color: const Color(0xFFEF4444),
+                        color: VelixPalette.claim,
                       ),
                     ),
                   ),
@@ -390,36 +390,36 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       Expanded(
                         child: Text(
                           car.name,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                         ),
                       ),
                       Text.rich(
                         TextSpan(
                           text: '₦${car.pricePerDay.toStringAsFixed(0)}',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                           children: const [
-                            TextSpan(text: '\nper day', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                            TextSpan(text: '\nper day', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
                           ],
                         ),
                         textAlign: TextAlign.right,
                       ),
                     ],
                   ),
-                  Text('${car.category} • ${car.brand}', style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+                  Text('${car.category} • ${car.brand}', style: const TextStyle(fontSize: 11, color: VelixPalette.muted)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.star, size: 14, color: Colors.amber),
+                      const Icon(Icons.star, size: 14, color: VelixPalette.brass),
                       const SizedBox(width: 4),
-                      Text(car.rating.toStringAsFixed(1), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                      Text(' (${car.reviewsCount})', style: const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF))),
+                      Text(car.rating.toStringAsFixed(1), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                      Text(' (${car.reviewsCount})', style: const TextStyle(fontSize: 11, color: VelixPalette.lineStrong)),
                       const SizedBox(width: 12),
-                      const Icon(Icons.location_on_outlined, size: 14, color: Color(0xFFC84C00)),
+                      const Icon(Icons.location_on_outlined, size: 14, color: VelixPalette.copper),
                       const SizedBox(width: 2),
                       Expanded(
                         child: Text(
                           car.location,
-                          style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                          style: const TextStyle(fontSize: 11, color: VelixPalette.muted),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -442,10 +442,10 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () => context.go(AppRoutes.carDetail, extra: car),
-                          icon: const Text('Book Now', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
-                          label: const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                          icon: const Text('Book Now', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
+                          label: const Icon(Icons.arrow_forward, size: 16, color: VelixPalette.paper),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFC84C00),
+                            backgroundColor: VelixPalette.copper,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             elevation: 0,
@@ -456,10 +456,10 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF3F4F6),
+                          color: VelixPalette.stone,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.more_horiz, color: Color(0xFF374151), size: 20),
+                        child: const Icon(Icons.more_horiz, color: VelixPalette.muted, size: 20),
                       ),
                     ],
                   ),
@@ -476,10 +476,10 @@ class _CarListingScreenState extends ConsumerState<CarListingScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F4F6),
+        color: VelixPalette.stone,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(label, style: const TextStyle(fontSize: 11, color: Color(0xFF374151))),
+      child: Text(label, style: const TextStyle(fontSize: 11, color: VelixPalette.muted)),
     );
   }
 }

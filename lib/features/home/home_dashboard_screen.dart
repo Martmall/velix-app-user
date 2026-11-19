@@ -26,8 +26,8 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'highlight': '₦5,000 OFF',
       'code': 'VELO5K',
       'buttonText': 'Claim Now',
-      'gradient': [const Color(0xFF0C1830), const Color(0xFF1E293B)],
-      'accent': const Color(0xFFC84C00),
+      'gradient': [VelixPalette.ink, VelixPalette.nightPaper],
+      'accent': VelixPalette.copper,
       'icon': Icons.local_fire_department,
       'image': CarImageCatalog.limitedOfferBanner,
     },
@@ -37,8 +37,8 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'highlight': '20% OFF SUVs',
       'code': 'SUVSAVE',
       'buttonText': 'Rent SUV',
-      'gradient': [const Color(0xFF7C2D12), const Color(0xFFC84C00)],
-      'accent': const Color(0xFFF59E0B),
+      'gradient': [VelixPalette.onCopperSoft, VelixPalette.copper],
+      'accent': VelixPalette.brass,
       'icon': Icons.directions_car,
       'image': CarImageCatalog.weekendEscapeBanner,
     },
@@ -49,7 +49,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'code': 'VIPRIDE',
       'buttonText': 'Book Chauffeur',
       'gradient': [const Color(0xFF1E1B4B), const Color(0xFF312E81)],
-      'accent': const Color(0xFF818CF8),
+      'accent': VelixPalette.ink,
       'icon': Icons.shield,
       'image': CarImageCatalog.luxuryChauffeurBanner,
     },
@@ -59,8 +59,8 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
       'highlight': 'Lagos & Abuja Pickups',
       'code': 'AIRPORT',
       'buttonText': 'Book Transfer',
-      'gradient': [const Color(0xFF064E3B), const Color(0xFF047857)],
-      'accent': const Color(0xFF34D399),
+      'gradient': [VelixPalette.onGoSoft, VelixPalette.go],
+      'accent': VelixPalette.nightGo,
       'icon': Icons.flight_land,
       'image': CarImageCatalog.featuredHeroBanner,
     },
@@ -117,12 +117,12 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
     }).toList();
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final scaffoldBg = isDark ? const Color(0xFF0A0C10) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF161922) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF262B38) : const Color(0xFFE5E7EB);
-    final inputBg = isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9);
+    final scaffoldBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final inputBg = isDark ? VelixPalette.nightStone3 : VelixPalette.stone;
 
     return Scaffold(
       backgroundColor: scaffoldBg,
@@ -186,14 +186,14 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF0C1830), Color(0xFF1E293B)],
+                    colors: [VelixPalette.ink, VelixPalette.nightPaper],
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.3)),
+                  border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.3)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.lock_open_rounded, color: Color(0xFFC84C00), size: 22),
+                    const Icon(Icons.lock_open_rounded, color: VelixPalette.copper, size: 22),
                     const SizedBox(width: 10),
                     const Expanded(
                       child: Column(
@@ -201,7 +201,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                         children: [
                           Text(
                             'Guest Explorer Mode',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                           ),
                           Text(
                             'Sign in to book vehicles, save favorites, and access your wallet.',
@@ -213,13 +213,13 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                     ElevatedButton(
                       onPressed: () => context.go(AppRoutes.signIn),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFC84C00),
+                        backgroundColor: VelixPalette.copper,
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('Sign In', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                      child: const Text('Sign In', style: TextStyle(color: VelixPalette.paper, fontSize: 11, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -237,7 +237,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.location_on, color: Color(0xFFC84C00), size: 22),
+                    const Icon(Icons.location_on, color: VelixPalette.copper, size: 22),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -248,10 +248,10 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                     Container(
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFC84C00),
+                        color: VelixPalette.copper,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.tune, color: Colors.white, size: 16),
+                      child: const Icon(Icons.tune, color: VelixPalette.paper, size: 16),
                     ),
                   ],
                 ),
@@ -279,15 +279,15 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF332014) : const Color(0xFFFDF0E9),
+                        color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.4)),
+                        border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.4)),
                       ),
                       child: const Row(
                         children: [
-                          Text('Categories', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                          Text('Categories', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                           SizedBox(width: 4),
-                          Icon(Icons.arrow_forward_ios, size: 9, color: Color(0xFFC84C00)),
+                          Icon(Icons.arrow_forward_ios, size: 9, color: VelixPalette.copper),
                         ],
                       ),
                     ),
@@ -347,7 +347,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.15),
+                                  color: VelixPalette.paper.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
@@ -364,7 +364,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                               Text.rich(
                                 TextSpan(
                                   text: banner['title'] as String,
-                                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                                  style: const TextStyle(fontSize: 12, color: VelixPalette.paper),
                                   children: [
                                     TextSpan(
                                       text: banner['highlight'] as String,
@@ -393,14 +393,14 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                             context.go(AppRoutes.carListing);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFC84C00),
+                            backgroundColor: VelixPalette.copper,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             elevation: 0,
                           ),
                           child: Text(
                             banner['buttonText'] as String,
-                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                           ),
                         ),
                       ],
@@ -421,7 +421,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                   width: isSelected ? 18 : 6,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: isSelected ? const Color(0xFFC84C00) : (isDark ? const Color(0xFF374151) : const Color(0xFFD1D5DB)),
+                    color: isSelected ? VelixPalette.copper : (isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong),
                     borderRadius: BorderRadius.circular(3),
                   ),
                 );
@@ -440,14 +440,14 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF451A03) : const Color(0xFFFEE2E2),
+                        color: isDark ? VelixPalette.nightClaimSoft : VelixPalette.claimSoft,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Row(
                         children: [
-                          Icon(Icons.local_fire_department, color: Color(0xFFEF4444), size: 12),
+                          Icon(Icons.local_fire_department, color: VelixPalette.claim, size: 12),
                           SizedBox(width: 2),
-                          Text('HOT', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFFEF4444))),
+                          Text('HOT', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.claim)),
                         ],
                       ),
                     ),
@@ -455,7 +455,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                 ),
                 GestureDetector(
                   onTap: () => context.go(AppRoutes.carListing),
-                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 ),
               ],
             ),
@@ -498,10 +498,10 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFC84C00),
+                            color: VelixPalette.copper,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Text('20% OFF', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+                          child: const Text('20% OFF', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                         ),
                       ),
                       Positioned(
@@ -510,7 +510,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(allCars.first.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                            Text(allCars.first.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                             Text('${allCars.first.category} • ${allCars.first.transmission}', style: const TextStyle(fontSize: 11, color: Colors.white70)),
                           ],
                         ),
@@ -521,7 +521,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text('₦${allCars.first.pricePerDay.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                            Text('₦${allCars.first.pricePerDay.toStringAsFixed(0)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                             const Text('/day', style: TextStyle(fontSize: 9, color: Colors.white70)),
                           ],
                         ),
@@ -540,12 +540,12 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                 Row(
                   children: [
                     Text('Recommended for ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor)),
-                    const Text('You', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                    const Text('You', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                   ],
                 ),
                 GestureDetector(
                   onTap: () => context.go(AppRoutes.carListing),
-                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 ),
               ],
             ),
@@ -639,11 +639,11 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFC84C00)
-              : (isDark ? const Color(0xFF161922) : Colors.white),
+              ? VelixPalette.copper
+              : (isDark ? VelixPalette.nightPaper : VelixPalette.paper),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: isSelected ? const Color(0xFFC84C00) : borderColor,
+            color: isSelected ? VelixPalette.copper : borderColor,
           ),
         ),
         child: Row(
@@ -660,7 +660,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                   errorBuilder: (_, __, ___) => Icon(
                     Icons.directions_car,
                     size: 14,
-                    color: isSelected ? Colors.white : const Color(0xFFC84C00),
+                    color: isSelected ? VelixPalette.paper : VelixPalette.copper,
                   ),
                 ),
               ),
@@ -669,7 +669,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
               Icon(
                 icon,
                 size: 14,
-                color: isSelected ? Colors.white : const Color(0xFFC84C00),
+                color: isSelected ? VelixPalette.paper : VelixPalette.copper,
               ),
               const SizedBox(width: 5),
             ],
@@ -678,7 +678,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                color: isSelected ? Colors.white : subtextColor,
+                color: isSelected ? VelixPalette.paper : subtextColor,
               ),
             ),
           ],
@@ -720,7 +720,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                   child: Container(
                     height: 82,
                     width: double.infinity,
-                    color: isDark ? const Color(0xFF1F2430) : const Color(0xFFF3F4F6),
+                    color: isDark ? VelixPalette.nightStone3 : VelixPalette.stone,
                     child: Image.network(
                       car.imageUrl,
                       fit: BoxFit.cover,
@@ -736,12 +736,12 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C1830).withValues(alpha: 0.85),
+                      color: VelixPalette.ink.withValues(alpha: 0.85),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
                       car.category.toUpperCase(),
-                      style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                     ),
                   ),
                 ),
@@ -769,7 +769,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                       child: Icon(
                         car.isFavorite ? Icons.favorite : Icons.favorite_border,
                         size: 13,
-                        color: const Color(0xFFC84C00),
+                        color: VelixPalette.copper,
                       ),
                     ),
                   ),
@@ -798,7 +798,7 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                   const SizedBox(height: 3),
                   Row(
                     children: [
-                      const Icon(Icons.star, size: 11, color: Colors.amber),
+                      const Icon(Icons.star, size: 11, color: VelixPalette.brass),
                       const SizedBox(width: 2),
                       Text(car.rating.toStringAsFixed(1), style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: textColor)),
                       Text(' (${car.reviewsCount})', style: TextStyle(fontSize: 8, color: subtextColor)),
@@ -820,10 +820,10 @@ class _HomeDashboardScreenState extends ConsumerState<HomeDashboardScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC84C00),
+                          color: VelixPalette.copper,
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Text('Book', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+                        child: const Text('Book', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                       ),
                     ],
                   ),

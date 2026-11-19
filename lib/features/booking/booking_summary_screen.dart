@@ -66,17 +66,17 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
     showDialog(
       context: context,
       builder: (dialogCtx) => AlertDialog(
-        backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
+        backgroundColor: isDark ? VelixPalette.nightPaper : VelixPalette.paper,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         title: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF332014) : const Color(0xFFFDF0E9),
+                color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.shield_outlined, color: Color(0xFFC84C00), size: 24),
+              child: const Icon(Icons.shield_outlined, color: VelixPalette.copper, size: 24),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -85,7 +85,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0C1830),
+                  color: isDark ? VelixPalette.paper : VelixPalette.ink,
                 ),
               ),
             ),
@@ -96,7 +96,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
           style: TextStyle(
             fontSize: 13,
             height: 1.4,
-            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF4B5563),
+            color: isDark ? VelixPalette.nightMuted : VelixPalette.muted,
           ),
         ),
         actions: [
@@ -104,7 +104,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
             onPressed: () => Navigator.pop(dialogCtx),
             child: Text(
               'Later',
-              style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
+              style: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.muted),
             ),
           ),
           ElevatedButton(
@@ -113,11 +113,11 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
               context.go(AppRoutes.identityVerification);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFC84C00),
+              backgroundColor: VelixPalette.copper,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             ),
-            child: const Text('Verify Identity', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: const Text('Verify Identity', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -130,10 +130,10 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
     final car = draft.selectedCar;
     final breakdown = draft.breakdown;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : Colors.white;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.paper;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -158,11 +158,11 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
               children: [
                 Text('Vehicle', style: TextStyle(fontSize: 11, color: subtextColor)),
                 const SizedBox(width: 8),
-                Expanded(child: Container(height: 3, decoration: BoxDecoration(color: const Color(0xFFC84C00), borderRadius: BorderRadius.circular(2)))),
+                Expanded(child: Container(height: 3, decoration: BoxDecoration(color: VelixPalette.copper, borderRadius: BorderRadius.circular(2)))),
                 const SizedBox(width: 8),
-                const Text('Add-ons', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                const Text('Add-ons', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 const SizedBox(width: 8),
-                Expanded(child: Container(height: 3, decoration: BoxDecoration(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB), borderRadius: BorderRadius.circular(2)))),
+                Expanded(child: Container(height: 3, decoration: BoxDecoration(color: isDark ? VelixPalette.nightLine : VelixPalette.line, borderRadius: BorderRadius.circular(2)))),
                 const SizedBox(width: 8),
                 Text('Payment', style: TextStyle(fontSize: 11, color: subtextColor)),
               ],
@@ -178,7 +178,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF1E293B) : const Color(0xFF0C1830),
+                      color: isDark ? VelixPalette.nightPaper : VelixPalette.ink,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -203,11 +203,11 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(car?.name ?? 'Mercedes-Benz GLE 450', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white)),
+                              Text(car?.name ?? 'Mercedes-Benz GLE 450', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                               const SizedBox(height: 4),
                               Text('${car?.brand ?? "Mercedes"} · ${car?.category ?? "Luxury SUV"}', style: const TextStyle(fontSize: 11, color: Colors.white70)),
                               const SizedBox(height: 4),
-                              Text('₦${(car?.pricePerDay ?? 48000).toStringAsFixed(0)}/day', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFFDBA74))),
+                              Text('₦${(car?.pricePerDay ?? 48000).toStringAsFixed(0)}/day', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copperSoft)),
                             ],
                           ),
                         ),
@@ -276,7 +276,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                     decoration: BoxDecoration(
                       color: cardBg,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+                      border: Border.all(color: isDark ? VelixPalette.nightLine : VelixPalette.line),
                     ),
                     child: Column(
                       children: [
@@ -297,7 +297,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                           const SizedBox(height: 8),
                           _buildPriceRow('Discount Applied', '-₦${breakdown.discount.toStringAsFixed(0)}', textColor, subtextColor),
                         ],
-                        Divider(height: 20, color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+                        Divider(height: 20, color: isDark ? VelixPalette.nightLine : VelixPalette.line),
                         _buildPriceRow('Refundable Deposit (not charged now)', '₦${breakdown.securityDeposit.toStringAsFixed(0)}', textColor, subtextColor),
                       ],
                     ),
@@ -333,10 +333,10 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 ),
                 ElevatedButton.icon(
                   onPressed: _processing ? null : _handleProceedToPayment,
-                  icon: Text(_processing ? 'Processing...' : 'Confirm & Pay', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
-                  label: const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                  icon: Text(_processing ? 'Processing...' : 'Confirm & Pay', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
+                  label: const Icon(Icons.arrow_forward, size: 16, color: VelixPalette.paper),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFC84C00),
+                    backgroundColor: VelixPalette.copper,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     elevation: 0,
@@ -364,14 +364,14 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.3), width: 1.5),
+        border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.3), width: 1.5),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(color: Color(0xFFFDF0E9), borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: Icon(icon, color: const Color(0xFFC84C00), size: 20),
+            decoration: const BoxDecoration(color: VelixPalette.copperSoft, borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: Icon(icon, color: VelixPalette.copper, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -385,12 +385,12 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEF3C7),
+                        color: VelixPalette.amberSoft,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Text(
                         'MANDATORY',
-                        style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFFD97706)),
+                        style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.onAmberSoft),
                       ),
                     ),
                   ],
@@ -398,23 +398,23 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 const SizedBox(height: 2),
                 Text(subtitle, style: TextStyle(fontSize: 10, color: subtextColor)),
                 const SizedBox(height: 4),
-                Text(price, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                Text(price, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
               ],
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFFECFDF5),
+              color: VelixPalette.goSoft,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFFA7F3D0)),
+              border: Border.all(color: VelixPalette.goSoft),
             ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, size: 14, color: Color(0xFF10B981)),
+                Icon(Icons.check_circle, size: 14, color: VelixPalette.go),
                 SizedBox(width: 4),
-                Text('Included', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                Text('Included', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.go)),
               ],
             ),
           ),
@@ -439,14 +439,14 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: value ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB), width: value ? 1.5 : 1),
+        border: Border.all(color: value ? VelixPalette.copper : VelixPalette.line, width: value ? 1.5 : 1),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(color: Color(0xFFFDF0E9), borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: Icon(icon, color: const Color(0xFFC84C00), size: 20),
+            decoration: const BoxDecoration(color: VelixPalette.copperSoft, borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: Icon(icon, color: VelixPalette.copper, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -457,13 +457,13 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 const SizedBox(height: 2),
                 Text(subtitle, style: TextStyle(fontSize: 10, color: subtextColor)),
                 const SizedBox(height: 4),
-                Text(price, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                Text(price, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
               ],
             ),
           ),
           Switch(
             value: value,
-            activeTrackColor: const Color(0xFFC84C00),
+            activeTrackColor: VelixPalette.copper,
             onChanged: onChanged,
           ),
         ],

@@ -18,13 +18,13 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final dividerColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final iconBtnBg = isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final dividerColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final iconBtnBg = isDark ? VelixPalette.nightLine : VelixPalette.stone;
 
     final ticketsAsync = ref.watch(userSupportTicketsProvider);
     final tickets = ticketsAsync.valueOrNull ?? [];
@@ -52,7 +52,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: const Color(0xFFC84C00),
+                color: VelixPalette.copper,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Row(
@@ -60,25 +60,25 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: VelixPalette.paper.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Icon(Icons.headset_mic, color: Colors.white, size: 28),
+                    child: const Icon(Icons.headset_mic, color: VelixPalette.paper, size: 28),
                   ),
                   const SizedBox(width: 14),
                   const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Need urgent help?', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                        Text('Need urgent help?', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                         SizedBox(height: 2),
                         Text('Our support team is available 24/7', style: TextStyle(fontSize: 10, color: Colors.white70)),
                         SizedBox(height: 6),
                         Row(
                           children: [
-                            Icon(Icons.phone, color: Colors.white, size: 12),
+                            Icon(Icons.phone, color: VelixPalette.paper, size: 12),
                             SizedBox(width: 4),
-                            Text('Call Support: 0800-VELIX', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
+                            Text('Call Support: 0800-VELIX', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                           ],
                         ),
                       ],
@@ -136,10 +136,10 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                     title: Text('Start Live Chat', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor)),
                     subtitle: const Row(
                       children: [
-                        CircleAvatar(radius: 3, backgroundColor: Color(0xFF10B981)),
+                        CircleAvatar(radius: 3, backgroundColor: VelixPalette.go),
                         SizedBox(width: 4),
-                        Text('Online ', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
-                        Text('Support Agent Ready', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                        Text('Online ', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.go)),
+                        Text('Support Agent Ready', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
                       ],
                     ),
                     trailing: Icon(Icons.arrow_forward_ios, size: 14, color: subtextColor),
@@ -150,10 +150,10 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
+                        color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(Icons.confirmation_number_outlined, color: Color(0xFFC84C00), size: 20),
+                      child: const Icon(Icons.confirmation_number_outlined, color: VelixPalette.copper, size: 20),
                     ),
                     title: Text('Submit a Ticket', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor)),
                     subtitle: Text('Describe your issue in detail', style: TextStyle(fontSize: 10, color: subtextColor)),
@@ -183,18 +183,18 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(t.id, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                          Text(t.id, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: isResolved
-                                  ? (isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5))
-                                  : (isDark ? const Color(0xFF78350F) : const Color(0xFFFEF3C7)),
+                                  ? (isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft)
+                                  : (isDark ? VelixPalette.nightAmberSoft : VelixPalette.amberSoft),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
                                 color: isResolved
-                                    ? (isDark ? const Color(0xFF059669) : const Color(0xFFA7F3D0))
-                                    : (isDark ? const Color(0xFFB45309) : const Color(0xFFFDE68A)),
+                                    ? (isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft)
+                                    : (isDark ? VelixPalette.nightAmberSoft : VelixPalette.amberSoft),
                               ),
                             ),
                             child: Text(
@@ -202,7 +202,7 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: isResolved ? const Color(0xFF10B981) : const Color(0xFFD97706),
+                                color: isResolved ? VelixPalette.go : VelixPalette.onAmberSoft,
                               ),
                             ),
                           ),
@@ -249,10 +249,10 @@ class _HelpSupportScreenState extends ConsumerState<HelpSupportScreen> {
           leading: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
+              color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: const Color(0xFFC84C00), size: 18),
+            child: Icon(icon, color: VelixPalette.copper, size: 18),
           ),
           title: Text(question, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: textColor)),
           trailing: Icon(isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: subtextColor),

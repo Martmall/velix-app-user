@@ -61,12 +61,12 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final inputBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final inputBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -137,7 +137,7 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                         style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           hintText: 'Brief summary of the issue...',
-                          hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF), fontSize: 13),
+                          hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong, fontSize: 13),
                           filled: true,
                           fillColor: inputBg,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -155,7 +155,7 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                         style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           hintText: 'Provide as many details as possible (booking ID, car model, location, etc.)...',
-                          hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF), fontSize: 13),
+                          hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong, fontSize: 13),
                           filled: true,
                           fillColor: inputBg,
                           contentPadding: const EdgeInsets.all(16),
@@ -175,7 +175,7 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                             color: inputBg,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: _attachmentUrl != null ? const Color(0xFF10B981) : borderColor,
+                              color: _attachmentUrl != null ? VelixPalette.go : borderColor,
                               style: BorderStyle.solid,
                             ),
                           ),
@@ -184,7 +184,7 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                             children: [
                               Icon(
                                 _attachmentUrl != null ? Icons.check_circle : Icons.attach_file,
-                                color: _attachmentUrl != null ? const Color(0xFF10B981) : const Color(0xFFC84C00),
+                                color: _attachmentUrl != null ? VelixPalette.go : VelixPalette.copper,
                                 size: 20,
                               ),
                               const SizedBox(width: 8),
@@ -193,7 +193,7 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: _attachmentUrl != null ? const Color(0xFF10B981) : textColor,
+                                  color: _attachmentUrl != null ? VelixPalette.go : textColor,
                                 ),
                               ),
                             ],
@@ -210,15 +210,15 @@ class _SubmitTicketScreenState extends ConsumerState<SubmitTicketScreen> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _submit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFC84C00),
+                      backgroundColor: VelixPalette.copper,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       elevation: 0,
                     ),
                     child: _isLoading
-                        ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                        ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: VelixPalette.paper, strokeWidth: 2))
                         : const Text(
                             'Submit Ticket to Support',
-                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                           ),
                   ),
                 ),

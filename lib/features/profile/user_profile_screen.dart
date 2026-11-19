@@ -90,11 +90,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     final phoneCtrl = TextEditingController(text: currentUser.phone);
     final emailCtrl = TextEditingController(text: currentUser.email);
 
-    final sheetBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final labelColor = isDark ? const Color(0xFFCBD5E1) : const Color(0xFF0C1830);
-    final inputBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
+    final sheetBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final labelColor = isDark ? VelixPalette.nightMuted : VelixPalette.ink;
+    final inputBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
 
     showModalBottomSheet(
       context: context,
@@ -120,7 +120,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   width: 44,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF475569) : const Color(0xFFE5E7EB),
+                    color: isDark ? VelixPalette.nightLineStrong : VelixPalette.line,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -134,7 +134,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
                   ),
                   IconButton(
-                    icon: Icon(Icons.close, size: 20, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
+                    icon: Icon(Icons.close, size: 20, color: isDark ? VelixPalette.nightMuted : VelixPalette.muted),
                     onPressed: () => Navigator.pop(ctx),
                   ),
                 ],
@@ -149,7 +149,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   filled: true,
                   fillColor: inputBg,
                   hintText: 'e.g. Oluwaseun Temilola',
-                  hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
+                  hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -168,7 +168,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   filled: true,
                   fillColor: inputBg,
                   hintText: 'e.g. yourname@gmail.com',
-                  hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
+                  hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -185,7 +185,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   filled: true,
                   fillColor: inputBg,
                   hintText: 'e.g. +234 801 234 5678',
-                  hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
+                  hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -209,11 +209,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFC84C00),
+                    backgroundColor: VelixPalette.copper,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   ),
-                  child: const Text('Save Changes', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: const Text('Save Changes', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -225,8 +225,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   void _showLanguageModal() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final sheetBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
+    final sheetBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
 
     final currentLang = ref.read(appLanguageProvider);
 
@@ -253,7 +253,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     width: 40,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF475569) : const Color(0xFFE5E7EB),
+                      color: isDark ? VelixPalette.nightLineStrong : VelixPalette.line,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -273,11 +273,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       lang.label,
                       style: TextStyle(
                         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                        color: isSelected ? const Color(0xFFC84C00) : textColor,
+                        color: isSelected ? VelixPalette.copper : textColor,
                       ),
                     ),
                     trailing: isSelected
-                        ? const Icon(Icons.check_circle, color: Color(0xFFC84C00))
+                        ? const Icon(Icons.check_circle, color: VelixPalette.copper)
                         : null,
                     onTap: () {
                       ref.read(appLanguageProvider.notifier).state = lang;
@@ -301,25 +301,25 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     showDialog(
       context: context,
       builder: (dialogCtx) => AlertDialog(
-        backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
+        backgroundColor: isDark ? VelixPalette.nightPaper : VelixPalette.paper,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           'Log Out',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : const Color(0xFF0C1830),
+            color: isDark ? VelixPalette.paper : VelixPalette.ink,
           ),
         ),
         content: Text(
           'Are you sure you want to log out of your Velix account?',
-          style: TextStyle(color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF4B5563)),
+          style: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.muted),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogCtx),
             child: Text(
               'Cancel',
-              style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
+              style: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.muted),
             ),
           ),
           ElevatedButton(
@@ -332,10 +332,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFEF4444),
+              backgroundColor: VelixPalette.claim,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
-            child: const Text('Log Out', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: const Text('Log Out', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -347,14 +347,14 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     final user = _currentUser;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final dividerColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final statBoxBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final iconBtnBg = isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final dividerColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final statBoxBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final iconBtnBg = isDark ? VelixPalette.nightLine : VelixPalette.stone;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -407,14 +407,14 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           children: [
                             CircleAvatar(
                               radius: 34,
-                              backgroundColor: isDark ? const Color(0xFF332014) : const Color(0xFFFDF0E9),
+                              backgroundColor: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                               backgroundImage: user.avatarUrl != null && user.avatarUrl!.isNotEmpty
                                   ? NetworkImage(user.avatarUrl!)
                                   : null,
                               child: (user.avatarUrl == null || user.avatarUrl!.isEmpty)
                                   ? Text(
                                       user.fullName.isNotEmpty ? user.fullName[0].toUpperCase() : 'U',
-                                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                                     )
                                   : null,
                             ),
@@ -424,11 +424,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFC84C00),
+                                  color: VelixPalette.copper,
                                   shape: BoxShape.circle,
                                   border: Border.all(color: cardBg, width: 1.5),
                                 ),
-                                child: const Icon(Icons.camera_alt, color: Colors.white, size: 12),
+                                child: const Icon(Icons.camera_alt, color: VelixPalette.paper, size: 12),
                               ),
                             ),
                           ],
@@ -445,7 +445,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                             const SizedBox(height: 4),
                             Row(
                               children: [
-                                const Icon(Icons.location_on, size: 12, color: Color(0xFFC84C00)),
+                                const Icon(Icons.location_on, size: 12, color: VelixPalette.copper),
                                 const SizedBox(width: 2),
                                 Text('Lagos, Nigeria', style: TextStyle(fontSize: 11, color: subtextColor)),
                               ],
@@ -462,13 +462,13 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: user.isVerified
-                              ? (isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5))
-                              : (isDark ? const Color(0xFF78350F) : const Color(0xFFFFFBEB)),
+                              ? (isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft)
+                              : (isDark ? VelixPalette.nightAmberSoft : VelixPalette.amberSoft),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: user.isVerified
-                                ? (isDark ? const Color(0xFF059669) : const Color(0xFFA7F3D0))
-                                : (isDark ? const Color(0xFFB45309) : const Color(0xFFFDE68A)),
+                                ? (isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft)
+                                : (isDark ? VelixPalette.nightAmberSoft : VelixPalette.amberSoft),
                           ),
                         ),
                         child: Row(
@@ -476,7 +476,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                             Icon(
                               user.isVerified ? Icons.shield_outlined : Icons.info_outline,
                               size: 12,
-                              color: user.isVerified ? const Color(0xFF10B981) : const Color(0xFFF59E0B),
+                              color: user.isVerified ? VelixPalette.go : VelixPalette.brass,
                             ),
                             const SizedBox(width: 4),
                             Text(
@@ -484,7 +484,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: user.isVerified ? const Color(0xFF10B981) : const Color(0xFFF59E0B),
+                                color: user.isVerified ? VelixPalette.go : VelixPalette.brass,
                               ),
                             ),
                           ],
@@ -495,12 +495,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: (user.licenseNumber != null && user.licenseNumber!.isNotEmpty)
-                              ? (isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9))
-                              : (isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
+                              ? (isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft)
+                              : (isDark ? VelixPalette.nightLine : VelixPalette.stone),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: (user.licenseNumber != null && user.licenseNumber!.isNotEmpty)
-                                ? const Color(0xFFFDBA74)
+                                ? VelixPalette.copperSoft
                                 : borderColor,
                           ),
                         ),
@@ -510,7 +510,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               Icons.badge_outlined,
                               size: 12,
                               color: (user.licenseNumber != null && user.licenseNumber!.isNotEmpty)
-                                  ? const Color(0xFFC84C00)
+                                  ? VelixPalette.copper
                                   : subtextColor,
                             ),
                             const SizedBox(width: 4),
@@ -522,7 +522,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: (user.licenseNumber != null && user.licenseNumber!.isNotEmpty)
-                                    ? const Color(0xFFC84C00)
+                                    ? VelixPalette.copper
                                     : subtextColor,
                               ),
                             ),
@@ -572,8 +572,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                 children: [
                   _buildOptionTile(
                     icon: Icons.calendar_month,
-                    iconBg: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFDBEAFE),
-                    iconColor: const Color(0xFF3B82F6),
+                    iconBg: isDark ? VelixPalette.nightStone3 : VelixPalette.stone2,
+                    iconColor: isDark ? VelixPalette.nightInk : VelixPalette.ink,
                     title: 'My Bookings',
                     textColor: textColor,
                     subtextColor: subtextColor,
@@ -582,8 +582,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Divider(height: 1, color: dividerColor),
                   _buildOptionTile(
                     icon: Icons.favorite,
-                    iconBg: isDark ? const Color(0xFF7F1D1D) : const Color(0xFFFEE2E2),
-                    iconColor: const Color(0xFFEF4444),
+                    iconBg: isDark ? VelixPalette.nightClaimSoft : VelixPalette.claimSoft,
+                    iconColor: VelixPalette.claim,
                     title: 'Saved Cars',
                     subtitle: 'Your Favorites',
                     textColor: textColor,
@@ -593,8 +593,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Divider(height: 1, color: dividerColor),
                   _buildOptionTile(
                     icon: Icons.credit_card,
-                    iconBg: isDark ? const Color(0xFF581C87) : const Color(0xFFF3E8FF),
-                    iconColor: const Color(0xFFA855F7),
+                    iconBg: isDark ? VelixPalette.nightStone3 : VelixPalette.stone2,
+                    iconColor: isDark ? VelixPalette.nightInk : VelixPalette.ink,
                     title: 'Payment Methods',
                     textColor: textColor,
                     subtextColor: subtextColor,
@@ -603,8 +603,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Divider(height: 1, color: dividerColor),
                   _buildOptionTile(
                     icon: Icons.account_balance_wallet,
-                    iconBg: isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5),
-                    iconColor: const Color(0xFF10B981),
+                    iconBg: isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft,
+                    iconColor: VelixPalette.go,
                     title: 'Wallet Balance',
                     subtitle: '₦${(ref.watch(walletProvider).valueOrNull?.balance ?? 0).toStringAsFixed(0)} available',
                     badge: '₦${(ref.watch(walletProvider).valueOrNull?.balance ?? 0).toStringAsFixed(0)}',
@@ -629,8 +629,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                 children: [
                   _buildOptionTile(
                     icon: Icons.notifications,
-                    iconBg: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
-                    iconColor: const Color(0xFFC84C00),
+                    iconBg: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
+                    iconColor: VelixPalette.copper,
                     title: 'Notifications',
                     countBadge: null,
                     textColor: textColor,
@@ -640,8 +640,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Divider(height: 1, color: dividerColor),
                   _buildOptionTile(
                     icon: Icons.language,
-                    iconBg: isDark ? const Color(0xFF312E81) : const Color(0xFFE0E7FF),
-                    iconColor: const Color(0xFF6366F1),
+                    iconBg: isDark ? VelixPalette.nightStone3 : VelixPalette.stone2,
+                    iconColor: isDark ? VelixPalette.nightInk : VelixPalette.ink,
                     title: 'Language',
                     subtitle: _selectedLanguage,
                     textColor: textColor,
@@ -651,8 +651,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   Divider(height: 1, color: dividerColor),
                   _buildOptionTile(
                     icon: Icons.directions_car_filled_outlined,
-                    iconBg: isDark ? const Color(0xFF78350F) : const Color(0xFFFEF3C7),
-                    iconColor: const Color(0xFFF59E0B),
+                    iconBg: isDark ? VelixPalette.nightAmberSoft : VelixPalette.amberSoft,
+                    iconColor: VelixPalette.brass,
                     title: 'Switch to Fleet Partner Mode',
                     subtitle: 'Manage and list your vehicles',
                     textColor: textColor,
@@ -661,7 +661,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: const Text('Switched to Partner Mode. Access Partner App at port 8081.'),
-                          backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFF0C1830),
+                          backgroundColor: isDark ? VelixPalette.nightPaper : VelixPalette.ink,
                         ),
                       );
                     },
@@ -679,7 +679,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           ),
                           child: Icon(
                             isDark ? Icons.nightlight_round : Icons.wb_sunny_outlined,
-                            color: isDark ? const Color(0xFFF59E0B) : const Color(0xFF4B5563),
+                            color: isDark ? VelixPalette.nightBrass : VelixPalette.muted,
                             size: 20,
                           ),
                         ),
@@ -695,8 +695,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         ),
                         Switch(
                           value: ref.watch(appThemeModeProvider) == ThemeMode.dark,
-                          activeTrackColor: const Color(0xFFC84C00),
-                          activeThumbColor: Colors.white,
+                          activeTrackColor: VelixPalette.copper,
+                          activeThumbColor: VelixPalette.paper,
                           onChanged: (val) {
                             ref.read(appThemeModeProvider.notifier).state = val ? ThemeMode.dark : ThemeMode.light;
                           },
@@ -726,10 +726,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
+                            color: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(Icons.fingerprint_rounded, color: Color(0xFFC84C00), size: 20),
+                          child: const Icon(Icons.fingerprint_rounded, color: VelixPalette.copper, size: 20),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -743,7 +743,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                                     : 'Toggle ON to register and enable fingerprint login',
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: _isBiometricEnabled ? const Color(0xFF10B981) : subtextColor,
+                                  color: _isBiometricEnabled ? VelixPalette.go : subtextColor,
                                   fontWeight: _isBiometricEnabled ? FontWeight.bold : FontWeight.normal,
                                 ),
                               ),
@@ -752,8 +752,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         ),
                         Switch(
                           value: _isBiometricEnabled,
-                          activeTrackColor: const Color(0xFFC84C00),
-                          activeThumbColor: Colors.white,
+                          activeTrackColor: VelixPalette.copper,
+                          activeThumbColor: VelixPalette.paper,
                           onChanged: _handleToggleBiometrics,
                         ),
                       ],
@@ -774,8 +774,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               ),
               child: _buildOptionTile(
                 icon: Icons.headset_mic,
-                iconBg: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
-                iconColor: const Color(0xFFC84C00),
+                iconBg: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
+                iconColor: VelixPalette.copper,
                 title: 'Help & Support',
                 subtitle: 'FAQs, chat, tickets',
                 textColor: textColor,
@@ -796,12 +796,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF7F1D1D) : const Color(0xFFFEE2E2),
+                    color: isDark ? VelixPalette.nightClaimSoft : VelixPalette.claimSoft,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.logout, color: Color(0xFFEF4444), size: 20),
+                  child: const Icon(Icons.logout, color: VelixPalette.claim, size: 20),
                 ),
-                title: const Text('Log Out', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFEF4444))),
+                title: const Text('Log Out', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.claim)),
               ),
             ),
             const SizedBox(height: 30),
@@ -866,20 +866,20 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: const Color(0xFFECFDF5),
+                color: VelixPalette.goSoft,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFA7F3D0)),
+                border: Border.all(color: VelixPalette.goSoft),
               ),
-              child: Text(badge, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+              child: Text(badge, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.go)),
             ),
           if (countBadge != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: const Color(0xFFC84C00),
+                color: VelixPalette.copper,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(countBadge, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white)),
+              child: Text(countBadge, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
             ),
           const SizedBox(width: 6),
           Icon(Icons.arrow_forward_ios, size: 14, color: subtextColor),

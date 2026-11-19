@@ -21,7 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'description': 'Experience the open road in rugged refinement and unmatched comfort.',
       'asset': 'assets/images/range_rover_sunset.jpg',
       'fallback': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=85',
-      'color': const Color(0xFFE05A00),
+      'color': VelixPalette.copper,
     },
     {
       'title': 'Executive Luxury & Class',
@@ -29,7 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'description': 'Arrive in style with our chauffeured and self-drive executive fleet.',
       'asset': 'assets/images/mercedes_luxury.jpg',
       'fallback': 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=85',
-      'color': const Color(0xFF334155),
+      'color': VelixPalette.nightLine,
     },
     {
       'title': 'Pristine Coastal Elegance',
@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'description': 'Enjoy ultra-smooth rides with state-of-the-art climate and comfort control.',
       'asset': 'assets/images/lexus_suv.jpg',
       'fallback': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=85',
-      'color': const Color(0xFF94A3B8),
+      'color': VelixPalette.lineStrong,
     },
     {
       'title': 'Keyless Electric Future',
@@ -45,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'description': 'Instant phone-as-key digital unlock and zero-emission highway cruising.',
       'asset': 'assets/images/tesla_electric.jpg',
       'fallback': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1200&q=85',
-      'color': const Color(0xFF0284C7),
+      'color': VelixPalette.ink,
     },
     {
       'title': 'High Performance Exotics',
@@ -53,7 +53,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'description': 'Unleash track-level engineering and breathtaking acceleration on demand.',
       'asset': 'assets/images/sports_exotic.jpg',
       'fallback': 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=85',
-      'color': const Color(0xFFDC2626),
+      'color': VelixPalette.claim,
     },
   ];
 

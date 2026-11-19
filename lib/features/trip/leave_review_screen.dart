@@ -55,18 +55,18 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
   Widget build(BuildContext context) {
     final trip = ref.watch(lastCompletedTripProvider);
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -78,7 +78,7 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
         ),
         title: const Text(
           'Write a Review',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
       ),
@@ -91,9 +91,9 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Row(
                 children: [
@@ -107,8 +107,8 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                       errorBuilder: (_, __, ___) => Container(
                         width: 70,
                         height: 50,
-                        color: const Color(0xFFF3F4F6),
-                        child: const Icon(Icons.directions_car, size: 36, color: Color(0xFF9CA3AF)),
+                        color: VelixPalette.stone,
+                        child: const Icon(Icons.directions_car, size: 36, color: VelixPalette.lineStrong),
                       ),
                     ),
                   ),
@@ -117,11 +117,11 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(trip?.carName ?? 'Your last trip', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                        Text(trip?.carName ?? 'Your last trip', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                         const SizedBox(height: 2),
                         Text(
                           trip == null ? 'No completed trip yet' : '${DateFormat('MMM d').format(trip.startDate)} - ${DateFormat('MMM d, yyyy').format(trip.endDate)}',
-                          style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                          style: const TextStyle(fontSize: 11, color: VelixPalette.muted),
                         ),
                       ],
                     ),
@@ -129,10 +129,10 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFDF0E9),
+                      color: VelixPalette.copperSoft,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Text('3 available', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                    child: const Text('3 available', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                   ),
                 ],
               ),
@@ -142,15 +142,15 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 children: [
-                  const Text('How was your experience?', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                  const Text('How was your experience?', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                   const SizedBox(height: 4),
-                  const Text('Tap a star to rate your overall trip', style: TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
+                  const Text('Tap a star to rate your overall trip', style: TextStyle(fontSize: 12, color: VelixPalette.muted)),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -160,14 +160,14 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                         icon: Icon(
                           i < _overallRating ? Icons.star : Icons.star_border,
                           size: 32,
-                          color: i < _overallRating ? Colors.amber : const Color(0xFFD1D5DB),
+                          color: i < _overallRating ? VelixPalette.brass : VelixPalette.lineStrong,
                         ),
                         onPressed: () => setState(() => _overallRating = i + 1),
                       ),
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text('Very Good', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                  const Text('Very Good', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 ],
               ),
             ),
@@ -176,19 +176,19 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('RATE BY CATEGORY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF6B7280), letterSpacing: 0.5)),
+                  const Text('RATE BY CATEGORY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.muted, letterSpacing: 0.5)),
                   const SizedBox(height: 12),
                   _buildCategoryRatingRow('Cleanliness', _cleanlinessRating, (val) => setState(() => _cleanlinessRating = val)),
-                  const Divider(color: Color(0xFFE5E7EB)),
+                  const Divider(color: VelixPalette.line),
                   _buildCategoryRatingRow('Comfort', _comfortRating, (val) => setState(() => _comfortRating = val)),
-                  const Divider(color: Color(0xFFE5E7EB)),
+                  const Divider(color: VelixPalette.line),
                   _buildCategoryRatingRow('Value', _valueRating, (val) => setState(() => _valueRating = val)),
                 ],
               ),
@@ -198,19 +198,19 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('YOUR REVIEW', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF6B7280), letterSpacing: 0.5)),
+                  const Text('YOUR REVIEW', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.muted, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF4F6F9),
+                      color: VelixPalette.stone,
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Column(
@@ -220,15 +220,15 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                           controller: _commentController,
                           maxLines: 4,
                           maxLength: 500,
-                          style: const TextStyle(fontSize: 13, color: Color(0xFF0C1830)),
+                          style: const TextStyle(fontSize: 13, color: VelixPalette.ink),
                           decoration: const InputDecoration(
                             hintText: 'Share your experience... What did you enjoy most about this rental?',
-                            hintStyle: TextStyle(color: Color(0xFF9CA3AF), fontSize: 12),
+                            hintStyle: TextStyle(color: VelixPalette.lineStrong, fontSize: 12),
                             border: InputBorder.none,
                             counterText: '',
                           ),
                         ),
-                        const Text('0/500', style: TextStyle(fontSize: 10, color: Color(0xFF9CA3AF))),
+                        const Text('0/500', style: TextStyle(fontSize: 10, color: VelixPalette.lineStrong)),
                       ],
                     ),
                   ),
@@ -240,9 +240,9 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,8 +250,8 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ADD PHOTOS', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF6B7280), letterSpacing: 0.5)),
-                      Text('Optional - Up to 5', style: TextStyle(fontSize: 10, color: Color(0xFF9CA3AF))),
+                      Text('ADD PHOTOS', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.muted, letterSpacing: 0.5)),
+                      Text('Optional - Up to 5', style: TextStyle(fontSize: 10, color: VelixPalette.lineStrong)),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -265,16 +265,16 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                             width: 58,
                             height: 58,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFDF0E9),
+                              color: VelixPalette.copperSoft,
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.4)),
+                              border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.4)),
                             ),
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.add_a_photo, color: Color(0xFFC84C00), size: 16),
+                                Icon(Icons.add_a_photo, color: VelixPalette.copper, size: 16),
                                 SizedBox(height: 2),
-                                Text('Add Photo', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                                Text('Add Photo', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                               ],
                             ),
                           ),
@@ -303,10 +303,10 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                                     child: Container(
                                       padding: const EdgeInsets.all(2),
                                       decoration: const BoxDecoration(
-                                        color: Colors.red,
+                                        color: VelixPalette.claim,
                                         shape: BoxShape.circle,
                                       ),
-                                      child: const Icon(Icons.close, color: Colors.white, size: 10),
+                                      child: const Icon(Icons.close, color: VelixPalette.paper, size: 10),
                                     ),
                                   ),
                                 ),
@@ -325,9 +325,9 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Row(
                 children: [
@@ -335,15 +335,15 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Post Publicly', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                        Text('Post Publicly', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                         SizedBox(height: 2),
-                        Text('Others can see your review on the listing', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                        Text('Others can see your review on the listing', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
                       ],
                     ),
                   ),
                   Switch(
                     value: _postPublicly,
-                    activeTrackColor: const Color(0xFFC84C00),
+                    activeTrackColor: VelixPalette.copper,
                     onChanged: (val) => setState(() => _postPublicly = val),
                   ),
                 ],
@@ -366,7 +366,7 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+        Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
         Row(
           children: List.generate(
             5,
@@ -375,7 +375,7 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
               child: Icon(
                 i < value ? Icons.star : Icons.star_border,
                 size: 18,
-                color: i < value ? Colors.amber : const Color(0xFFD1D5DB),
+                color: i < value ? VelixPalette.brass : VelixPalette.lineStrong,
               ),
             ),
           ),

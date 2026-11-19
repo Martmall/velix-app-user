@@ -93,13 +93,13 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final inputBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF4F6F9);
-    final iconBtnBg = isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6);
+    final bgColor = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final inputBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final iconBtnBg = isDark ? VelixPalette.nightLine : VelixPalette.stone;
 
     final messages = _chatMessages;
 
@@ -132,10 +132,10 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
             else
               CircleAvatar(
                 radius: 16,
-                backgroundColor: const Color(0xFFC84C00),
+                backgroundColor: VelixPalette.copper,
                 child: Text(
                   _title.isNotEmpty ? _title[0] : 'V',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                 ),
               ),
             const SizedBox(width: 10),
@@ -155,15 +155,15 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5),
+              color: isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: isDark ? const Color(0xFF059669) : const Color(0xFFA7F3D0)),
+              border: Border.all(color: isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft),
             ),
             child: const Row(
               children: [
-                CircleAvatar(radius: 3.5, backgroundColor: Color(0xFF10B981)),
+                CircleAvatar(radius: 3.5, backgroundColor: VelixPalette.go),
                 SizedBox(width: 4),
-                Text('Online', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                Text('Online', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.go)),
               ],
             ),
           ),
@@ -179,8 +179,8 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundColor: isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9),
-                          child: const Icon(Icons.chat_bubble, size: 36, color: Color(0xFFC84C00)),
+                          backgroundColor: isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft,
+                          child: const Icon(Icons.chat_bubble, size: 36, color: VelixPalette.copper),
                         ),
                         const SizedBox(height: 16),
                         Text('Start a Conversation', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
@@ -196,8 +196,8 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                     itemBuilder: (context, index) {
                       final msg = messages[index];
                       final isUser = msg.isUser;
-                      final otherBubbleBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFF3F4F6);
-                      final otherTextColor = isDark ? Colors.white : const Color(0xFF0C1830);
+                      final otherBubbleBg = isDark ? VelixPalette.nightPaper : VelixPalette.stone;
+                      final otherTextColor = isDark ? VelixPalette.paper : VelixPalette.ink;
 
                       return Align(
                         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -206,7 +206,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                           padding: const EdgeInsets.all(14),
                           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
                           decoration: BoxDecoration(
-                            color: isUser ? const Color(0xFFC84C00) : otherBubbleBg,
+                            color: isUser ? VelixPalette.copper : otherBubbleBg,
                             borderRadius: BorderRadius.circular(16),
                             border: isUser ? null : Border.all(color: borderColor),
                           ),
@@ -215,7 +215,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                             children: [
                               Text(
                                 msg.text,
-                                style: TextStyle(fontSize: 13, color: isUser ? Colors.white : otherTextColor),
+                                style: TextStyle(fontSize: 13, color: isUser ? VelixPalette.paper : otherTextColor),
                               ),
                             ],
                           ),
@@ -246,7 +246,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                       style: TextStyle(fontSize: 13, color: textColor),
                       decoration: InputDecoration(
                         hintText: 'Type your message...',
-                        hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF), fontSize: 13),
+                        hintStyle: TextStyle(color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong, fontSize: 13),
                         border: InputBorder.none,
                       ),
                       onSubmitted: (_) => _sendMessage(),
@@ -258,8 +258,8 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                   onTap: _sendMessage,
                   child: Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: const Color(0xFFC84C00), borderRadius: BorderRadius.circular(12)),
-                    child: const Icon(Icons.send, color: Colors.white, size: 18),
+                    decoration: BoxDecoration(color: VelixPalette.copper, borderRadius: BorderRadius.circular(12)),
+                    child: const Icon(Icons.send, color: VelixPalette.paper, size: 18),
                   ),
                 ),
               ],

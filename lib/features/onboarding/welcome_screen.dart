@@ -26,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return GestureDetector(
       onTap: () => context.go(AppRoutes.onboarding),
       child: const Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         body: SafeArea(
           child: Column(
             children: [
@@ -44,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF6B7280),
+                    color: VelixPalette.muted,
                     letterSpacing: 1.2,
                   ),
                 ),
