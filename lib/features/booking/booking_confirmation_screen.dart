@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/routing/routes.dart';
 import '../../providers/user_app_providers.dart';
 
+import 'package:velix_core/theme/velix_palette.dart';
 class BookingConfirmationScreen extends ConsumerWidget {
   const BookingConfirmationScreen({super.key});
 
@@ -20,7 +21,7 @@ class BookingConfirmationScreen extends ConsumerWidget {
     final carName = car?.name ?? 'Premium Rental Vehicle';
 
     return Scaffold(
-      backgroundColor: const Color(0xFF090D16),
+      backgroundColor: VelixPalette.nightStone,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
@@ -32,18 +33,18 @@ class BookingConfirmationScreen extends ConsumerWidget {
                 width: 90,
                 height: 90,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF10B981),
+                  color: VelixPalette.go,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF10B981).withValues(alpha: 0.45),
+                      color: VelixPalette.go.withValues(alpha: 0.45),
                       blurRadius: 30,
                       spreadRadius: 6,
                     ),
                   ],
                 ),
                 child: const Center(
-                  child: Icon(Icons.check, size: 52, color: Colors.white),
+                  child: Icon(Icons.check, size: 52, color: VelixPalette.paper),
                 ),
               ),
               const SizedBox(height: 28),
@@ -52,7 +53,7 @@ class BookingConfirmationScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: VelixPalette.paper,
                 ),
               ),
               const SizedBox(height: 10),
@@ -61,7 +62,7 @@ class BookingConfirmationScreen extends ConsumerWidget {
                 child: Text(
                   'Your $carName is reserved. Digital key has been provisioned to your device.',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 14, color: Color(0xFF94A3B8), height: 1.4),
+                  style: const TextStyle(fontSize: 14, color: VelixPalette.lineStrong, height: 1.4),
                 ),
               ),
               const SizedBox(height: 32),
@@ -69,18 +70,18 @@ class BookingConfirmationScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF131B2A),
+                  color: VelixPalette.nightPaper,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFF1E293B)),
+                  border: Border.all(color: VelixPalette.nightPaper),
                 ),
                 child: Column(
                   children: [
                     _buildItem('Booking Reference ID', bookingId),
-                    const Divider(color: Color(0xFF1E293B), height: 24),
+                    const Divider(color: VelixPalette.nightPaper, height: 24),
                     _buildItem('Pickup Location', location),
-                    const Divider(color: Color(0xFF1E293B), height: 24),
+                    const Divider(color: VelixPalette.nightPaper, height: 24),
                     _buildItem('Payment Method', paymentMethod),
-                    const Divider(color: Color(0xFF1E293B), height: 24),
+                    const Divider(color: VelixPalette.nightPaper, height: 24),
                     _buildItem('Amount Paid', '₦${amount.toStringAsFixed(0)}', isHighlight: true),
                   ],
                 ),
@@ -90,14 +91,14 @@ class BookingConfirmationScreen extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () => context.go(AppRoutes.tripUpdates),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3B82F6),
+                  backgroundColor: VelixPalette.ink,
                   minimumSize: const Size.fromHeight(54),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
                 ),
                 child: const Text(
                   'Track Trip & Keyless Entry',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                 ),
               ),
               const SizedBox(height: 12),
@@ -108,12 +109,12 @@ class BookingConfirmationScreen extends ConsumerWidget {
                 child: OutlinedButton(
                   onPressed: () => context.go(AppRoutes.home),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFF1E293B)),
+                    side: const BorderSide(color: VelixPalette.nightPaper),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: const Text(
                     'Back to Home Dashboard',
-                    style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: VelixPalette.paper, fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -130,12 +131,12 @@ class BookingConfirmationScreen extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(color: Color(0xFF64748B), fontSize: 13),
+          style: const TextStyle(color: VelixPalette.muted, fontSize: 13),
         ),
         Text(
           value,
           style: TextStyle(
-            color: isHighlight ? const Color(0xFF10B981) : Colors.white,
+            color: isHighlight ? VelixPalette.go : VelixPalette.paper,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),

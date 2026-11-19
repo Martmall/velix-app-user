@@ -18,7 +18,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
   void _showFilterSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -34,19 +34,19 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE5E7EB),
+                    color: VelixPalette.line,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              const Text('Filter Wishlist', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+              const Text('Filter Wishlist', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
               const SizedBox(height: 16),
               ...['All Saved', 'SUVs', 'Sedans', 'Luxury', 'Economy'].map((cat) {
                 final isSelected = _selectedCategory == cat;
                 return ListTile(
-                  title: Text(cat, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: const Color(0xFF0C1830))),
-                  trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFFC84C00)) : null,
+                  title: Text(cat, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: VelixPalette.ink)),
+                  trailing: isSelected ? const Icon(Icons.check_circle, color: VelixPalette.copper) : null,
                   onTap: () {
                     setState(() => _selectedCategory = cat);
                     Navigator.pop(ctx);
@@ -80,16 +80,16 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
     }).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: const Center(
           child: VelixBackButton(fallbackRoute: AppRoutes.home),
         ),
         title: const Text(
           'Saved Cars',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
         actions: [
@@ -97,17 +97,17 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               children: [
-                Text('${allFavorites.length} Cars', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                Text('${allFavorites.length} Cars', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 const SizedBox(width: 8),
                 GestureDetector(
                   onTap: () => _showFilterSheet(context),
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3F4F6),
+                      color: VelixPalette.stone,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.tune, color: Color(0xFF0C1830), size: 18),
+                    child: const Icon(Icons.tune, color: VelixPalette.ink, size: 18),
                   ),
                 ),
               ],
@@ -162,19 +162,19 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF9FAFB),
+                  color: VelixPalette.stone,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFD1D5DB), style: BorderStyle.solid),
+                  border: Border.all(color: VelixPalette.lineStrong, style: BorderStyle.solid),
                 ),
                 child: Column(
                   children: [
-                    const Icon(Icons.favorite_border_rounded, size: 48, color: Color(0xFFC84C00)),
+                    const Icon(Icons.favorite_border_rounded, size: 48, color: VelixPalette.copper),
                     const SizedBox(height: 10),
                     Text(
                       ref.watch(userAuthProvider).user == null
                           ? 'Sign in to access Saved Cars'
                           : 'No saved cars yet',
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -182,26 +182,26 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                           ? 'Create a free account or sign in to save and compare your favorite vehicles.'
                           : 'Explore cars and tap the heart icon to save',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                      style: const TextStyle(fontSize: 12, color: VelixPalette.muted),
                     ),
                     const SizedBox(height: 14),
                     if (ref.watch(userAuthProvider).user == null)
                       ElevatedButton(
                         onPressed: () => context.go(AppRoutes.signIn),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFC84C00),
+                          backgroundColor: VelixPalette.copper,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text('Sign In / Register', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
+                        child: const Text('Sign In / Register', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                       )
                     else
                       OutlinedButton(
                         onPressed: () => context.go(AppRoutes.carListing),
                         style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Color(0xFFC84C00)),
+                          side: const BorderSide(color: VelixPalette.copper),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text('Start Exploring', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                        child: const Text('Start Exploring', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                       ),
                   ],
                 ),
@@ -235,16 +235,16 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF0C1830) : Colors.white,
+          color: isSelected ? VelixPalette.ink : VelixPalette.paper,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: isSelected ? const Color(0xFF0C1830) : const Color(0xFFE5E7EB)),
+          border: Border.all(color: isSelected ? VelixPalette.ink : VelixPalette.line),
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            color: isSelected ? Colors.white : const Color(0xFF374151),
+            color: isSelected ? VelixPalette.paper : VelixPalette.muted,
           ),
         ),
       ),
@@ -256,9 +256,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
       onTap: () => context.go(AppRoutes.carDetail, extra: car),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: VelixPalette.paper,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: VelixPalette.line),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,8 +274,8 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
                       height: 100,
-                      color: const Color(0xFFF3F4F6),
-                      child: const Center(child: Icon(Icons.directions_car, size: 48, color: Color(0xFF9CA3AF))),
+                      color: VelixPalette.stone,
+                      child: const Center(child: Icon(Icons.directions_car, size: 48, color: VelixPalette.lineStrong)),
                     ),
                   ),
                 ),
@@ -285,10 +285,10 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C1830),
+                      color: VelixPalette.ink,
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: Text(car.category, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.white)),
+                    child: Text(car.category, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                   ),
                 ),
                 Positioned(
@@ -303,8 +303,8 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                     },
                     child: const CircleAvatar(
                       radius: 12,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.favorite, size: 14, color: Color(0xFFEF4444)),
+                      backgroundColor: VelixPalette.paper,
+                      child: Icon(Icons.favorite, size: 14, color: VelixPalette.claim),
                     ),
                   ),
                 ),
@@ -315,23 +315,23 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(car.name, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)), maxLines: 1, overflow: TextOverflow.ellipsis),
-                  Text(car.brand, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                  Text(car.name, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(car.brand, style: const TextStyle(fontSize: 10, color: VelixPalette.muted)),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.location_on, size: 10, color: Color(0xFFC84C00)),
+                      const Icon(Icons.location_on, size: 10, color: VelixPalette.copper),
                       const SizedBox(width: 2),
-                      Expanded(child: Text(car.location, style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280)), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                      Expanded(child: Text(car.location, style: const TextStyle(fontSize: 9, color: VelixPalette.muted), maxLines: 1, overflow: TextOverflow.ellipsis)),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.star, size: 10, color: Colors.amber),
+                      const Icon(Icons.star, size: 10, color: VelixPalette.brass),
                       const SizedBox(width: 2),
-                      Text(car.rating.toString(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                      Text(' (${car.reviewsCount})', style: const TextStyle(fontSize: 9, color: Color(0xFF9CA3AF))),
+                      Text(car.rating.toString(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                      Text(' (${car.reviewsCount})', style: const TextStyle(fontSize: 9, color: VelixPalette.lineStrong)),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -340,15 +340,15 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                     children: [
                       Text(
                         '₦${car.pricePerDay.toStringAsFixed(0)}/d',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC84C00),
+                          color: VelixPalette.copper,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text('Rent', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+                        child: const Text('Rent', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                       ),
                     ],
                   ),

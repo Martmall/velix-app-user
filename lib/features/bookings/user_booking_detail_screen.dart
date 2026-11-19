@@ -66,18 +66,18 @@ class UserBookingDetailScreen extends ConsumerWidget {
     final isConfirmedOrActive = b.status == BookingStatus.active || b.status == BookingStatus.confirmed;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -90,8 +90,8 @@ class UserBookingDetailScreen extends ConsumerWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Booking Details', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-            Text(id, style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+            const Text('Booking Details', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+            Text(id, style: const TextStyle(fontSize: 11, color: VelixPalette.muted)),
           ],
         ),
         centerTitle: true,
@@ -105,15 +105,15 @@ class UserBookingDetailScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isConfirmedOrActive ? const Color(0xFFECFDF5) : const Color(0xFFFEF2F2),
+                color: isConfirmedOrActive ? VelixPalette.goSoft : VelixPalette.claimSoft,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: isConfirmedOrActive ? const Color(0xFFA7F3D0) : const Color(0xFFFECACA)),
+                border: Border.all(color: isConfirmedOrActive ? VelixPalette.goSoft : VelixPalette.claimSoft),
               ),
               child: Row(
                 children: [
                   Icon(
                     isConfirmedOrActive ? Icons.check_circle : Icons.info_outline,
-                    color: isConfirmedOrActive ? const Color(0xFF10B981) : const Color(0xFFEF4444),
+                    color: isConfirmedOrActive ? VelixPalette.go : VelixPalette.claim,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
@@ -126,7 +126,7 @@ class UserBookingDetailScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: isConfirmedOrActive ? const Color(0xFF065F46) : const Color(0xFF991B1B),
+                            color: isConfirmedOrActive ? VelixPalette.onGoSoft : VelixPalette.claim,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -134,7 +134,7 @@ class UserBookingDetailScreen extends ConsumerWidget {
                           'Pickup: ${b.startDate.day}/${b.startDate.month}/${b.startDate.year} • Return: ${b.endDate.day}/${b.endDate.month}/${b.endDate.year}',
                           style: TextStyle(
                             fontSize: 11,
-                            color: isConfirmedOrActive ? const Color(0xFF047857) : const Color(0xFFB91C1C),
+                            color: isConfirmedOrActive ? VelixPalette.go : VelixPalette.claim,
                           ),
                         ),
                       ],
@@ -148,22 +148,22 @@ class UserBookingDetailScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                color: const Color(0xFFFDF0E9),
+                color: VelixPalette.copperSoft,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.3)),
+                border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.3)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.shield_outlined, color: Color(0xFFC84C00), size: 20),
+                      Icon(Icons.shield_outlined, color: VelixPalette.copper, size: 20),
                       SizedBox(width: 8),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Booking Reference', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                          Text('Quote this to your partner at pickup', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                          Text('Booking Reference', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                          Text('Quote this to your partner at pickup', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
                         ],
                       ),
                     ],
@@ -173,7 +173,7 @@ class UserBookingDetailScreen extends ConsumerWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Booking reference copied!'),
-                          backgroundColor: Color(0xFF10B981),
+                          backgroundColor: VelixPalette.go,
                           duration: Duration(seconds: 2),
                         ),
                       );
@@ -181,18 +181,18 @@ class UserBookingDetailScreen extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFFC84C00).withValues(alpha: 0.4)),
+                        border: Border.all(color: VelixPalette.copper.withValues(alpha: 0.4)),
                       ),
                       child: Row(
                         children: [
                           Text(
                             _reference(b.id),
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Color(0xFFC84C00), letterSpacing: 2.0),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: VelixPalette.copper, letterSpacing: 2.0),
                           ),
                           const SizedBox(width: 6),
-                          const Icon(Icons.copy_rounded, size: 14, color: Color(0xFFC84C00)),
+                          const Icon(Icons.copy_rounded, size: 14, color: VelixPalette.copper),
                         ],
                       ),
                     ),
@@ -205,9 +205,9 @@ class UserBookingDetailScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Row(
                 children: [
@@ -221,8 +221,8 @@ class UserBookingDetailScreen extends ConsumerWidget {
                       errorBuilder: (_, __, ___) => Container(
                         width: 80,
                         height: 60,
-                        color: const Color(0xFFF3F4F6),
-                        child: const Icon(Icons.directions_car, size: 40, color: Color(0xFF9CA3AF)),
+                        color: VelixPalette.stone,
+                        child: const Icon(Icons.directions_car, size: 40, color: VelixPalette.lineStrong),
                       ),
                     ),
                   ),
@@ -231,11 +231,11 @@ class UserBookingDetailScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(carName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                        Text(carName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                         const SizedBox(height: 2),
-                        Text(b.pickupLocation.isNotEmpty ? b.pickupLocation : 'Pickup location to be confirmed', style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+                        Text(b.pickupLocation.isNotEmpty ? b.pickupLocation : 'Pickup location to be confirmed', style: const TextStyle(fontSize: 11, color: VelixPalette.muted)),
                         const SizedBox(height: 4),
-                        Text('₦${(total / 3).toStringAsFixed(0)} / day', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                        Text('₦${(total / 3).toStringAsFixed(0)} / day', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                       ],
                     ),
                   ),
@@ -247,39 +247,39 @@ class UserBookingDetailScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('CAR OWNER / HOST', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF6B7280), letterSpacing: 0.5)),
+                  const Text('CAR OWNER / HOST', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.muted, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Color(0xFFC84C00),
-                        child: Text('EA', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+                        backgroundColor: VelixPalette.copper,
+                        child: Text('EA', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                       ),
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Adebayo Luxury Motors', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                            Text('✔ Verified Host • Top Rated', style: TextStyle(fontSize: 10, color: Color(0xFF10B981))),
+                            Text('Adebayo Luxury Motors', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                            Text('✔ Verified Host • Top Rated', style: TextStyle(fontSize: 10, color: VelixPalette.go)),
                           ],
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.phone, color: Color(0xFFC84C00), size: 20),
+                        icon: const Icon(Icons.phone, color: VelixPalette.copper, size: 20),
                         // The booking API doesn't expose the host's phone number; support relays.
                         onPressed: () => context.push(AppRoutes.liveChat, extra: {'isHost': true}),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.chat_bubble_outline, color: Color(0xFF0C1830), size: 20),
+                        icon: const Icon(Icons.chat_bubble_outline, color: VelixPalette.ink, size: 20),
                         onPressed: () => context.go(AppRoutes.liveChat),
                       ),
                     ],
@@ -292,26 +292,26 @@ class UserBookingDetailScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Payment Summary', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                  const Text('Payment Summary', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                   const SizedBox(height: 12),
                   _buildReceiptRow('Total Rental Amount', '₦${total.toStringAsFixed(0)}'),
                   const SizedBox(height: 8),
                   _buildReceiptRow('Payment Method', 'Flutterwave'),
                   const SizedBox(height: 8),
-                  const Divider(color: Color(0xFFE5E7EB)),
+                  const Divider(color: VelixPalette.line),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                      Text('₦${total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                      const Text('Total', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                      Text('₦${total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                     ],
                   ),
                 ],
@@ -344,8 +344,8 @@ class UserBookingDetailScreen extends ConsumerWidget {
                           Navigator.pop(ctx);
                           _cancel(context, ref, b);
                         },
-                        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFEF4444)),
-                        child: const Text('Yes, Cancel', style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(backgroundColor: VelixPalette.claim),
+                        child: const Text('Yes, Cancel', style: TextStyle(color: VelixPalette.paper)),
                       ),
                     ],
                   ),
@@ -353,10 +353,10 @@ class UserBookingDetailScreen extends ConsumerWidget {
               },
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
-                side: const BorderSide(color: Color(0xFFEF4444)),
+                side: const BorderSide(color: VelixPalette.claim),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              child: const Text('Cancel Booking', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFEF4444))),
+              child: const Text('Cancel Booking', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.claim)),
             ),
             const SizedBox(height: 30),
           ],
@@ -369,8 +369,8 @@ class UserBookingDetailScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
-        Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+        Text(label, style: const TextStyle(fontSize: 12, color: VelixPalette.muted)),
+        Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
       ],
     );
   }

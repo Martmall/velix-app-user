@@ -29,7 +29,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Color(0xFFC84C00)),
+            colorScheme: const ColorScheme.light(primary: VelixPalette.copper),
           ),
           child: child!,
         );
@@ -55,7 +55,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Color(0xFFC84C00)),
+            colorScheme: const ColorScheme.light(primary: VelixPalette.copper),
           ),
           child: child!,
         );
@@ -102,15 +102,15 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
     final breakdown = draft.breakdown;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: const Color(0xFFF3F4F6), borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: VelixPalette.stone, borderRadius: BorderRadius.circular(12)),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -123,8 +123,8 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Book a Car', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-            Text(car?.name ?? 'Mercedes-Benz GLE 450', style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+            const Text('Book a Car', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+            Text(car?.name ?? 'Mercedes-Benz GLE 450', style: const TextStyle(fontSize: 11, color: VelixPalette.muted)),
           ],
         ),
       ),
@@ -136,9 +136,9 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
             child: Row(
               children: [
                 _buildStepCircle('1', 'Dates', true),
-                Expanded(child: Container(height: 2, color: const Color(0xFFE5E7EB))),
+                Expanded(child: Container(height: 2, color: VelixPalette.line)),
                 _buildStepCircle('2', 'Extras', false),
-                Expanded(child: Container(height: 2, color: const Color(0xFFE5E7EB))),
+                Expanded(child: Container(height: 2, color: VelixPalette.line)),
                 _buildStepCircle('3', 'Payment', false),
               ],
             ),
@@ -154,7 +154,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                     margin: const EdgeInsets.only(bottom: 20),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C1830),
+                      color: VelixPalette.ink,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -170,7 +170,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                               width: 80,
                               height: 60,
                               color: Colors.white12,
-                              child: const Icon(Icons.directions_car, color: Colors.white),
+                              child: const Icon(Icons.directions_car, color: VelixPalette.paper),
                             ),
                           ),
                         ),
@@ -181,19 +181,19 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                             children: [
                               Text(
                                 car?.name ?? 'Mercedes-Benz GLE 450',
-                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 2),
                               Text(
                                 '${car?.category ?? 'SUV'} • ${car?.transmission ?? 'Automatic'}',
-                                style: const TextStyle(fontSize: 10, color: Color(0xFF9CA3AF)),
+                                style: const TextStyle(fontSize: 10, color: VelixPalette.lineStrong),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 '₦${(car?.pricePerDay ?? 48000).toStringAsFixed(0)}/day',
-                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                               ),
                             ],
                           ),
@@ -201,7 +201,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                       ],
                     ),
                   ),
-                  const Text('• RENTAL DATES & TIMES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0C1830), letterSpacing: 0.5)),
+                  const Text('• RENTAL DATES & TIMES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.ink, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -211,25 +211,25 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: VelixPalette.paper,
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: const Color(0xFFC84C00), width: 1.5),
+                              border: Border.all(color: VelixPalette.copper, width: 1.5),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Row(
                                   children: [
-                                    Icon(Icons.calendar_today, size: 12, color: Color(0xFFC84C00)),
+                                    Icon(Icons.calendar_today, size: 12, color: VelixPalette.copper),
                                     SizedBox(width: 4),
-                                    Text('PICKUP DATE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                                    Text('PICKUP DATE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                                   ],
                                 ),
                                 const SizedBox(height: 4),
-                                Text(DateFormat('EEE, MMM d').format(_pickupDate), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                Text(DateFormat('EEE, MMM d').format(_pickupDate), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                                 GestureDetector(
                                   onTap: _selectPickupTime,
-                                  child: Text(_pickupTime.format(context), style: const TextStyle(fontSize: 10, color: Color(0xFFC84C00), fontWeight: FontWeight.bold)),
+                                  child: Text(_pickupTime.format(context), style: const TextStyle(fontSize: 10, color: VelixPalette.copper, fontWeight: FontWeight.bold)),
                                 ),
                               ],
                             ),
@@ -243,25 +243,25 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: VelixPalette.paper,
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: const Color(0xFFE5E7EB)),
+                              border: Border.all(color: VelixPalette.line),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Row(
                                   children: [
-                                    Icon(Icons.calendar_today, size: 12, color: Color(0xFF6B7280)),
+                                    Icon(Icons.calendar_today, size: 12, color: VelixPalette.muted),
                                     SizedBox(width: 4),
-                                    Text('RETURN DATE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF6B7280))),
+                                    Text('RETURN DATE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.muted)),
                                   ],
                                 ),
                                 const SizedBox(height: 4),
-                                Text(DateFormat('EEE, MMM d').format(_returnDate), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                                Text(DateFormat('EEE, MMM d').format(_returnDate), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                                 GestureDetector(
                                   onTap: _selectReturnTime,
-                                  child: Text(_returnTime.format(context), style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                                  child: Text(_returnTime.format(context), style: const TextStyle(fontSize: 10, color: VelixPalette.muted)),
                                 ),
                               ],
                             ),
@@ -273,36 +273,36 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                   const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(color: const Color(0xFFFDF0E9), borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(color: VelixPalette.copperSoft, borderRadius: BorderRadius.circular(12)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.access_time, size: 14, color: Color(0xFFC84C00)),
+                        const Icon(Icons.access_time, size: 14, color: VelixPalette.copper),
                         const SizedBox(width: 4),
-                        Text('${breakdown.days} Days Duration', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                        Text('${breakdown.days} Days Duration', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                       ],
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('• PICKUP & RETURN LOCATIONS', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0C1830), letterSpacing: 0.5)),
+                  const Text('• PICKUP & RETURN LOCATIONS', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.ink, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE5E7EB))),
+                    decoration: BoxDecoration(color: VelixPalette.paper, borderRadius: BorderRadius.circular(16), border: Border.all(color: VelixPalette.line)),
                     child: Row(
                       children: [
                         Container(
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(color: const Color(0xFFFDF0E9), borderRadius: BorderRadius.circular(10)),
-                          child: const Icon(Icons.location_on, color: Color(0xFFC84C00), size: 18),
+                          decoration: BoxDecoration(color: VelixPalette.copperSoft, borderRadius: BorderRadius.circular(10)),
+                          child: const Icon(Icons.location_on, color: VelixPalette.copper, size: 18),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('PICKUP & RETURN LOCATION', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF9CA3AF))),
-                              Text(draft.pickupLocation, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                              const Text('PICKUP & RETURN LOCATION', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: VelixPalette.lineStrong)),
+                              Text(draft.pickupLocation, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                             ],
                           ),
                         ),
@@ -310,31 +310,31 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('• CHAUFFEUR OPTION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0C1830), letterSpacing: 0.5)),
+                  const Text('• CHAUFFEUR OPTION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: VelixPalette.ink, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE5E7EB))),
+                    decoration: BoxDecoration(color: VelixPalette.paper, borderRadius: BorderRadius.circular(16), border: Border.all(color: VelixPalette.line)),
                     child: Row(
                       children: [
                         Container(
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(color: const Color(0xFFFDF0E9), borderRadius: BorderRadius.circular(10)),
-                          child: const Icon(Icons.person, color: Color(0xFFC84C00), size: 18),
+                          decoration: BoxDecoration(color: VelixPalette.copperSoft, borderRadius: BorderRadius.circular(10)),
+                          child: const Icon(Icons.person, color: VelixPalette.copper, size: 18),
                         ),
                         const SizedBox(width: 12),
                         const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Include Professional Chauffeur', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                              Text('Sent to the partner as a request; arranged with them', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                              Text('Include Professional Chauffeur', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                              Text('Sent to the partner as a request; arranged with them', style: TextStyle(fontSize: 10, color: VelixPalette.muted)),
                             ],
                           ),
                         ),
                         Switch(
                           value: _includeDriver,
-                          activeTrackColor: const Color(0xFFC84C00),
+                          activeTrackColor: VelixPalette.copper,
                           onChanged: (val) {
                             setState(() => _includeDriver = val);
                             ref.read(bookingDraftProvider.notifier).toggleChauffeur(val);
@@ -351,7 +351,7 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
           // Bottom Bar
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, -4))]),
+            decoration: BoxDecoration(color: VelixPalette.paper, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, -4))]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -359,17 +359,17 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('ESTIMATED SUBTOTAL', style: TextStyle(fontSize: 9, color: Color(0xFF6B7280), letterSpacing: 0.5)),
-                    Text('₦${breakdown.grandTotal.toStringAsFixed(0)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
-                    Text('${breakdown.days} days rental', style: const TextStyle(fontSize: 9, color: Color(0xFF6B7280))),
+                    const Text('ESTIMATED SUBTOTAL', style: TextStyle(fontSize: 9, color: VelixPalette.muted, letterSpacing: 0.5)),
+                    Text('₦${breakdown.grandTotal.toStringAsFixed(0)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
+                    Text('${breakdown.days} days rental', style: const TextStyle(fontSize: 9, color: VelixPalette.muted)),
                   ],
                 ),
                 ElevatedButton.icon(
                   onPressed: _continue,
-                  icon: const Text('Continue to Extras', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
-                  label: const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                  icon: const Text('Continue to Extras', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
+                  label: const Icon(Icons.arrow_forward, size: 16, color: VelixPalette.paper),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFC84C00),
+                    backgroundColor: VelixPalette.copper,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     elevation: 0,
@@ -388,11 +388,11 @@ class _BookingDateLocationScreenState extends ConsumerState<BookingDateLocationS
       children: [
         CircleAvatar(
           radius: 14,
-          backgroundColor: isActive ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB),
-          child: Text(number, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isActive ? Colors.white : const Color(0xFF6B7280))),
+          backgroundColor: isActive ? VelixPalette.copper : VelixPalette.line,
+          child: Text(number, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isActive ? VelixPalette.paper : VelixPalette.muted)),
         ),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 10, fontWeight: isActive ? FontWeight.bold : FontWeight.normal, color: isActive ? const Color(0xFFC84C00) : const Color(0xFF6B7280))),
+        Text(label, style: TextStyle(fontSize: 10, fontWeight: isActive ? FontWeight.bold : FontWeight.normal, color: isActive ? VelixPalette.copper : VelixPalette.muted)),
       ],
     );
   }

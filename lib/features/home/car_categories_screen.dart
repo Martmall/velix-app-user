@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/routing/routes.dart';
 
+import 'package:velix_core/theme/velix_palette.dart';
 class CarCategoriesScreen extends StatefulWidget {
   const CarCategoriesScreen({super.key});
 
@@ -15,18 +16,18 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -38,7 +39,7 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
         ),
         title: const Text(
           'Browse by Category',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
         actions: [
@@ -46,10 +47,10 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF3F4F6),
+              color: VelixPalette.stone,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.tune, color: Color(0xFF0C1830), size: 20),
+            child: const Icon(Icons.tune, color: VelixPalette.ink, size: 20),
           ),
         ],
       ),
@@ -83,11 +84,11 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
               children: [
                 const Text(
                   'All Categories',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                 ),
                 GestureDetector(
                   onTap: () => context.go(AppRoutes.carListing),
-                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                  child: const Text('See all', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                 ),
               ],
             ),
@@ -105,55 +106,55 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                   title: 'Economy Cars',
                   count: '14 Cars Available',
                   icon: Icons.directions_car,
-                  bgColor: const Color(0xFF0C1830),
-                  textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  bgColor: VelixPalette.ink,
+                  textColor: VelixPalette.paper,
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.25),
                   imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'SUVs & 4x4',
                   count: '18 Cars Available',
                   icon: Icons.airport_shuttle,
-                  bgColor: const Color(0xFF0C1830),
-                  textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  bgColor: VelixPalette.ink,
+                  textColor: VelixPalette.paper,
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.25),
                   imageUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Luxury Cars',
                   count: '9 Cars Available',
                   icon: Icons.star,
-                  bgColor: const Color(0xFFC84C00),
-                  textColor: Colors.white,
+                  bgColor: VelixPalette.copper,
+                  textColor: VelixPalette.paper,
                   badge: '✦ FEATURED',
-                  btnBg: Colors.white.withValues(alpha: 0.35),
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.35),
                   imageUrl: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Sports Cars',
                   count: '7 Cars Available',
                   icon: Icons.speed,
-                  bgColor: const Color(0xFF0C1830),
-                  textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  bgColor: VelixPalette.ink,
+                  textColor: VelixPalette.paper,
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.25),
                   imageUrl: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Family Vans',
                   count: '12 Cars Available',
                   icon: Icons.directions_bus_outlined,
-                  bgColor: const Color(0xFF0C1830),
-                  textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  bgColor: VelixPalette.ink,
+                  textColor: VelixPalette.paper,
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.25),
                   imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80',
                 ),
                 _buildCategoryCard(
                   title: 'Executive',
                   count: '11 Cars Available',
                   icon: Icons.business_center,
-                  bgColor: const Color(0xFF0C1830),
-                  textColor: Colors.white,
-                  btnBg: Colors.white.withValues(alpha: 0.25),
+                  bgColor: VelixPalette.ink,
+                  textColor: VelixPalette.paper,
+                  btnBg: VelixPalette.paper.withValues(alpha: 0.25),
                   imageUrl: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80',
                 ),
               ],
@@ -165,7 +166,7 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
       bottomNavigationBar: Container(
         height: 65,
         decoration: const BoxDecoration(
-          color: Color(0xFF0C1830),
+          color: VelixPalette.ink,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -191,13 +192,13 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundColor: isSelected ? const Color(0xFFC84C00) : const Color(0xFFF3F4F6),
+            backgroundColor: isSelected ? VelixPalette.copper : VelixPalette.stone,
             child: CircleAvatar(
               radius: 24,
-              backgroundColor: Colors.white,
+              backgroundColor: VelixPalette.paper,
               child: Icon(
                 Icons.directions_car_filled,
-                color: isSelected ? const Color(0xFFC84C00) : const Color(0xFF6B7280),
+                color: isSelected ? VelixPalette.copper : VelixPalette.muted,
                 size: 24,
               ),
             ),
@@ -208,7 +209,7 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? const Color(0xFFC84C00) : const Color(0xFF6B7280),
+              color: isSelected ? VelixPalette.copper : VelixPalette.muted,
             ),
           ),
         ],
@@ -235,7 +236,7 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(20),
-          border: isBordered ? Border.all(color: const Color(0xFFE5E7EB)) : null,
+          border: isBordered ? Border.all(color: VelixPalette.line) : null,
           image: imageUrl != null && imageUrl.isNotEmpty
               ? DecorationImage(
                   image: NetworkImage(imageUrl),
@@ -267,16 +268,16 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
                     color: Colors.black.withValues(alpha: 0.35),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(icon, color: iconColor ?? Colors.white, size: 20),
+                  child: Icon(icon, color: iconColor ?? VelixPalette.paper, size: 20),
                 ),
                 if (badge != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFC84C00),
+                      color: VelixPalette.copper,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(badge, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.white)),
+                    child: Text(badge, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                   ),
               ],
             ),
@@ -331,10 +332,10 @@ class _CarCategoriesScreenState extends State<CarCategoriesScreen> {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: isActive ? const Color(0xFFC84C00) : Colors.transparent,
+              color: isActive ? VelixPalette.copper : Colors.transparent,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: VelixPalette.paper, size: 18),
           ),
           Text(label, style: const TextStyle(fontSize: 9, color: Colors.white70)),
         ],

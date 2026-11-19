@@ -57,12 +57,12 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: VelixPalette.stone,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF0C1830), size: 18),
+          icon: const Icon(Icons.arrow_back_ios, color: VelixPalette.ink, size: 18),
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -73,7 +73,7 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
         ),
         title: const Text(
           'Account Setup',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
       ),
@@ -91,12 +91,12 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                   children: [
                     CircleAvatar(
                       radius: 46,
-                      backgroundColor: const Color(0xFFFDF0E9),
+                      backgroundColor: VelixPalette.copperSoft,
                       backgroundImage: _avatarUrl != null ? NetworkImage(_avatarUrl!) : null,
                       child: _avatarUrl == null
                           ? Text(
                               _nameController.text.isNotEmpty ? _nameController.text[0].toUpperCase() : 'U',
-                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                             )
                           : null,
                     ),
@@ -106,9 +106,9 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC84C00),
+                          color: VelixPalette.copper,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(color: VelixPalette.paper, width: 2),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.1),
@@ -116,7 +116,7 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                             ),
                           ],
                         ),
-                        child: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
+                        child: const Icon(Icons.camera_alt, color: VelixPalette.paper, size: 16),
                       ),
                     ),
                   ],
@@ -127,7 +127,7 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                 onTap: _pickAvatar,
                 child: const Text(
                   'Tap to Upload Profile Photo',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00)),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper),
                 ),
               ),
               const SizedBox(height: 24),
@@ -135,7 +135,7 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
               Container(
                 padding: const EdgeInsets.all(24.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: VelixPalette.paper,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -148,22 +148,22 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Full Name', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const Text('Full Name', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _nameController,
-                      style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14),
+                      style: const TextStyle(color: VelixPalette.ink, fontSize: 14),
                       decoration: _buildInputDecoration('Enter full name'),
                       validator: (val) => val == null || val.isEmpty ? 'Name required' : null,
                     ),
                     const SizedBox(height: 16),
-                    const Text('Preferred City', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const Text('Preferred City', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                     const SizedBox(height: 6),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedCity,
                       decoration: _buildInputDecoration('Select City'),
-                      dropdownColor: Colors.white,
-                      style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14, fontWeight: FontWeight.bold),
+                      dropdownColor: VelixPalette.paper,
+                      style: const TextStyle(color: VelixPalette.ink, fontSize: 14, fontWeight: FontWeight.bold),
                       items: ['Lagos', 'Abuja', 'Port Harcourt', 'Ibadan']
                           .map((city) => DropdownMenuItem(value: city, child: Text('📍 $city')))
                           .toList(),
@@ -172,20 +172,20 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    const Text("Driver's License Number", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const Text("Driver's License Number", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _licenseController,
-                      style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14),
+                      style: const TextStyle(color: VelixPalette.ink, fontSize: 14),
                       decoration: _buildInputDecoration('DL-90821-XYZ'),
                       validator: (val) => val == null || val.isEmpty ? 'License number required' : null,
                     ),
                     const SizedBox(height: 16),
-                    const Text('Emergency Contact Phone', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                    const Text('Emergency Contact Phone', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _emergencyController,
-                      style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14),
+                      style: const TextStyle(color: VelixPalette.ink, fontSize: 14),
                       decoration: _buildInputDecoration('+234 801 234 5678'),
                     ),
                     const SizedBox(height: 28),
@@ -207,21 +207,21 @@ class _SetUpScreenState extends ConsumerState<SetUpScreen> {
   InputDecoration _buildInputDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
+      hintStyle: const TextStyle(color: VelixPalette.lineStrong, fontSize: 14),
       filled: true,
-      fillColor: const Color(0xFFF4F6F9),
+      fillColor: VelixPalette.stone,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderSide: const BorderSide(color: VelixPalette.line),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderSide: const BorderSide(color: VelixPalette.line),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFC84C00), width: 1.5),
+        borderSide: const BorderSide(color: VelixPalette.copper, width: 1.5),
       ),
     );
   }

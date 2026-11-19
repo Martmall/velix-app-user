@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/routing/routes.dart';
 import '../../providers/user_app_providers.dart';
 
+import 'package:velix_core/theme/velix_palette.dart';
 class NotificationCenterScreen extends ConsumerStatefulWidget {
   const NotificationCenterScreen({super.key});
 
@@ -21,18 +22,18 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
     final bookings = bookingsAsync.valueOrNull ?? [];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: VelixPalette.paper,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -44,7 +45,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
         ),
         title: const Text(
           'Notifications',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         actions: [
           if (bookings.isNotEmpty)
@@ -55,7 +56,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                   const SnackBar(content: Text('All notifications marked as read.')),
                 );
               },
-              child: const Text('Mark all read', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+              child: const Text('Mark all read', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
             ),
           const SizedBox(width: 8),
         ],
@@ -71,31 +72,31 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                       width: 80,
                       height: 80,
                       decoration: const BoxDecoration(
-                        color: Color(0xFFF3F4F6),
+                        color: VelixPalette.stone,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.notifications_none, size: 40, color: Color(0xFF9CA3AF)),
+                      child: const Icon(Icons.notifications_none, size: 40, color: VelixPalette.lineStrong),
                     ),
                     const SizedBox(height: 20),
                     const Text(
                       'No notifications yet',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                     ),
                     const SizedBox(height: 8),
                     const Text(
                       'When you make a booking, complete payments, or receive trip updates, notifications will appear here.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13, color: Color(0xFF6B7280), height: 1.4),
+                      style: TextStyle(fontSize: 13, color: VelixPalette.muted, height: 1.4),
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () => context.go(AppRoutes.carListing),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFC84C00),
+                        backgroundColor: VelixPalette.copper,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       ),
-                      child: const Text('Browse Cars', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      child: const Text('Browse Cars', style: TextStyle(color: VelixPalette.paper, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -120,15 +121,15 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text('RECENT UPDATES', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF6B7280), letterSpacing: 0.5)),
+                  const Text('RECENT UPDATES', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.muted, letterSpacing: 0.5)),
                   const SizedBox(height: 10),
                   ...bookings.map((b) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: _buildNotificationItem(
                         icon: Icons.directions_car,
-                        iconBg: const Color(0xFFFDF0E9),
-                        iconColor: const Color(0xFFC84C00),
+                        iconBg: VelixPalette.copperSoft,
+                        iconColor: VelixPalette.copper,
                         title: 'Booking #${b.id}: ${b.carName}',
                         subtitle: 'Status: ${b.status.name.toUpperCase()} • Total: ₦${b.totalPrice.toStringAsFixed(0)}',
                         time: 'Active',
@@ -144,7 +145,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
       bottomNavigationBar: Container(
         height: 65,
         decoration: const BoxDecoration(
-          color: Color(0xFF0C1830),
+          color: VelixPalette.ink,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -167,16 +168,16 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF0C1830) : Colors.white,
+          color: isSelected ? VelixPalette.ink : VelixPalette.paper,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: isSelected ? const Color(0xFF0C1830) : const Color(0xFFE5E7EB)),
+          border: Border.all(color: isSelected ? VelixPalette.ink : VelixPalette.line),
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            color: isSelected ? Colors.white : const Color(0xFF374151),
+            color: isSelected ? VelixPalette.paper : VelixPalette.muted,
           ),
         ),
       ),
@@ -198,9 +199,9 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: VelixPalette.paper,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: VelixPalette.line),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,20 +222,20 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830))),
+                      Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink)),
                       Row(
                         children: [
-                          Text(time, style: const TextStyle(fontSize: 10, color: Color(0xFF9CA3AF))),
+                          Text(time, style: const TextStyle(fontSize: 10, color: VelixPalette.lineStrong)),
                           if (isUnread) ...[
                             const SizedBox(width: 6),
-                            const CircleAvatar(radius: 3.5, backgroundColor: Color(0xFFC84C00)),
+                            const CircleAvatar(radius: 3.5, backgroundColor: VelixPalette.copper),
                           ],
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Text(subtitle, style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280), height: 1.4)),
+                  Text(subtitle, style: const TextStyle(fontSize: 11, color: VelixPalette.muted, height: 1.4)),
                 ],
               ),
             ),
@@ -253,10 +254,10 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: isActive ? const Color(0xFFC84C00) : Colors.transparent,
+              color: isActive ? VelixPalette.copper : Colors.transparent,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.white, size: 18),
+            child: Icon(icon, color: VelixPalette.paper, size: 18),
           ),
           Text(label, style: const TextStyle(fontSize: 9, color: Colors.white70)),
         ],

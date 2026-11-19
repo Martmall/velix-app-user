@@ -95,7 +95,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
           content: Text(
             'Biometric login is not enabled on this device. Please sign in with your email & password first and toggle on Biometrics in Settings.',
           ),
-          backgroundColor: Color(0xFFC84C00),
+          backgroundColor: VelixPalette.copper,
           behavior: SnackBarBehavior.floating,
           duration: Duration(seconds: 4),
         ),
@@ -127,7 +127,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
@@ -144,7 +144,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF0C1830),
+                    color: VelixPalette.ink,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -152,7 +152,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                   'Sign In To Your Account',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF6B7280),
+                    color: VelixPalette.muted,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -160,7 +160,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                 Container(
                   padding: const EdgeInsets.all(24.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: VelixPalette.paper,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
@@ -178,32 +178,32 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF0C1830),
+                          color: VelixPalette.ink,
                         ),
                       ),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14),
+                        style: const TextStyle(color: VelixPalette.ink, fontSize: 14),
                         decoration: InputDecoration(
                           hintText: 'name@example.com',
-                          hintStyle: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
+                          hintStyle: const TextStyle(color: VelixPalette.lineStrong, fontSize: 14),
                           filled: true,
-                          fillColor: const Color(0xFFF4F6F9),
-                          prefixIcon: const Icon(Icons.mail_outline, color: Color(0xFF6B7280), size: 20),
+                          fillColor: VelixPalette.stone,
+                          prefixIcon: const Icon(Icons.mail_outline, color: VelixPalette.muted, size: 20),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                            borderSide: const BorderSide(color: VelixPalette.line),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                            borderSide: const BorderSide(color: VelixPalette.line),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFC84C00), width: 1.5),
+                            borderSide: const BorderSide(color: VelixPalette.copper, width: 1.5),
                           ),
                         ),
                         validator: (val) => val == null || val.isEmpty ? 'Email is required' : null,
@@ -214,24 +214,24 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF0C1830),
+                          color: VelixPalette.ink,
                         ),
                       ),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: _obscurePassword,
-                        style: const TextStyle(color: Color(0xFF0C1830), fontSize: 14),
+                        style: const TextStyle(color: VelixPalette.ink, fontSize: 14),
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
-                          hintStyle: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
+                          hintStyle: const TextStyle(color: VelixPalette.lineStrong, fontSize: 14),
                           filled: true,
-                          fillColor: const Color(0xFFF4F6F9),
-                          prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF6B7280), size: 20),
+                          fillColor: VelixPalette.stone,
+                          prefixIcon: const Icon(Icons.lock_outline, color: VelixPalette.muted, size: 20),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                              color: const Color(0xFF6B7280),
+                              color: VelixPalette.muted,
                               size: 20,
                             ),
                             onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
@@ -239,15 +239,15 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                            borderSide: const BorderSide(color: VelixPalette.line),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                            borderSide: const BorderSide(color: VelixPalette.line),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Color(0xFFC84C00), width: 1.5),
+                            borderSide: const BorderSide(color: VelixPalette.copper, width: 1.5),
                           ),
                         ),
                         validator: (val) => val == null || val.length < 6 ? 'Password required' : null,
@@ -255,15 +255,15 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                       const SizedBox(height: 20),
                       const Row(
                         children: [
-                          Expanded(child: Divider(color: Color(0xFFE5E7EB))),
+                          Expanded(child: Divider(color: VelixPalette.line)),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               'or continue with',
-                              style: TextStyle(color: Color(0xFF6B7280), fontSize: 12),
+                              style: TextStyle(color: VelixPalette.muted, fontSize: 12),
                             ),
                           ),
-                          Expanded(child: Divider(color: Color(0xFFE5E7EB))),
+                          Expanded(child: Divider(color: VelixPalette.line)),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -275,7 +275,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                               onPressed: () => _socialSignIn('Google'),
                               style: OutlinedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(vertical: 12),
-                                side: const BorderSide(color: Color(0xFFE5E7EB)),
+                                side: const BorderSide(color: VelixPalette.line),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
                               child: const Row(
@@ -283,11 +283,11 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                                 children: [
                                   Text(
                                     'G ',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                                   ),
                                   Text(
                                     'Google',
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                                   ),
                                 ],
                               ),
@@ -298,7 +298,7 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                             child: ElevatedButton(
                               onPressed: () => _socialSignIn('Apple'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF0C1830),
+                                backgroundColor: VelixPalette.ink,
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 elevation: 0,
@@ -306,11 +306,11 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.apple, color: Colors.white, size: 20),
+                                  Icon(Icons.apple, color: VelixPalette.paper, size: 20),
                                   SizedBox(width: 6),
                                   Text(
                                     'Apple',
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                                   ),
                                 ],
                               ),
@@ -328,14 +328,14 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                         const SizedBox(height: 12),
                         OutlinedButton.icon(
                           onPressed: _handleBiometricSignIn,
-                          icon: const Icon(Icons.fingerprint_rounded, color: Color(0xFFC84C00), size: 22),
+                          icon: const Icon(Icons.fingerprint_rounded, color: VelixPalette.copper, size: 22),
                           label: const Text(
                             'Sign In with Biometrics / Fingerprint',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                           ),
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size.fromHeight(48),
-                            side: const BorderSide(color: Color(0xFFE5E7EB)),
+                            side: const BorderSide(color: VelixPalette.line),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           ),
                         ),
@@ -346,14 +346,14 @@ class _UserSignInScreenState extends ConsumerState<UserSignInScreen> {
                         children: [
                           const Text(
                             'Not registered yet? ',
-                            style: TextStyle(color: Color(0xFF6B7280), fontSize: 13),
+                            style: TextStyle(color: VelixPalette.muted, fontSize: 13),
                           ),
                           GestureDetector(
                             onTap: () => context.go(AppRoutes.createAccount),
                             child: const Text(
                               'Get Started',
                               style: TextStyle(
-                                color: Color(0xFFC84C00),
+                                color: VelixPalette.copper,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),

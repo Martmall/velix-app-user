@@ -38,11 +38,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
       return;
     }
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF161922) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF262B38) : const Color(0xFFE5E7EB);
-    final inputBg = isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9);
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final inputBg = isDark ? VelixPalette.nightStone3 : VelixPalette.stone;
 
     double selectedAmount = 10000;
     _amountController.text = '10000';
@@ -81,7 +81,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       width: 40,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF374151) : const Color(0xFFD1D5DB),
+                        color: isDark ? VelixPalette.nightMuted : VelixPalette.lineStrong,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -130,11 +130,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
                             color: isSel
-                                ? const Color(0xFFC84C00)
-                                : (isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9)),
+                                ? VelixPalette.copper
+                                : (isDark ? VelixPalette.nightStone3 : VelixPalette.stone),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: isSel ? const Color(0xFFC84C00) : borderColor,
+                              color: isSel ? VelixPalette.copper : borderColor,
                             ),
                           ),
                           child: Text(
@@ -142,7 +142,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
-                              color: isSel ? Colors.white : textColor,
+                              color: isSel ? VelixPalette.paper : textColor,
                             ),
                           ),
                         ),
@@ -170,7 +170,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       fillColor: inputBg,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: borderColor)),
                       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: borderColor)),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: Color(0xFFC84C00), width: 1.5)),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: VelixPalette.copper, width: 1.5)),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -185,7 +185,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       _executeDeposit(depositAmount);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFC84C00),
+                      backgroundColor: VelixPalette.copper,
                       minimumSize: const Size.fromHeight(52),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       elevation: 0,
@@ -193,11 +193,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.lock, color: Colors.white, size: 16),
+                        const Icon(Icons.lock, color: VelixPalette.paper, size: 16),
                         const SizedBox(width: 8),
                         Text(
                           'Pay ₦${selectedAmount.toStringAsFixed(0)} with Paystack / Flutterwave',
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.paper),
                         ),
                       ],
                     ),
@@ -250,12 +250,12 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final scaffoldBg = isDark ? const Color(0xFF0A0C10) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF161922) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF262B38) : const Color(0xFFE5E7EB);
-    final dividerColor = isDark ? const Color(0xFF262B38) : const Color(0xFFF3F4F6);
+    final scaffoldBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final dividerColor = isDark ? VelixPalette.nightLine : VelixPalette.stone;
 
     final balance = ref.watch(walletProvider).valueOrNull?.balance ?? 0.0;
 
@@ -283,7 +283,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
         actions: [
           IconButton(
             onPressed: () => _showTopUpSheet(context, balance),
-            icon: const Icon(Icons.add_circle_outline, color: Color(0xFFC84C00)),
+            icon: const Icon(Icons.add_circle_outline, color: VelixPalette.copper),
             tooltip: 'Fund Wallet',
           ),
         ],
@@ -302,14 +302,14 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFFC84C00),
-                    Color(0xFF9A3400),
+                    VelixPalette.copper,
+                    VelixPalette.onCopperSoft,
                   ],
                 ),
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFC84C00).withValues(alpha: 0.35),
+                    color: VelixPalette.copper.withValues(alpha: 0.35),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -326,10 +326,10 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
+                              color: VelixPalette.paper.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Icon(Icons.account_balance_wallet, color: Colors.white, size: 18),
+                            child: const Icon(Icons.account_balance_wallet, color: VelixPalette.paper, size: 18),
                           ),
                           const SizedBox(width: 8),
                           const Text(
@@ -341,14 +341,14 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
+                          color: VelixPalette.paper.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Row(
                           children: [
-                            Icon(Icons.shield, color: Colors.white, size: 12),
+                            Icon(Icons.shield, color: VelixPalette.paper, size: 12),
                             SizedBox(width: 4),
-                            Text('Secured by Velix', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white)),
+                            Text('Secured by Velix', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                           ],
                         ),
                       ),
@@ -360,7 +360,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     style: const TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: VelixPalette.paper,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -370,10 +370,10 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () => _showTopUpSheet(context, balance),
-                          icon: const Icon(Icons.add, size: 16, color: Color(0xFFC84C00)),
-                          label: const Text('Top Up', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
+                          icon: const Icon(Icons.add, size: 16, color: VelixPalette.copper),
+                          label: const Text('Top Up', style: TextStyle(fontWeight: FontWeight.bold, color: VelixPalette.copper)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: VelixPalette.paper,
                             elevation: 0,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -386,10 +386,10 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           onPressed: () {
                             VelixToast.showInfo(context, 'Virtual NUBAN account: 9035427435 (Wema Bank)');
                           },
-                          icon: const Icon(Icons.account_balance, size: 16, color: Colors.white),
-                          label: const Text('Bank Transfer', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                          icon: const Icon(Icons.account_balance, size: 16, color: VelixPalette.paper),
+                          label: const Text('Bank Transfer', style: TextStyle(fontWeight: FontWeight.bold, color: VelixPalette.paper)),
                           style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: Colors.white, width: 1.2),
+                            side: const BorderSide(color: VelixPalette.paper, width: 1.2),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
@@ -420,20 +420,20 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFDBEAFE),
+                        color: isDark ? VelixPalette.nightStone3 : VelixPalette.stone2,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.credit_card, color: Color(0xFF3B82F6), size: 20),
+                      child: const Icon(Icons.credit_card, color: VelixPalette.ink, size: 20),
                     ),
                     title: Text('•••• •••• •••• 4242', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor)),
                     subtitle: Text('Mastercard • Expires 08/28', style: TextStyle(fontSize: 11, color: subtextColor)),
                     trailing: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5),
+                        color: isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Text('Default', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                      child: const Text('Default', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: VelixPalette.go)),
                     ),
                   ),
                   Divider(height: 1, color: dividerColor),
@@ -442,13 +442,13 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
+                        color: isDark ? VelixPalette.nightStone3 : VelixPalette.stone,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.add, color: Color(0xFFC84C00), size: 20),
+                      child: const Icon(Icons.add, color: VelixPalette.copper, size: 20),
                     ),
-                    title: const Text('Add New Payment Card', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFFC84C00))),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Color(0xFFC84C00)),
+                    title: const Text('Add New Payment Card', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.copper)),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: VelixPalette.copper),
                   ),
                 ],
               ),
@@ -483,17 +483,17 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
                           color: isSel
-                              ? const Color(0xFFC84C00)
-                              : (isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9)),
+                              ? VelixPalette.copper
+                              : (isDark ? VelixPalette.nightStone3 : VelixPalette.stone),
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: isSel ? const Color(0xFFC84C00) : borderColor),
+                          border: Border.all(color: isSel ? VelixPalette.copper : borderColor),
                         ),
                         child: Text(
                           f,
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: isSel ? FontWeight.bold : FontWeight.w600,
-                            color: isSel ? Colors.white : subtextColor,
+                            color: isSel ? VelixPalette.paper : subtextColor,
                           ),
                         ),
                       ),
@@ -541,13 +541,13 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: isCredit
-                                  ? (isDark ? const Color(0xFF064E3B) : const Color(0xFFECFDF5))
-                                  : (isDark ? const Color(0xFF451A03) : const Color(0xFFFDF0E9)),
+                                  ? (isDark ? VelixPalette.nightGoSoft : VelixPalette.goSoft)
+                                  : (isDark ? VelixPalette.nightCopperSoft : VelixPalette.copperSoft),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
                               isCredit ? Icons.arrow_downward : Icons.directions_car,
-                              color: isCredit ? const Color(0xFF10B981) : const Color(0xFFC84C00),
+                              color: isCredit ? VelixPalette.go : VelixPalette.copper,
                               size: 18,
                             ),
                           ),
@@ -568,7 +568,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                  color: isCredit ? const Color(0xFF10B981) : const Color(0xFFEF4444),
+                                  color: isCredit ? VelixPalette.go : VelixPalette.claim,
                                 ),
                               ),
                               const SizedBox(height: 2),

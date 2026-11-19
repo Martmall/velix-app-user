@@ -39,7 +39,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Front of ID document uploaded to verification desk!'),
-          backgroundColor: Color(0xFF0C1830),
+          backgroundColor: VelixPalette.ink,
         ),
       );
     }
@@ -57,7 +57,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Back of ID document uploaded to verification desk!'),
-          backgroundColor: Color(0xFF0C1830),
+          backgroundColor: VelixPalette.ink,
         ),
       );
     }
@@ -74,7 +74,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Facial selfie captured and uploaded!'),
-          backgroundColor: Color(0xFF0C1830),
+          backgroundColor: VelixPalette.ink,
         ),
       );
     }
@@ -106,7 +106,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: const Row(
             children: [
-              Icon(Icons.verified_user, color: Color(0xFFC84C00), size: 28),
+              Icon(Icons.verified_user, color: VelixPalette.copper, size: 28),
               SizedBox(width: 10),
               Text('Verification Pending', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             ],
@@ -117,12 +117,12 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
             children: [
               Text(
                 'Your documents have been uploaded for review.',
-                style: TextStyle(fontSize: 14, color: Color(0xFF4B5563)),
+                style: TextStyle(fontSize: 14, color: VelixPalette.muted),
               ),
               SizedBox(height: 12),
               Text(
                 'An Administrator will inspect and approve your documents shortly. You can explore vehicles in the meantime.',
-                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 12, color: VelixPalette.muted),
               ),
             ],
           ),
@@ -132,7 +132,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                 Navigator.pop(ctx);
                 context.go(AppRoutes.home);
               },
-              child: const Text('Explore Velix', style: TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold)),
+              child: const Text('Explore Velix', style: TextStyle(color: VelixPalette.copper, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -143,18 +143,18 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: VelixPalette.paper,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -166,7 +166,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
         ),
         title: const Text(
           'Identity Verification',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
       ),
@@ -177,18 +177,18 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
           children: [
             const Text(
               'Verify Your Identity',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: VelixPalette.ink),
             ),
             const SizedBox(height: 6),
             const Text(
               'To ensure vehicle security and instant access, upload a valid government-issued ID and facial selfie.',
-              style: TextStyle(fontSize: 13, color: Color(0xFF6B7280), height: 1.4),
+              style: TextStyle(fontSize: 13, color: VelixPalette.muted, height: 1.4),
             ),
             const SizedBox(height: 20),
             // Select Document Type
             const Text(
               'Select Document Type',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink),
             ),
             const SizedBox(height: 10),
             SingleChildScrollView(
@@ -202,10 +202,10 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                       margin: const EdgeInsets.only(right: 8),
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       decoration: BoxDecoration(
-                        color: isSelected ? const Color(0xFFC84C00) : Colors.white,
+                        color: isSelected ? VelixPalette.copper : VelixPalette.paper,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isSelected ? const Color(0xFFC84C00) : const Color(0xFFE5E7EB),
+                          color: isSelected ? VelixPalette.copper : VelixPalette.line,
                         ),
                       ),
                       child: Text(
@@ -213,7 +213,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: isSelected ? Colors.white : const Color(0xFF374151),
+                          color: isSelected ? VelixPalette.paper : VelixPalette.muted,
                         ),
                       ),
                     ),
@@ -231,10 +231,10 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                     child: Container(
                       height: 140,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: _frontIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFFE5E7EB),
+                          color: _frontIdPhotoUrl != null ? VelixPalette.go : VelixPalette.line,
                           width: _frontIdPhotoUrl != null ? 2 : 1,
                         ),
                       ),
@@ -243,18 +243,18 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                         children: [
                           Icon(
                             _frontIdPhotoUrl != null ? Icons.check_circle : Icons.camera_front,
-                            color: _frontIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFFC84C00),
+                            color: _frontIdPhotoUrl != null ? VelixPalette.go : VelixPalette.copper,
                             size: 32,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             _frontIdPhotoUrl != null ? 'Front added' : 'Front of ID',
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             _frontIdPhotoUrl != null ? 'Tap to change' : 'Tap to capture',
-                            style: TextStyle(fontSize: 10, color: _frontIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFF6B7280)),
+                            style: TextStyle(fontSize: 10, color: _frontIdPhotoUrl != null ? VelixPalette.go : VelixPalette.muted),
                           ),
                         ],
                       ),
@@ -268,10 +268,10 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                     child: Container(
                       height: 140,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: VelixPalette.paper,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: _backIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFFE5E7EB),
+                          color: _backIdPhotoUrl != null ? VelixPalette.go : VelixPalette.line,
                           width: _backIdPhotoUrl != null ? 2 : 1,
                         ),
                       ),
@@ -280,18 +280,18 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                         children: [
                           Icon(
                             _backIdPhotoUrl != null ? Icons.check_circle : Icons.camera_rear,
-                            color: _backIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFFC84C00),
+                            color: _backIdPhotoUrl != null ? VelixPalette.go : VelixPalette.copper,
                             size: 32,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             _backIdPhotoUrl != null ? 'Back added' : 'Back of ID',
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             _backIdPhotoUrl != null ? 'Tap to change' : 'Tap to capture',
-                            style: TextStyle(fontSize: 10, color: _backIdPhotoUrl != null ? const Color(0xFF10B981) : const Color(0xFF6B7280)),
+                            style: TextStyle(fontSize: 10, color: _backIdPhotoUrl != null ? VelixPalette.go : VelixPalette.muted),
                           ),
                         ],
                       ),
@@ -307,10 +307,10 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
               child: Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: VelixPalette.paper,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: _selfieCaptured ? const Color(0xFF10B981) : const Color(0xFFE5E7EB),
+                    color: _selfieCaptured ? VelixPalette.go : VelixPalette.line,
                     width: _selfieCaptured ? 2 : 1,
                   ),
                 ),
@@ -318,10 +318,10 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                   children: [
                     CircleAvatar(
                       radius: 24,
-                      backgroundColor: _selfieCaptured ? const Color(0xFFECFDF5) : const Color(0xFFFDF0E9),
+                      backgroundColor: _selfieCaptured ? VelixPalette.goSoft : VelixPalette.copperSoft,
                       child: Icon(
                         _selfieCaptured ? Icons.face : Icons.face_retouching_natural,
-                        color: _selfieCaptured ? const Color(0xFF10B981) : const Color(0xFFC84C00),
+                        color: _selfieCaptured ? VelixPalette.go : VelixPalette.copper,
                       ),
                     ),
                     const SizedBox(width: 14),
@@ -331,14 +331,14 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                         children: [
                           Text(
                             _selfieCaptured ? 'Selfie added' : 'Take a Selfie',
-                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             _selfieCaptured ? 'Sent with your ID for review' : 'Optional: helps the reviewer match your ID',
                             style: TextStyle(
                               fontSize: 11,
-                              color: _selfieCaptured ? const Color(0xFF10B981) : const Color(0xFF6B7280),
+                              color: _selfieCaptured ? VelixPalette.go : VelixPalette.muted,
                             ),
                           ),
                         ],
@@ -346,7 +346,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
                     ),
                     Icon(
                       _selfieCaptured ? Icons.check_circle : Icons.chevron_right,
-                      color: _selfieCaptured ? const Color(0xFF10B981) : const Color(0xFF9CA3AF),
+                      color: _selfieCaptured ? VelixPalette.go : VelixPalette.lineStrong,
                     ),
                   ],
                 ),
@@ -363,7 +363,7 @@ class _IdentityVerificationScreenState extends ConsumerState<IdentityVerificatio
             Center(
               child: TextButton(
                 onPressed: () => context.go(AppRoutes.home),
-                child: const Text('Skip for Now', style: TextStyle(color: Color(0xFF6B7280), fontSize: 14)),
+                child: const Text('Skip for Now', style: TextStyle(color: VelixPalette.muted, fontSize: 14)),
               ),
             ),
           ],

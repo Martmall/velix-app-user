@@ -9,7 +9,7 @@ class VehicleSecuredScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -20,25 +20,25 @@ class VehicleSecuredScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: const BoxDecoration(
-                  color: Color(0xFFECFDF5),
+                  color: VelixPalette.goSoft,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check_circle, size: 80, color: Color(0xFF10B981)),
+                child: const Icon(Icons.check_circle, size: 80, color: VelixPalette.go),
               ),
               const SizedBox(height: 24),
               const Text(
                 'Access Granted!',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: VelixPalette.ink),
               ),
               const SizedBox(height: 8),
               const Text(
                 'Your vehicle is now unlocked',
-                style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 14, color: VelixPalette.muted),
               ),
               const Spacer(flex: 3),
               const Text(
                 'Enjoy your ride with',
-                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 12, color: VelixPalette.muted),
               ),
               const SizedBox(height: 12),
               // Velix Logo Header
@@ -48,11 +48,11 @@ class VehicleSecuredScreen extends StatelessWidget {
                 onPressed: () => context.go(AppRoutes.tripUpdates),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
-                  backgroundColor: const Color(0xFFC84C00),
+                  backgroundColor: VelixPalette.copper,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   elevation: 0,
                 ),
-                child: const Text('Proceed to Trip Dashboard', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+                child: const Text('Proceed to Trip Dashboard', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: VelixPalette.paper)),
               ),
               const SizedBox(height: 20),
             ],

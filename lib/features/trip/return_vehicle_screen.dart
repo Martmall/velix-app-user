@@ -47,18 +47,18 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: VelixPalette.stone,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: VelixPalette.stone,
         elevation: 0,
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color: VelixPalette.stone,
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF0C1830), size: 16),
+            icon: const Icon(Icons.arrow_back_ios_new, color: VelixPalette.ink, size: 16),
             onPressed: () {
               if (context.canPop()) {
                 context.pop();
@@ -70,7 +70,7 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
         ),
         title: const Text(
           'Return Vehicle',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: VelixPalette.ink),
         ),
         centerTitle: true,
       ),
@@ -82,9 +82,9 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: VelixPalette.paper,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: VelixPalette.line),
                 boxShadow: const [
                   BoxShadow(color: Color(0x08000000), blurRadius: 10, offset: Offset(0, 4)),
                 ],
@@ -97,7 +97,7 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
                     width: 90,
                     height: 90,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFFDF0E9),
+                      color: VelixPalette.copperSoft,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -105,32 +105,32 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
                         width: 64,
                         height: 64,
                         decoration: const BoxDecoration(
-                          color: Color(0xFFFDE68A),
+                          color: VelixPalette.amberSoft,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.directions_car, size: 32, color: Color(0xFF0C1830)),
+                        child: const Icon(Icons.directions_car, size: 32, color: VelixPalette.ink),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   const Text(
                     'Enter Return Code',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0C1830)),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: VelixPalette.ink),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     'Enter the return code provided by the vendor to complete your trip',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF6B7280), height: 1.4),
+                    style: TextStyle(fontSize: 13, color: VelixPalette.muted, height: 1.4),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 28),
                   // 6 PIN Input Boxes with crisp text rendering
                   OtpPinInput(
                     length: 6,
-                    fillColor: Colors.white,
-                    textColor: const Color(0xFF0C1830),
-                    borderColor: const Color(0xFFE5E7EB),
-                    activeBorderColor: const Color(0xFFC84C00),
+                    fillColor: VelixPalette.paper,
+                    textColor: VelixPalette.ink,
+                    borderColor: VelixPalette.line,
+                    activeBorderColor: VelixPalette.copper,
                     onCompleted: (val) {
                       setState(() => _returnCode = val);
                     },
@@ -140,13 +140,13 @@ class _ReturnVehicleScreenState extends ConsumerState<ReturnVehicleScreen> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3F4F6),
+                      color: VelixPalette.stone,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFE5E7EB)),
+                      border: Border.all(color: VelixPalette.line),
                     ),
                     child: const Text(
                       'Please ensure the vehicle is returned to the designed location and the vendor has inspected it before entering the code.',
-                      style: TextStyle(fontSize: 12, color: Color(0xFF4B5563), height: 1.4),
+                      style: TextStyle(fontSize: 12, color: VelixPalette.muted, height: 1.4),
                       textAlign: TextAlign.center,
                     ),
                   ),

@@ -96,13 +96,13 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final scaffoldBg = isDark ? const Color(0xFF0A0C10) : const Color(0xFFF9FAFB);
-    final cardBg = isDark ? const Color(0xFF161922) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF0C1830);
-    final subtextColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280);
-    final borderColor = isDark ? const Color(0xFF262B38) : const Color(0xFFE5E7EB);
-    final inputBg = isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9);
-    final roleToggleBg = isDark ? const Color(0xFF1F2430) : const Color(0xFFF4F6F9);
+    final scaffoldBg = isDark ? VelixPalette.nightStone : VelixPalette.stone;
+    final cardBg = isDark ? VelixPalette.nightPaper : VelixPalette.paper;
+    final textColor = isDark ? VelixPalette.paper : VelixPalette.ink;
+    final subtextColor = isDark ? VelixPalette.nightMuted : VelixPalette.muted;
+    final borderColor = isDark ? VelixPalette.nightLine : VelixPalette.line;
+    final inputBg = isDark ? VelixPalette.nightStone3 : VelixPalette.stone;
+    final roleToggleBg = isDark ? VelixPalette.nightStone3 : VelixPalette.stone;
 
     return Scaffold(
       backgroundColor: scaffoldBg,
@@ -176,7 +176,7 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 side: BorderSide(color: borderColor),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                backgroundColor: isDark ? const Color(0xFF1F2430) : Colors.white,
+                                backgroundColor: isDark ? VelixPalette.nightStone3 : VelixPalette.paper,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +192,7 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                             child: ElevatedButton(
                               onPressed: () => _socialSignUp('Apple'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: isDark ? Colors.white : const Color(0xFF0C1830),
+                                backgroundColor: isDark ? VelixPalette.paper : VelixPalette.ink,
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 elevation: 0,
@@ -200,9 +200,9 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.apple, color: isDark ? Colors.black : Colors.white, size: 20),
+                                  Icon(Icons.apple, color: isDark ? Colors.black : VelixPalette.paper, size: 20),
                                   const SizedBox(width: 6),
-                                  Text('Apple', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: isDark ? Colors.black : Colors.white)),
+                                  Text('Apple', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: isDark ? Colors.black : VelixPalette.paper)),
                                 ],
                               ),
                             ),
@@ -237,20 +237,20 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 10),
                                   decoration: BoxDecoration(
-                                    color: _isCustomerRole ? const Color(0xFFC84C00) : Colors.transparent,
+                                    color: _isCustomerRole ? VelixPalette.copper : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.person_outline, size: 16, color: _isCustomerRole ? Colors.white : subtextColor),
+                                      Icon(Icons.person_outline, size: 16, color: _isCustomerRole ? VelixPalette.paper : subtextColor),
                                       const SizedBox(width: 6),
                                       Text(
                                         "I'm a Customer",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
-                                          color: _isCustomerRole ? Colors.white : subtextColor,
+                                          color: _isCustomerRole ? VelixPalette.paper : subtextColor,
                                         ),
                                       ),
                                     ],
@@ -264,20 +264,20 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 10),
                                   decoration: BoxDecoration(
-                                    color: !_isCustomerRole ? const Color(0xFFC84C00) : Colors.transparent,
+                                    color: !_isCustomerRole ? VelixPalette.copper : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.directions_car_outlined, size: 16, color: !_isCustomerRole ? Colors.white : subtextColor),
+                                      Icon(Icons.directions_car_outlined, size: 16, color: !_isCustomerRole ? VelixPalette.paper : subtextColor),
                                       const SizedBox(width: 6),
                                       Text(
                                         "I Own a Car",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
-                                          color: !_isCustomerRole ? Colors.white : subtextColor,
+                                          color: !_isCustomerRole ? VelixPalette.paper : subtextColor,
                                         ),
                                       ),
                                     ],
@@ -378,8 +378,8 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                               height: 24,
                               child: Checkbox(
                                 value: _agreeTerms,
-                                activeColor: const Color(0xFFC84C00),
-                                checkColor: Colors.white,
+                                activeColor: VelixPalette.copper,
+                                checkColor: VelixPalette.paper,
                                 side: BorderSide(color: subtextColor, width: 1.8),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                 onChanged: (val) => setState(() => _agreeTerms = val ?? false),
@@ -394,14 +394,14 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                                   children: [
                                     TextSpan(
                                       text: 'Terms of Service',
-                                      style: const TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      style: const TextStyle(color: VelixPalette.copper, fontWeight: FontWeight.bold),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => LegalTermsModal.showTermsOfService(context),
                                     ),
                                     const TextSpan(text: ' and '),
                                     TextSpan(
                                       text: 'Privacy Policy',
-                                      style: const TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold),
+                                      style: const TextStyle(color: VelixPalette.copper, fontWeight: FontWeight.bold),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => LegalTermsModal.showPrivacyPolicy(context),
                                     ),
@@ -425,7 +425,7 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
                           Text('Already have an account? ', style: TextStyle(color: subtextColor, fontSize: 13)),
                           GestureDetector(
                             onTap: () => context.go(AppRoutes.signIn),
-                            child: const Text('Login', style: TextStyle(color: Color(0xFFC84C00), fontWeight: FontWeight.bold, fontSize: 13)),
+                            child: const Text('Login', style: TextStyle(color: VelixPalette.copper, fontWeight: FontWeight.bold, fontSize: 13)),
                           ),
                         ],
                       ),
@@ -457,7 +457,7 @@ class _UserCreateAccountScreenState extends ConsumerState<UserCreateAccountScree
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFC84C00), width: 1.5),
+        borderSide: const BorderSide(color: VelixPalette.copper, width: 1.5),
       ),
     );
   }
