@@ -44,9 +44,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final IAuthRepository _repository;
   StreamSubscription<void>? _expiry;
 
+  /// Completes once the saved session (if any) has been restored at launch.
+  late final Future<void> ready;
+
   AuthNotifier(this._repository) : super(AuthState()) {
     _expiry = ApiClient().onSessionExpired.listen((_) => state = AuthState());
-    _init();
+    ready = _init();
   }
 
   @override
